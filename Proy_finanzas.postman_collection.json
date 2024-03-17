@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "e3dbbe47-42b1-45a0-be31-5e50b98df8a8",
+		"name": "Proyecto_Finanzas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9496920"
+	},
+	"item": [
+		{
+			"name": "Registrar usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"sigla\": \"pr\",\r\n    \"tipo\": 321,\r\n    \"email\": \"test@algo.com\",\r\n    \"password\": \"4321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/auth/signup",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Iniciar sesion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"4321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:5000/auth/login",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar todos los usuarios",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZXhwIjoxNzA4Mjc2MTYzfQ.X-i01OV0L2Lhi9mMHdkkwZb8d6GoNqIOX9b_CbTJAKg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:5000/usuarios/users",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"usuarios",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eureka!",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:5000/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
