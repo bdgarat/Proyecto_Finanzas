@@ -1,1 +1,1 @@
-FLASK_APP=supbi.py
+FLASK_APP=proy_finanzas.py
