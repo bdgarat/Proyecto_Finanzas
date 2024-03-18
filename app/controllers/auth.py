@@ -18,7 +18,7 @@ def user_login():
     if not username or not password:
         # returns 401 if any email or / and password is missing
         return jsonify({
-            'message': 'Username o password invalidos1'
+            'message': 'Username o password invalidos'
         }), 401 # Siempre se envia la misma respuesta ante 401 por motivos de ciberseguridad
 
     usuario = Usuario.query.filter_by(username=username).first()
@@ -26,7 +26,7 @@ def user_login():
     if not usuario:
         # returns 401 if user does not exist
         return jsonify({
-            'message': 'Username o password invalidos2' # 'Usuario no encontrado'
+            'message': 'Username o password invalidos' # 'Usuario no encontrado'
         }), 401 # Siempre se envia la misma respuesta ante 401 por motivos de ciberseguridad
 
     if check_password_hash(usuario.password_hash, password):
@@ -39,7 +39,7 @@ def user_login():
         return jsonify({'token': token}), 201
     # returns 403 if password is wrong
     return jsonify({
-            'message': 'Username o password invalidos3' # 'Password incorrecta'
+            'message': 'Username o password invalidos' # 'Password incorrecta'
         }), 401 # Siempre se envia la misma respuesta ante 401 por motivos de ciberseguridad
 
 
@@ -48,8 +48,7 @@ def user_login():
 def user_signup():
 
     username = request.json["username"]
-    sigla = request.json["sigla"]
-    tipo = request.json["tipo"]
+    saldo_actual = request.json["saldo_actual"]
     password = request.json["password"]
     email = request.json["email"]
 
@@ -58,7 +57,7 @@ def user_signup():
 
     if not usuario:
         # database ORM object
-        usuario = Usuario(username, sigla, tipo, email, generate_password_hash(password))
+        usuario = Usuario(username = username, saldo_actual = saldo_actual, password_hash = generate_password_hash(password), email = email)
         Usuario.create(usuario)
 
         return jsonify({

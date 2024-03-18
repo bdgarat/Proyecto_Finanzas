@@ -1,7 +1,6 @@
 from app import token_required
-from flask import Blueprint, request, jsonify
-import jwt
-import datetime
+from flask import Blueprint, jsonify
+
 
 from app.models.usuarios import Usuario
 
@@ -23,8 +22,7 @@ def get_all_users(current_user):
         output.append({
             'username': usuario.username,
             'email': usuario.email,
-            'sigla': usuario.sigla,
-            'tipo': usuario.tipo,
+            'saldo_actual': usuario.saldo_actual,
             'created_on': usuario.created_on,
             'last_updated_on': usuario.last_updated_on
         })

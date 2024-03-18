@@ -14,23 +14,20 @@ class Usuario(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(30), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
-    email: so.Mapped[Optional[str]] = so.mapped_column(sa.String(50))
+    email: so.Mapped[str] = so.mapped_column(sa.String(50))
     created_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now()) #default=lambda: datetime.now(timezone.utc))
     last_updated_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now(), server_onupdate=db.func.now())
     imagen: so.Mapped[Optional[LargeBinary]] = so.mapped_column(sa.LargeBinary)
-    saldo_actual: so.Mapped[int] = so.mapped_column(sa.Integer)
+    saldo_actual: so.Mapped[float] = so.mapped_column(sa.Float)
 
 
-    def __init__(self, username, saldo_actual, password_hash, email = None):
+    def __init__(self, username, password_hash, email, saldo_actual = 0.0, imagen = None):
         self.username = username
         self.saldo_actual = saldo_actual
         self.password_hash = password_hash
-        if email:
-            self.email = email
-
-    def add_email(self, email):
         self.email = email
-        db.session.commit()
+        if imagen:
+            self.imagen = imagen
 
     def add_imagen(self, imagen):
         self.imagen = imagen
