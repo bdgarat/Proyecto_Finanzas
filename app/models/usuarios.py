@@ -19,15 +19,17 @@ class Usuario(UserMixin, db.Model):
     last_updated_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now(), server_onupdate=db.func.now())
     imagen: so.Mapped[Optional[LargeBinary]] = so.mapped_column(sa.LargeBinary)
     saldo_actual: so.Mapped[float] = so.mapped_column(sa.Float)
+    is_admin: so.Mapped[bool] = so.mapped_column(sa.Boolean)
 
 
-    def __init__(self, username, password_hash, email, saldo_actual = 0.0, imagen = None):
+    def __init__(self, username, password_hash, email, saldo_actual = 0.0, imagen = None, is_admin = False):
         self.username = username
         self.saldo_actual = saldo_actual
         self.password_hash = password_hash
         self.email = email
         if imagen:
             self.imagen = imagen
+        self.is_admin = is_admin
 
     def add_imagen(self, imagen):
         self.imagen = imagen

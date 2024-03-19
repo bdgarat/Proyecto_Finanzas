@@ -52,9 +52,11 @@ def token_required(f):
 def home():
     return ("Eureka!")
 
-from app.controllers import auth, usuarios
+from app.controllers import auth, usuarios, ingresos, gastos
 app.register_blueprint(auth.bp)
 app.register_blueprint(usuarios.bp)
+app.register_blueprint(ingresos.bp)
+app.register_blueprint(gastos.bp)
 
 
 if __name__ == '__main__':

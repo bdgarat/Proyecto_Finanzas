@@ -10,19 +10,23 @@ class Ingreso(db.Model):
 
     id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
     descripcion: so.Mapped[str] = so.mapped_column(sa.String(256))
-    fecha: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now(), server_onupdate=db.func.now())
+    fecha: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now())
     monto: so.Mapped[float] = so.mapped_column(sa.Float)
-    tipo: so.Mapped[str] = so.mapped_column(sa.String(32))
+    tipo: so.Mapped[str] = so.mapped_column(sa.String(32), index=True)
     id_usuario: so.Mapped[int] = so.mapped_column(sa.ForeignKey("usuarios.id"))
 
     def __repr__(self):
         return f'Ingreso ({self.monto}, {self.descripcion}, {self.id_usuario})'
     
-    def __init__(self, usuario, descripcion, monto, tipo):
-        self.id_usuario = usuario
+    def __init__(self, id_usuario, descripcion, monto, tipo, fecha):
+        self.id_usuario = id_usuario
         self.descripcion = descripcion
         self.monto = monto
         self.tipo = tipo
+        if fecha:
+            self.fecha = fecha
+        else:
+            self.fecha = db.func.now()
 
     @classmethod
     def create(cls, ingreso):

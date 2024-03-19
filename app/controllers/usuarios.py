@@ -7,12 +7,19 @@ from app.models.usuarios import Usuario
 bp = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 # User Database Route
 # this route sends back list of users
-@bp.route('/users', methods=['GET'])
+@bp.route('/list', methods=['GET'])
 @token_required
 def get_all_users(current_user):
     # querying the database
     # for all the entries in it
-    usuarios = Usuario.query.all()
+    current_user: Usuario
+    if current_user.is_admin: # Si es admin, traigo el listado de todos los usuarios
+        usuarios = Usuario.query.all()
+    else: # Si NO es admin, rechazo el listado
+        return jsonify({
+            'message': 'No tiene permisos para esta operación'
+        }), 401
+
     # converting the query objects
     # to list of jsons
     output = []
@@ -24,7 +31,8 @@ def get_all_users(current_user):
             'email': usuario.email,
             'saldo_actual': usuario.saldo_actual,
             'created_on': usuario.created_on,
-            'last_updated_on': usuario.last_updated_on
+            'last_updated_on': usuario.last_updated_on,
+            'is_admin': usuario.is_admin
         })
 
     return jsonify({'usuarios': output})
