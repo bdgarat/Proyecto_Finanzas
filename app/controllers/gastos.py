@@ -19,7 +19,7 @@ def get_all_gastos(current_user):
     if current_user.is_admin: # Si es admin, traigo los gastos de todos los usuarios
         gastos = Gasto.query.all()
     else: # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
-        gastos = Gasto.query.filter_by(id_usuario=Usuario.get_id()).all()
+        gastos = Gasto.query.filter_by(id_usuario=current_user.get_id()).all()
     # converting the query objects
     # to list of jsons
     output = []
@@ -74,7 +74,7 @@ def get_all_gastos_by_monto(current_user):
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
         gastos = Gasto.query.filter_by(monto=monto).all()
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
-        gastos = Gasto.query.filter_by(id_usuario=Usuario.get_id(), monto=monto).all()
+        gastos = Gasto.query.filter_by(id_usuario=current_user.get_id(), monto=monto).all()
     # convierto la lista obtenida a coleccion de json
     output = []
     for gasto in gastos:
@@ -98,7 +98,7 @@ def get_first_gasto_by_monto(current_user):
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
         gasto = Gasto.query.filter_by(monto=monto).first()
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
-        gasto = Gasto.query.filter_by(id_usuario=Usuario.get_id(), monto=monto).first()
+        gasto = Gasto.query.filter_by(id_usuario=current_user.get_id(), monto=monto).first()
     # Convierto el gasto traido a json
     output = {
         'monto': gasto.monto,
@@ -148,7 +148,7 @@ def get_all_gastos_by_tipo(current_user):
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
         gastos = Gasto.query.filter_by(tipo=tipo).all()
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
-        gastos = Gasto.query.filter_by(id_usuario=Usuario.get_id(), tipo=tipo).all()
+        gastos = Gasto.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).all()
     # convierto la lista obtenida a coleccion de json
     output = []
     for gasto in gastos:
@@ -171,7 +171,7 @@ def get_first_gasto_by_tipo(current_user):
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
         gasto = Gasto.query.filter_by(tipo=tipo).first()
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
-        gasto = Gasto.query.filter_by(id_usuario=Usuario.get_id(), tipo=tipo).first()
+        gasto = Gasto.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).first()
     # Convierto el gasto traido a json
     output = {
         'monto': gasto.monto,
