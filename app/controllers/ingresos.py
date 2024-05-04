@@ -34,7 +34,7 @@ def get_all_ingresos(current_user):
             'id_usuario': ingreso.id_usuario
         })
 
-    return jsonify({'ingresos': output})
+    return jsonify({'ingresos': output}), 200
 
 
 # add ingreso route
@@ -54,14 +54,16 @@ def add_ingreso(current_user):
     # Obtengo el id de usuario del token
     current_user: Usuario
     id_usuario = current_user.get_id()
-
+    operacion_exitosa = current_user.add_monto(float(monto))
     # Creo el ingreso
     ingreso = Ingreso(id_usuario, descripcion, monto, tipo, fecha)
     Ingreso.create(ingreso)
+    saldo_actual = current_user.get_saldo()
 
     return jsonify({
-        'message': 'Ingreso registrado exitosamente'
-    }), 200
+        'message': 'Ingreso registrado exitosamente',
+        'monto': saldo_actual
+    }), 201
 
 
 
@@ -85,7 +87,7 @@ def get_all_ingresos_by_monto(current_user):
             'tipo': ingreso.tipo,
             'id_usuario': ingreso.id_usuario
         })
-    return jsonify({'ingresos': output})
+    return jsonify({'ingresos': output}), 200
 
 
 
@@ -107,7 +109,7 @@ def get_first_ingreso_by_monto(current_user):
         'tipo': ingreso.tipo,
         'id_usuario': ingreso.id_usuario
     }
-    return jsonify({'ingreso': output})
+    return jsonify({'ingreso': output}), 200
 
 
 @bp.route('/get_all_between_fechas', methods=['GET'])
@@ -136,7 +138,7 @@ def get_all_ingresos_between_fechas(current_user):
             'tipo': ingreso.tipo,
             'id_usuario': ingreso.id_usuario
         })
-    return jsonify({'ingresos': output})
+    return jsonify({'ingresos': output}), 200
 
 
 @bp.route('/get_all_by_tipo', methods=['GET'])
@@ -159,7 +161,7 @@ def get_all_ingresos_by_tipo(current_user):
             'tipo': ingreso.tipo,
             'id_usuario': ingreso.id_usuario
         })
-    return jsonify({'ingresos': output})
+    return jsonify({'ingresos': output}), 200
 
 
 @bp.route('/get_first_by_tipo', methods=['GET'])
@@ -180,4 +182,4 @@ def get_first_ingreso_by_tipo(current_user):
         'tipo': ingreso.tipo,
         'id_usuario': ingreso.id_usuario
     }
-    return jsonify({'ingreso': output})
+    return jsonify({'ingreso': output}), 200

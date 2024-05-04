@@ -31,9 +31,29 @@ class Usuario(UserMixin, db.Model):
             self.imagen = imagen
         self.is_admin = is_admin
 
+    def get_saldo(self):
+        """Devuelve el saldo actual del usuario"""
+        return self.saldo_actual
+
     def add_imagen(self, imagen):
+        """Agrega la imagen al perfil del usuario"""
         self.imagen = imagen
         db.session.commit()
+
+    def substract_monto(self, unMonto: float) -> bool:
+        """Le quita a monto el valor traido por parametro y devuelve el nuevo monto. Si no se puede, no hace nada y devuelve 'None'"""
+        if unMonto > self.saldo_actual:
+            return False
+        else:
+            self.saldo_actual -= unMonto
+            db.session.commit()
+            return True
+
+    def add_monto(self, unMonto: float) -> float:
+        """Le suma a monto el valor traido por parametro y devuelve el nuevo monto"""
+        self.saldo_actual += unMonto
+        db.session.commit()
+        return True
 
     def __repr__(self):
         return '<Usuario {}>'.format(self.username)

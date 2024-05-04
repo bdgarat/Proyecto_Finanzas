@@ -18,11 +18,13 @@ class Gasto(db.Model):
     def __repr__(self):
         return f'Gasto ({self.monto}, {self.descripcion}, {self.id_usuario})'
 
-    def __init__(self, usuario, descripcion, monto, tipo):
+    def __init__(self, usuario, descripcion, monto, tipo, fecha: datetime = None):
         self.id_usuario = usuario
         self.descripcion = descripcion
         self.monto = monto
         self.tipo = tipo
+        if fecha:
+            self.fecha = fecha
 
     @classmethod
     def create(cls, gasto):

@@ -10,8 +10,7 @@ bp = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 @bp.route('/list', methods=['GET'])
 @token_required
 def get_all_users(current_user):
-    # querying the database
-    # for all the entries in it
+    """Devuelve un JSON con info de todos los usuarios"""
     current_user: Usuario
     if current_user.is_admin: # Si es admin, traigo el listado de todos los usuarios
         usuarios = Usuario.query.all()
@@ -35,4 +34,20 @@ def get_all_users(current_user):
             'is_admin': usuario.is_admin
         })
 
-    return jsonify({'usuarios': output})
+    return jsonify({'usuarios': output}), 200
+
+
+@bp.route('/whoami', methods=['GET'])
+@token_required
+def who_am_i(current_user):
+    """Muestra info del usuario logueado via JWT"""
+    current_user: Usuario
+    output = {
+        'username': current_user.username,
+        'email': current_user.email,
+        'saldo_actual': current_user.saldo_actual,
+        'created_on': current_user.created_on,
+        'last_updated_on': current_user.last_updated_on,
+        'is_admin': current_user.is_admin
+    }
+    return jsonify(output), 200

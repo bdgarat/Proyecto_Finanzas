@@ -34,7 +34,7 @@ def get_all_gastos(current_user):
             'id_usuario': gasto.id_usuario
         })
 
-    return jsonify({'gastos': output})
+    return jsonify({'gastos': output}), 200
 
 
 # add gasto route
@@ -54,14 +54,19 @@ def add_gasto(current_user):
     # Obtengo el id de usuario del token
     current_user: Usuario
     id_usuario = current_user.get_id()
+    operacion_exitosa = current_user.substract_monto(float(monto))
+    if not operacion_exitosa: return jsonify({
+        'message': 'Fondos insuficientes'
+    }), 403
 
     # Creo el gasto
     gasto = Gasto(id_usuario, descripcion, monto, tipo, fecha)
     Gasto.create(gasto)
-
+    saldo_actual = current_user.get_saldo()
     return jsonify({
-        'message': 'Gasto registrado exitosamente'
-    }), 200
+        'message': 'Gasto registrado exitosamente',
+        'monto': saldo_actual
+    }), 201
 
 
 
@@ -85,7 +90,7 @@ def get_all_gastos_by_monto(current_user):
             'tipo': gasto.tipo,
             'id_usuario': gasto.id_usuario
         })
-    return jsonify({'gastos': output})
+    return jsonify({'gastos': output}), 200
 
 
 
@@ -107,7 +112,7 @@ def get_first_gasto_by_monto(current_user):
         'tipo': gasto.tipo,
         'id_usuario': gasto.id_usuario
     }
-    return jsonify({'gasto': output})
+    return jsonify({'gasto': output}), 200
 
 
 @bp.route('/get_all_between_fechas', methods=['GET'])
@@ -136,7 +141,7 @@ def get_all_gastos_between_fechas(current_user):
             'tipo': gasto.tipo,
             'id_usuario': gasto.id_usuario
         })
-    return jsonify({'gastos': output})
+    return jsonify({'gastos': output}), 200
 
 
 @bp.route('/get_all_by_tipo', methods=['GET'])
@@ -159,7 +164,7 @@ def get_all_gastos_by_tipo(current_user):
             'tipo': gasto.tipo,
             'id_usuario': gasto.id_usuario
         })
-    return jsonify({'gastos': output})
+    return jsonify({'gastos': output}), 200
 
 
 @bp.route('/get_first_by_tipo', methods=['GET'])
@@ -180,4 +185,4 @@ def get_first_gasto_by_tipo(current_user):
         'tipo': gasto.tipo,
         'id_usuario': gasto.id_usuario
     }
-    return jsonify({'gasto': output})
+    return jsonify({'gasto': output}), 200

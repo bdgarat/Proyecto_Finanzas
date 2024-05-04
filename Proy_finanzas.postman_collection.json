@@ -19,7 +19,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEyNjI4fQ.1er6AVWspCQTDvqKuImEZvEEtVLhW6ZP_giuXEk2aJ8",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -59,7 +59,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEwODkxfQ.XlNI-6hCLdq-bbnfzfkeFXjuII20XtyUs5Tn_u9avUg",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -99,7 +99,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEwODkxfQ.XlNI-6hCLdq-bbnfzfkeFXjuII20XtyUs5Tn_u9avUg",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -139,7 +139,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEyOTI0fQ.CyijOSaBb9zuc4a8QZtN2cR6V6_YYRoX9v6mnXYIXCE",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -179,7 +179,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwNzk0Njk0fQ.HYlSnT-dVvw1xIw4dcuVDCgD0XwJphH5HFecUQxPP7k",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -219,7 +219,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEyOTI0fQ.CyijOSaBb9zuc4a8QZtN2cR6V6_YYRoX9v6mnXYIXCE",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -256,7 +256,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODA0MTc0fQ.ah5T28QyzEiiJzCqZoiUk0D_1OE_8n67fhdt37Z_kOg",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -301,7 +301,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEyNjI4fQ.1er6AVWspCQTDvqKuImEZvEEtVLhW6ZP_giuXEk2aJ8",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -341,7 +341,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEwODkxfQ.XlNI-6hCLdq-bbnfzfkeFXjuII20XtyUs5Tn_u9avUg",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -381,7 +381,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEwODkxfQ.XlNI-6hCLdq-bbnfzfkeFXjuII20XtyUs5Tn_u9avUg",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -421,7 +421,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEyOTI0fQ.CyijOSaBb9zuc4a8QZtN2cR6V6_YYRoX9v6mnXYIXCE",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -461,7 +461,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwNzk0Njk0fQ.HYlSnT-dVvw1xIw4dcuVDCgD0XwJphH5HFecUQxPP7k",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -501,7 +501,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODEyOTI0fQ.CyijOSaBb9zuc4a8QZtN2cR6V6_YYRoX9v6mnXYIXCE",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -538,13 +538,13 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODA0MTc0fQ.ah5T28QyzEiiJzCqZoiUk0D_1OE_8n67fhdt37Z_kOg",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de ingreso\",\r\n    \"monto\": 200.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 200.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -612,9 +612,41 @@
 				},
 				{
 					"name": "Iniciar sesion",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save JWT Token\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"JWT_Token\", jsonData.token);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"4321\"\r\n}",
@@ -653,7 +685,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwNzk4NDE4fQ.Q1_dpb58iZNAGiVUZBoyfih9Anjq2vO8lx9_wC5mGCs",
+								"value": "{{JWT_Token}}",
 								"type": "text"
 							}
 						],
@@ -673,8 +705,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Consultar usuario logueado",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{JWT_Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/whoami",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"whoami"
+							]
+						}
+					},
+					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "JWT_Token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODA0MTc0fQ.ah5T28QyzEiiJzCqZoiUk0D_1OE_8n67fhdt37Z_kOg"
+		},
+		{
+			"key": "JWT_Token",
+			"value": ""
 		}
 	]
 }
