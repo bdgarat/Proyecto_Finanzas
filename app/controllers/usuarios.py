@@ -1,3 +1,5 @@
+from flask_cors import cross_origin
+
 from app import token_required
 from flask import Blueprint, jsonify
 
@@ -8,6 +10,7 @@ bp = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 # User Database Route
 # this route sends back list of users
 @bp.route('/list', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_users(current_user):
     """Devuelve un JSON con info de todos los usuarios"""
@@ -38,6 +41,7 @@ def get_all_users(current_user):
 
 
 @bp.route('/whoami', methods=['GET'])
+@cross_origin()
 @token_required
 def who_am_i(current_user):
     """Muestra info del usuario logueado via JWT"""

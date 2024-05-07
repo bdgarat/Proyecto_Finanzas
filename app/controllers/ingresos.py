@@ -1,4 +1,5 @@
 import jwt
+from flask_cors import cross_origin
 
 from app import token_required
 from flask import Blueprint, jsonify, request
@@ -12,6 +13,7 @@ bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
 # User Database Route
 # this route sends back list of users
 @bp.route('/list', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_ingresos(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -39,6 +41,7 @@ def get_all_ingresos(current_user):
 
 # add ingreso route
 @bp.route('/add', methods=['POST'])
+@cross_origin()
 @token_required
 def add_ingreso(current_user):
 
@@ -68,6 +71,7 @@ def add_ingreso(current_user):
 
 
 @bp.route('/get_all_by_monto', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_ingresos_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -92,6 +96,7 @@ def get_all_ingresos_by_monto(current_user):
 
 
 @bp.route('/get_first_by_monto', methods=['GET'])
+@cross_origin()
 @token_required
 def get_first_ingreso_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -113,6 +118,7 @@ def get_first_ingreso_by_monto(current_user):
 
 
 @bp.route('/get_all_between_fechas', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_ingresos_between_fechas(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -142,6 +148,7 @@ def get_all_ingresos_between_fechas(current_user):
 
 
 @bp.route('/get_all_by_tipo', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_ingresos_by_tipo(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -165,6 +172,7 @@ def get_all_ingresos_by_tipo(current_user):
 
 
 @bp.route('/get_first_by_tipo', methods=['GET'])
+@cross_origin()
 @token_required
 def get_first_ingreso_by_tipo(current_user):
     # Me fijo si el usuario logueado (token) es admin

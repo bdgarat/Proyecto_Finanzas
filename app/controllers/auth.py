@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify
 import jwt
 import datetime
+
+from flask_cors import cross_origin
+
 from app import app
 
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -10,6 +13,7 @@ from app.models.usuarios import Usuario
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 # route for logging user in
 @bp.route('/login', methods=['POST'])
+@cross_origin()
 def user_login():
     # creates dictionary of form data
     username = request.json["username"]
@@ -45,6 +49,7 @@ def user_login():
 
 # signup route
 @bp.route('/signup', methods=['POST'])
+@cross_origin()
 def user_signup():
 
     username = request.json["username"]

@@ -1,4 +1,5 @@
 import jwt
+from flask_cors import cross_origin
 
 from app import token_required
 from flask import Blueprint, jsonify, request
@@ -12,6 +13,7 @@ bp = Blueprint('gastos', __name__, url_prefix='/gastos')
 # User Database Route
 # this route sends back list of users
 @bp.route('/list', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_gastos(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -39,6 +41,7 @@ def get_all_gastos(current_user):
 
 # add gasto route
 @bp.route('/add', methods=['POST'])
+@cross_origin()
 @token_required
 def add_gasto(current_user):
 
@@ -71,6 +74,7 @@ def add_gasto(current_user):
 
 
 @bp.route('/get_all_by_monto', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_gastos_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -95,6 +99,7 @@ def get_all_gastos_by_monto(current_user):
 
 
 @bp.route('/get_first_by_monto', methods=['GET'])
+@cross_origin()
 @token_required
 def get_first_gasto_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -116,6 +121,7 @@ def get_first_gasto_by_monto(current_user):
 
 
 @bp.route('/get_all_between_fechas', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_gastos_between_fechas(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -145,6 +151,7 @@ def get_all_gastos_between_fechas(current_user):
 
 
 @bp.route('/get_all_by_tipo', methods=['GET'])
+@cross_origin()
 @token_required
 def get_all_gastos_by_tipo(current_user):
     # Me fijo si el usuario logueado (token) es admin
@@ -168,6 +175,7 @@ def get_all_gastos_by_tipo(current_user):
 
 
 @bp.route('/get_first_by_tipo', methods=['GET'])
+@cross_origin()
 @token_required
 def get_first_gasto_by_tipo(current_user):
     # Me fijo si el usuario logueado (token) es admin

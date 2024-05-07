@@ -2,6 +2,7 @@ from functools import wraps
 
 import jwt
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 
 from app.db import db
 from app.db_config import db_config
@@ -12,10 +13,12 @@ from flask_migrate import Migrate
 # Commitear los cambios de modelos a db: "flask db upgrade"
 
 app = Flask(__name__)
+CORS(app)
 app.config[
     "SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{db_config.get('USER')}:{db_config.get('PASSWORD')}@{db_config.get('HOST')}/{db_config.get('DATABASE')}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "super-secret" # CAMBIAR A ALGO SEGURO EN PRODUCCION!!!
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 db.init_app(app)
 
@@ -48,6 +51,7 @@ def token_required(f):
     return decorated
 
 @app.route("/")
+@cross_origin()
 # @login_required
 def home():
     return ("Eureka!")
