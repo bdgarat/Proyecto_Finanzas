@@ -42,9 +42,9 @@
     margin-top:8px;
     margin-bottom:20px
 }
-input{
-    width: 45%;
-    height: 30px;
+.input-login{
+    width: 55%;
+    height: 38px;
     background: darkgray;
     border-radius: 5px;
 }

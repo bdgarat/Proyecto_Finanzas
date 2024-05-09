@@ -1,6 +1,6 @@
 import './loginPage.css';
-import {useState, useEffect} from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import {useState} from 'react';
+import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 function LoginPage(){
     const [name,setName] = useState('');
@@ -62,11 +62,11 @@ function LoginPage(){
                 className="form"
                 onSubmit={handleSubmit}
                 >
-                    <input type="text" name="username" onChange={e=>handleName(e) }></input>
-                    <input type="password" name="password" onChange={e=>handlePass(e)}></input>
+                    <input className="input-login" type="text" name="username" onChange={e=>handleName(e) }></input>
+                    <input className="input-login" type="password" name="password" onChange={e=>handlePass(e)}></input>
                     <div className="contenedor-botones">
                     <button className="boton-login" type="submit" variant="primary" onClick={obtenerPermiso} >Login</button>
-                    <button type="" className="boton-login">Sing Up</button>
+                    <button onClick={llevarARegistros} className="boton-login">Sing Up</button>
                     </div>
                 </form>
                 {error && <p id="login-mensaje">Los datos ingresados no son validos</p>}
