@@ -30,12 +30,13 @@ function Register() {
         email:values.email,
         password:values.password,
       }
-    }).then(()=>goToLogin)
+    }).then(()=>goToLogin())
     .catch((err)=>console.log(err))
   }
   function goToLogin()
   {
-    navigate('/') 
+    console.log("estoy en goToLogin");
+    navigate('/'); 
   }
   return (
     <div className="container">
