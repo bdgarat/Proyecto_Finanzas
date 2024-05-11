@@ -1,6 +1,6 @@
 db_config = {
     "USER": "root",
-    "PASSWORD": "1234",
+    "PASSWORD": "",
     "HOST": "localhost",
     "DATABASE": "proyecto_finanzas_develop"
 }
