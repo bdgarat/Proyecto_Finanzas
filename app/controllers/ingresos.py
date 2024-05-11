@@ -192,7 +192,10 @@ def add_ingreso(current_user):
     ingreso = Ingreso(id_usuario, descripcion, monto, tipo, fecha)
 
     # ---------- INICIO DE VALIDACIONES ---------------------
-
+    if not monto or not tipo:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     if len(descripcion) > ingreso.get_descripcion_characters_limit() or len(tipo) > ingreso.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',

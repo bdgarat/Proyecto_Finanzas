@@ -191,10 +191,15 @@ def add_gasto(current_user):
         'message': 'Fondos insuficientes'
     }), 403
 
-    # ---------- FIN DE VALIDACIONES ---------------------
-
     # Creo el gasto
     gasto = Gasto(id_usuario, descripcion, monto, tipo, fecha)
+
+    # ---------- FIN DE VALIDACIONES ---------------------
+
+    if not monto or not tipo:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     if len(descripcion) > gasto.get_descripcion_characters_limit() or len(tipo) > gasto.get_tipo_characters_limit():   # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',

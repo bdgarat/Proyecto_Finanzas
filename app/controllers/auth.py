@@ -66,10 +66,13 @@ def user_signup():
         usuario = Usuario(username = username, saldo_actual = saldo_actual, password_hash = generate_password_hash(password), email = email)
 
         # ---------- INICIO DE VALIDACIONES ---------------------
-
+        if not username or not saldo_actual or not password or not email:
+            return jsonify({
+                'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+            }), 403
         if len(username) > usuario.get_username_characters_limit() or len(email) > usuario.get_email_characters_limit(): # 'superan los caracteres maximos permitidos'
             return jsonify({
-                'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
+                'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
                 'username_max_characters': f"{usuario.get_username_characters_limit()}",
                 'email_max_characters': f"{usuario.get_email_characters_limit()}"
             }), 403
