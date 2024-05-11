@@ -38,28 +38,46 @@ function Register() {
     navigate('/') 
   }
   return (
-    <div>
-      <h1>Formulario</h1>
-      <form onSubmit={handleRegister}>
-        <label> name <input name="username" type="text" required value={values.username} 
-        placeholder="ingrese su nombre" onChange={handleInputChange}/></label>
+    <div className="container">
+     <div className="container-formulario">
+     <h1 className="title-formulario">Crear usuario</h1>
+      <form className="formulario" onSubmit={handleRegister}>
+       
+       <div className='entrada'>
+          <label className='label-form' > Name  </label>
+          <input className='input-form' name="username" type="text" required value={values.username} 
+          placeholder="ingrese su nombre" onChange={handleInputChange}/>
+       </div>
         
-        <label> Saldo Actual <input name="saldoActual" type="number" value={values.saldoActual} 
-        placeholder='ingrese su saldo actual ' onChange={handleInputChange}/></label>
+        <div className='entrada'>
+          <label className='label-form'> Saldo Actual</label>
+          <input className='input-form' name="saldoActual" type="number" min="0" value={values.saldoActual} 
+          placeholder='600 ' onChange={handleInputChange}/>
+        </div>
         
-        <label>email<input type="email" name="email" value={values.email} required 
-        onChange={handleInputChange}/></label>
+        <div className='entrada'>
+          <label className='label-form'>email</label>
+          <input className='input-form' type="email" name="email" value={values.email} required 
+          onChange={handleInputChange}/>
+        </div>
+
+        <div className='entrada'> 
+          <label className='label-form'>password</label>
+          <input className='input-form' type="password" name="password" value={values.password} required
+          onChange={handleInputChange}/>
+        </div>
+        <div className='entrada'>
+          <label className='label-from'>repeat password</label>
+          <input className='input-form' type="password" value={values.repeatPassword} required
+        name='repeatPassword' onChange={handleInputChange}/>
+        </div>
         
-        <label>password<input type="password" name="password" value={values.password} required
-         onChange={handleInputChange}/></label>
-        
-        <label>repeat password<input type="password" value={values.repeatPassword} required
-        name='repeatPassword' onChange={handleInputChange}/></label>
-        
-        <button type="submit">register</button>
-        
-        <button onClick={goToLogin}>atras</button>
+      <div className='button-form-usuario'>
+         <button className='button-f' type="submit">Registrarse</button>
+         <button className='button-f' onClick={goToLogin}>Cancelar</button>
+      </div>
       </form>
+     </div>
     </div>
   )
 }
