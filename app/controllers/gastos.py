@@ -39,40 +39,6 @@ def get_all_gastos(current_user):
     return jsonify({'gastos': output}), 200
 
 
-# add gasto route
-@bp.route('/add', methods=['POST'])
-@cross_origin()
-@token_required
-def add_gasto(current_user):
-
-    # Obtengo los datos necesarios para crear el gasto desde json enviado en el body
-    descripcion = request.json["descripcion"]
-    monto = request.json["monto"]
-    tipo = request.json["tipo"]
-    try:
-        fecha = request.json["fecha"]
-    except KeyError:
-        fecha = None
-
-    # Obtengo el id de usuario del token
-    current_user: Usuario
-    id_usuario = current_user.get_id()
-    operacion_exitosa = current_user.substract_monto(float(monto))
-    if not operacion_exitosa: return jsonify({
-        'message': 'Fondos insuficientes'
-    }), 403
-
-    # Creo el gasto
-    gasto = Gasto(id_usuario, descripcion, monto, tipo, fecha)
-    Gasto.create(gasto)
-    saldo_actual = current_user.get_saldo()
-    return jsonify({
-        'message': 'Gasto registrado exitosamente',
-        'monto': saldo_actual
-    }), 201
-
-
-
 @bp.route('/get_all_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
@@ -194,3 +160,63 @@ def get_first_gasto_by_tipo(current_user):
         'id_usuario': gasto.id_usuario
     }
     return jsonify({'gasto': output}), 200
+
+
+# add gasto route
+@bp.route('/add', methods=['POST'])
+@cross_origin()
+@token_required
+def add_gasto(current_user):
+
+    # Obtengo los datos necesarios para crear el gasto desde json enviado en el body
+    descripcion = request.json["descripcion"]
+    monto = request.json["monto"]
+    tipo = request.json["tipo"]
+    try:
+        fecha = request.json["fecha"]
+    except KeyError:
+        fecha = None
+
+    # Obtengo el id de usuario del token
+    current_user: Usuario
+    id_usuario = current_user.get_id()
+    try:
+        operacion_exitosa = current_user.substract_monto(float(monto))
+    except ValueError:
+        return jsonify({
+            'message': "Valor invalido en 'monto'"  # 'No se permite crear gastos con monto invalido'
+        }), 403
+
+    if not operacion_exitosa: return jsonify({
+        'message': 'Fondos insuficientes'
+    }), 403
+
+    # ---------- FIN DE VALIDACIONES ---------------------
+
+    # Creo el gasto
+    gasto = Gasto(id_usuario, descripcion, monto, tipo, fecha)
+    if len(descripcion) > gasto.get_descripcion_characters_limit() or len(tipo) > gasto.get_tipo_characters_limit():   # 'superan los caracteres maximos permitidos'
+        return jsonify({
+            'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
+            'descripcion_max_characters': f"{gasto.get_descripcion_characters_limit()}",
+            'tipo_max_characters': f"{gasto.get_tipo_characters_limit()}"
+        }), 403
+    try:
+        if float(monto) < 0.0:
+            return jsonify({
+                'message': 'monto negativo'  # 'No se permite crear gastos con monto negativo'
+            }), 403
+    except ValueError:
+        return jsonify({
+            'message': "Valor invalido en 'monto'"  # 'No se permite crear gastos con monto invalido'
+        }), 403
+
+    # ---------- FIN DE VALIDACIONES ---------------------
+
+    # Cargo el gasto en la base de datos
+    Gasto.create(gasto)
+    saldo_actual = current_user.get_saldo()
+    return jsonify({
+        'message': 'Gasto registrado exitosamente',
+        'monto': saldo_actual
+    }), 201

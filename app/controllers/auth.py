@@ -9,6 +9,7 @@ from app import app
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.models.usuarios import Usuario
+from app.utils.email_validation import validar_email
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 # route for logging user in
@@ -63,13 +64,38 @@ def user_signup():
     if not usuario:
         # database ORM object
         usuario = Usuario(username = username, saldo_actual = saldo_actual, password_hash = generate_password_hash(password), email = email)
-        Usuario.create(usuario)
 
+        # ---------- INICIO DE VALIDACIONES ---------------------
+
+        if len(username) > usuario.get_username_characters_limit() or len(email) > usuario.get_email_characters_limit(): # 'superan los caracteres maximos permitidos'
+            return jsonify({
+                'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
+                'username_max_characters': f"{usuario.get_username_characters_limit()}",
+                'email_max_characters': f"{usuario.get_email_characters_limit()}"
+            }), 403
+        if not validar_email(email):
+            return jsonify({
+                'message': 'Email invalido'  # 'email no cumple con sintaxis'
+            }), 403
+        try:
+            if float(saldo_actual) < 0.0:
+                return jsonify({
+                    'message': 'Saldo negativo'  # 'No se permite crear cuentas con saldo negativo'
+                }), 403
+        except ValueError:
+            return jsonify({
+                'message': "Valor invalido en 'sueldo_actual'"  # 'No se permite crear cuentas con saldo invalido'
+            }), 403
+
+        # ---------- FIN DE VALIDACIONES ---------------------
+
+        # Agrego el usuario en la base de datos
+        Usuario.create(usuario)
         return jsonify({
-            'message': 'Usuario registrado correctamente'  # 'Usuario no encontrado'
+            'message': 'Usuario registrado correctamente'  # 'Usuario creado exitosamente en la base de datos'
         }), 201
     else:
         # returns 202 if user already exists
         return jsonify({
-            'message': 'Usuario existente'  # 'Usuario ya creado'
+            'message': 'Usuario existente'  # 'Usuario ya existe en la base de datos'
         }), 202

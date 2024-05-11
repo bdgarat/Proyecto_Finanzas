@@ -39,37 +39,6 @@ def get_all_ingresos(current_user):
     return jsonify({'ingresos': output}), 200
 
 
-# add ingreso route
-@bp.route('/add', methods=['POST'])
-@cross_origin()
-@token_required
-def add_ingreso(current_user):
-
-    # Obtengo los datos necesarios para crear el ingreso desde json enviado en el body
-    descripcion = request.json["descripcion"]
-    monto = request.json["monto"]
-    tipo = request.json["tipo"]
-    try:
-        fecha = request.json["fecha"]
-    except KeyError:
-        fecha = None
-
-    # Obtengo el id de usuario del token
-    current_user: Usuario
-    id_usuario = current_user.get_id()
-    operacion_exitosa = current_user.add_monto(float(monto))
-    # Creo el ingreso
-    ingreso = Ingreso(id_usuario, descripcion, monto, tipo, fecha)
-    Ingreso.create(ingreso)
-    saldo_actual = current_user.get_saldo()
-
-    return jsonify({
-        'message': 'Ingreso registrado exitosamente',
-        'monto': saldo_actual
-    }), 201
-
-
-
 @bp.route('/get_all_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
@@ -191,3 +160,62 @@ def get_first_ingreso_by_tipo(current_user):
         'id_usuario': ingreso.id_usuario
     }
     return jsonify({'ingreso': output}), 200
+
+
+
+# add ingreso route
+@bp.route('/add', methods=['POST'])
+@cross_origin()
+@token_required
+def add_ingreso(current_user):
+
+    # Obtengo los datos necesarios para crear el ingreso desde json enviado en el body
+    descripcion = request.json["descripcion"]
+    monto = request.json["monto"]
+    tipo = request.json["tipo"]
+    try:
+        fecha = request.json["fecha"]
+    except KeyError:
+        fecha = None
+
+    # Obtengo el id de usuario del token
+    current_user: Usuario
+    id_usuario = current_user.get_id()
+    try:
+        operacion_exitosa = current_user.add_monto(float(monto))
+    except ValueError:
+        return jsonify({
+            'message': "Valor invalido en 'monto'"  # 'No se permite crear ingresos con monto invalido'
+        }), 403
+
+    # Creo el ingreso
+    ingreso = Ingreso(id_usuario, descripcion, monto, tipo, fecha)
+
+    # ---------- INICIO DE VALIDACIONES ---------------------
+
+    if len(descripcion) > ingreso.get_descripcion_characters_limit() or len(tipo) > ingreso.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
+        return jsonify({
+            'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
+            'descripcion_max_characters': f"{ingreso.get_descripcion_characters_limit()}",
+            'tipo_max_characters': f"{ingreso.get_tipo_characters_limit()}"
+        }), 403
+    try:
+        if float(monto) < 0.0:
+            return jsonify({
+                'message': 'monto negativo'  # 'No se permite crear ingresos con monto negativo'
+            }), 403
+    except ValueError:
+        return jsonify({
+            'message': "Valor invalido en 'monto'"  # 'No se permite crear ingresos con monto invalido'
+        }), 403
+
+    # ---------- FIN DE VALIDACIONES ---------------------
+
+    # Cargo el ingreso en la base de datos
+    Ingreso.create(ingreso)
+    saldo_actual = current_user.get_saldo()
+
+    return jsonify({
+        'message': 'Ingreso registrado exitosamente',
+        'monto': saldo_actual
+    }), 201
