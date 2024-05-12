@@ -3,6 +3,7 @@ from flask_cors import cross_origin
 
 from app import token_required
 from flask import Blueprint, jsonify, request
+from sqlalchemy import and_
 
 from app.models.gastos import Gasto
 from app.models.usuarios import Usuario
@@ -15,7 +16,7 @@ bp = Blueprint('gastos', __name__, url_prefix='/gastos')
 @bp.route('/list', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all_gastos(current_user):
+def get_all(current_user):
     # Me fijo si el usuario logueado (token) es admin
     current_user: Usuario
     if current_user.is_admin: # Si es admin, traigo los gastos de todos los usuarios
@@ -42,7 +43,7 @@ def get_all_gastos(current_user):
 @bp.route('/get_all_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all_gastos_by_monto(current_user):
+def get_all_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
     monto = request.json['value']
     current_user: Usuario
@@ -67,7 +68,7 @@ def get_all_gastos_by_monto(current_user):
 @bp.route('/get_first_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
-def get_first_gasto_by_monto(current_user):
+def get_first_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
     monto = request.json['value']
     current_user: Usuario
@@ -89,19 +90,19 @@ def get_first_gasto_by_monto(current_user):
 @bp.route('/get_all_between_fechas', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all_gastos_between_fechas(current_user):
+def get_all_between_fechas(current_user):
     # Me fijo si el usuario logueado (token) es admin
     fecha_inicio = request.json['fecha_inicio']
     fecha_fin = request.json['fecha_fin']
     current_user: Usuario
-    if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
+    if current_user.is_admin:  # Si es admin, traigo los elementos de todos los usuarios
         gastos = Gasto.query.filter(
-            Gasto.fecha.between(fecha_inicio, fecha_fin)
+            Gasto.fecha >= fecha_inicio, Gasto.fecha <= fecha_fin
         ).all()
-    else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
+    else:  # Si NO es admin, traigo solo los elementos que le pertenecen al usuario logueado
         gastos = Gasto.query.filter(
-            Gasto.id_usuario == Usuario.get_id(),
-            Gasto.fecha.between(fecha_inicio, fecha_fin)
+            Gasto.id_usuario == current_user.get_id(),
+            and_(Gasto.fecha >= fecha_inicio, Gasto.fecha <= fecha_fin)
         ).all()
     # convierto la lista obtenida a coleccion de json
     output = []
@@ -119,7 +120,7 @@ def get_all_gastos_between_fechas(current_user):
 @bp.route('/get_all_by_tipo', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all_gastos_by_tipo(current_user):
+def get_all_by_tipo(current_user):
     # Me fijo si el usuario logueado (token) es admin
     tipo = request.json['value']
     current_user: Usuario
@@ -161,14 +162,12 @@ def get_first_gasto_by_tipo(current_user):
     }
     return jsonify({'gasto': output}), 200
 
-
-# add gasto route
-@bp.route('/add', methods=['POST'])
+@bp.route('/add', methods=['PUT'])
 @cross_origin()
 @token_required
-def add_gasto(current_user):
+def add(current_user):
 
-    # Obtengo los datos necesarios para crear el gasto desde json enviado en el body
+    # Obtengo los datos necesarios para crear el elemento desde json enviado en el body
     descripcion = request.json["descripcion"]
     monto = request.json["monto"]
     tipo = request.json["tipo"]
@@ -180,32 +179,63 @@ def add_gasto(current_user):
     # Obtengo el id de usuario del token
     current_user: Usuario
     id_usuario = current_user.get_id()
+
+    # ---------- INICIO DE VALIDACIONES ---------------------
+
     try:
-        operacion_exitosa = current_user.substract_monto(float(monto))
+        if float(monto) < 0.0:
+            return jsonify({
+                'message': 'monto negativo'  # 'No se permite crear elementos con monto negativo'
+            }), 403
     except ValueError:
         return jsonify({
-            'message': "Valor invalido en 'monto'"  # 'No se permite crear gastos con monto invalido'
+            'message': "Valor invalido en 'monto'"  # 'No se permite crear elementos con monto invalido'
         }), 403
 
-    if not operacion_exitosa: return jsonify({
-        'message': 'Fondos insuficientes'
-    }), 403
-
-    # Creo el gasto
+    # Creo el elemento
     gasto = Gasto(id_usuario, descripcion, monto, tipo, fecha)
-
-    # ---------- FIN DE VALIDACIONES ---------------------
 
     if not monto or not tipo:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
-    if len(descripcion) > gasto.get_descripcion_characters_limit() or len(tipo) > gasto.get_tipo_characters_limit():   # 'superan los caracteres maximos permitidos'
+    if len(descripcion) > gasto.get_descripcion_characters_limit() or len(tipo) > gasto.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{gasto.get_descripcion_characters_limit()}",
             'tipo_max_characters': f"{gasto.get_tipo_characters_limit()}"
         }), 403
+
+    # ---------- FIN DE VALIDACIONES ---------------------
+
+    # Cargo el elemento en la base de datos
+    Gasto.create(gasto)
+
+    return jsonify({
+        'message': 'Gasto registrado exitosamente'
+    }), 201
+
+@bp.route('/update', methods=['POST'])
+@cross_origin()
+@token_required
+def update(current_user):
+
+    # Obtengo los datos necesarios para actualizar el elemento desde json enviado en el body
+    id_gasto = request.json["id"]
+    descripcion = request.json["descripcion"]
+    monto = request.json["monto"]
+    tipo = request.json["tipo"]
+    try:
+        fecha = request.json["fecha"]
+    except KeyError:
+        fecha = None
+
+    # Obtengo el id de usuario del token
+    current_user: Usuario
+    id_usuario = current_user.get_id()
+
+    # ---------- INICIO DE VALIDACIONES ---------------------
+
     try:
         if float(monto) < 0.0:
             return jsonify({
@@ -216,12 +246,59 @@ def add_gasto(current_user):
             'message': "Valor invalido en 'monto'"  # 'No se permite crear gastos con monto invalido'
         }), 403
 
+    # Busco el elemento
+    gasto = Gasto.query.filter_by(id=id_gasto).first()
+
+    if not (gasto and (current_user.is_admin or gasto.id_usuario != id_usuario)):
+        return jsonify({
+            'message': 'No se ha encontrado el elemento'
+        }), 404
+
+    if not monto or not tipo:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
+    if len(descripcion) > gasto.get_descripcion_characters_limit() or len(tipo) > gasto.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
+        return jsonify({
+            'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
+            'descripcion_max_characters': f"{gasto.get_descripcion_characters_limit()}",
+            'tipo_max_characters': f"{gasto.get_tipo_characters_limit()}"
+        }), 403
+
     # ---------- FIN DE VALIDACIONES ---------------------
 
-    # Cargo el gasto en la base de datos
-    Gasto.create(gasto)
-    saldo_actual = current_user.get_saldo()
+    # Actualizo los valores del elemento
+    gasto.descripcion = descripcion
+    gasto.monto = monto
+    gasto.tipo = tipo
+    gasto.fecha = fecha
+
+    # Actualizo el elemento en la base de datos
+    gasto.update()
+
     return jsonify({
-        'message': 'Gasto registrado exitosamente',
-        'monto': saldo_actual
-    }), 201
+        'message': 'Gasto actualizado exitosamente'
+    }), 200
+
+@bp.route('/delete', methods=['DELETE'])
+@cross_origin()
+@token_required
+def delete(current_user):
+    # Obtengo los datos necesarios para eliminar el elemento desde json enviado en el body
+    id_gasto = request.json["id"]
+
+    # Obtengo el id de usuario del token
+    current_user: Usuario
+    id_usuario = current_user.get_id()
+
+    gasto = Gasto.query.filter_by(id=id_gasto).first()
+
+    if not (gasto and (current_user.is_admin or gasto.id_usuario != id_usuario)):
+        return jsonify({
+            'message': 'No se ha encontrado el elemento'
+        }), 404
+
+    gasto.delete()
+    return jsonify({
+        'message': 'Elemento eliminado exitosamente'
+    }), 200

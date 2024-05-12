@@ -11,6 +11,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.models.usuarios import Usuario
 from app.utils.email_validation import validar_email
 
+from app import config as cfg
+
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 # route for logging user in
 @bp.route('/login', methods=['POST'])
@@ -34,6 +36,16 @@ def user_login():
             'message': 'Username o password invalidos' # 'Usuario no encontrado'
         }), 401 # Siempre se envia la misma respuesta ante 401 por motivos de ciberseguridad
 
+    if not usuario.is_verified:
+        return jsonify({
+            'message': 'Usuario no validado'
+        }), 403
+
+    """if usuario.is_deleted:
+        return jsonify({
+            'message': 'Usuario eliminado'
+        }), 403"""
+
     if check_password_hash(usuario.password_hash, password):
         # generates the JWT Token
         token = jwt.encode({
@@ -54,7 +66,6 @@ def user_login():
 def user_signup():
 
     username = request.json["username"]
-    saldo_actual = request.json["saldo_actual"]
     password = request.json["password"]
     email = request.json["email"]
 
@@ -63,10 +74,11 @@ def user_signup():
 
     if not usuario:
         # database ORM object
-        usuario = Usuario(username = username, saldo_actual = saldo_actual, password_hash = generate_password_hash(password), email = email)
+        verified_on_creation = not cfg.EMAIL_VERIFICATION # Si no se verifica email, se asume verificacion correcta
+        usuario = Usuario(username = username, password_hash = generate_password_hash(password), email = email, is_verified=verified_on_creation)
 
         # ---------- INICIO DE VALIDACIONES ---------------------
-        if not username or not saldo_actual or not password or not email:
+        if not username or not password or not email:
             return jsonify({
                 'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
             }), 403
@@ -79,15 +91,6 @@ def user_signup():
         if not validar_email(email):
             return jsonify({
                 'message': 'Email invalido'  # 'email no cumple con sintaxis'
-            }), 403
-        try:
-            if float(saldo_actual) < 0.0:
-                return jsonify({
-                    'message': 'Saldo negativo'  # 'No se permite crear cuentas con saldo negativo'
-                }), 403
-        except ValueError:
-            return jsonify({
-                'message': "Valor invalido en 'sueldo_actual'"  # 'No se permite crear cuentas con saldo invalido'
             }), 403
 
         # ---------- FIN DE VALIDACIONES ---------------------
