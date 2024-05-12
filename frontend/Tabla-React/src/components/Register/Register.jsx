@@ -6,10 +6,13 @@ function Register() {
   const navigate = new useNavigate();
   const [values,setValues]=useState({
     username:"",
-    saldoActual:0,
     email:"",
     password:"",
     repeatPassword:""
+  })
+  const [conditions,setConditions]=useState({
+    igualEmail:false,
+    igualPassword:false,
   })
   const handleInputChange = (event)=>{
     const {name,value}= event.target;
@@ -26,7 +29,6 @@ function Register() {
       url:"http://127.0.0.1:5000/auth/signup",
       data:{
         username:values.username,
-        saldo_actual:values.saldoActual,
         email:values.email,
         password:values.password,
       }
@@ -37,6 +39,33 @@ function Register() {
   {
     console.log("estoy en goToLogin");
     navigate('/'); 
+  } 
+  function equalsEmails(e){
+    if(e.target.value != values.email)
+      {
+        setConditions({
+          igualEmail:true
+        })
+      }
+      else{
+        setConditions({
+          igualEmail:false
+        })
+      }
+  }
+
+  function equalsPassword(e){
+    if(e.target.value != values.password)
+      {
+        setConditions({
+          igualPassword:true
+        })
+      }
+      else{
+        setConditions({
+          igualPassword:false
+        })
+      }
   }
   return (
     <div className="container">
@@ -51,17 +80,17 @@ function Register() {
        </div>
         
         <div className='entrada'>
-          <label className='label-form'> Saldo Actual</label>
-          <input className='input-form' name="saldoActual" type="number" min="0" value={values.saldoActual} 
-          placeholder='600 ' onChange={handleInputChange}/>
-        </div>
-        
-        <div className='entrada'>
           <label className='label-form'>email</label>
           <input className='input-form' type="email" name="email" value={values.email} required 
           onChange={handleInputChange}/>
         </div>
 
+        <div className='entrada'>
+          <label className='label-form'>repeat email</label>
+          <input className='input-form' type="email" name="repeat-email" required 
+          onChange={equalsEmails}/>
+        </div>
+        {conditions.igualEmail && <p className="alert-mensaje">Los emails ingresados no son iguales</p>}
         <div className='entrada'> 
           <label className='label-form'>password</label>
           <input className='input-form' type="password" name="password" value={values.password} required
@@ -69,9 +98,10 @@ function Register() {
         </div>
         <div className='entrada'>
           <label className='label-from'>repeat password</label>
-          <input className='input-form' type="password" value={values.repeatPassword} required
-        name='repeatPassword' onChange={handleInputChange}/>
+          <input className='input-form' type="password" required
+        name='repeatPassword' onChange={equalsPassword}/>
         </div>
+        {conditions.igualPassword && <p className="alert-mensaje">Las contraseñas ingresadas no son iguales</p>}
         
       <div className='button-form-usuario'>
          <button className='button-f' type="submit">Registrarse</button>
