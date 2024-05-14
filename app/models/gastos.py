@@ -10,6 +10,7 @@ class Gasto(db.Model):
     _descripcion_char_limit = 256
     _tipo_char_limit = 32
 
+<<<<<<< HEAD
     _id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
     _descripcion: so.Mapped[str] = so.mapped_column(sa.String(_descripcion_char_limit))
     _fecha: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now())
@@ -20,6 +21,17 @@ class Gasto(db.Model):
     _tipo: so.Mapped[str] = so.mapped_column(sa.String(_tipo_char_limit))
     _id_usuario: so.Mapped[int] = so.mapped_column(sa.ForeignKey("usuarios.id"))
     # _is_deleted: so.Mapped[bool] = so.mapped_column(sa.Boolean)
+=======
+    id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
+    descripcion: so.Mapped[str] = so.mapped_column(sa.String(_descripcion_char_limit))
+    fecha: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now())
+    created_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now())
+    last_updated_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now(),
+                                                            server_onupdate=db.func.now())
+    monto: so.Mapped[float] = so.mapped_column(sa.Float)
+    tipo: so.Mapped[str] = so.mapped_column(sa.String(_tipo_char_limit))
+    id_usuario: so.Mapped[int] = so.mapped_column(sa.ForeignKey("usuarios.id"))
+>>>>>>> develop
 
     def __repr__(self):
         return f'Gasto ({self.monto}, {self.descripcion}, {self.id_usuario})'
@@ -30,11 +42,19 @@ class Gasto(db.Model):
         self._monto = monto
         self._tipo = tipo
         if fecha:
+<<<<<<< HEAD
             self._fecha = fecha
         else:
             self._fecha = db.func.now()
         self._created_on = db.func.now()
         self._last_updated_on = db.func.now()
+=======
+            self.fecha = fecha
+        else:
+            self.fecha = db.func.now()
+        self.created_on = db.func.now()
+        self.last_updated_on = db.func.now()
+>>>>>>> develop
         # self._is_deleted = is_deleted
 
     @property
@@ -45,6 +65,7 @@ class Gasto(db.Model):
     def descripcion_char_limit(self):
         return self._descripcion_char_limit
 
+<<<<<<< HEAD
     @property
     def tipo(self):
         return self._tipo
@@ -109,6 +130,8 @@ class Gasto(db.Model):
     def monto(self, value):
         self._monto = value
 
+=======
+>>>>>>> develop
     @classmethod
     def create(cls, ingreso):
         """Crea un gasto en la base de datos"""

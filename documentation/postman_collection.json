@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d302fc52-7579-4e0e-96bc-5615675adbca",
+		"_postman_id": "ed6fe5d8-83ae-48ae-aca0-b65c6c3c8b2d",
 		"name": "Proyecto_Finanzas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29172403"
+		"_exporter_id": "9496920"
 	},
 	"item": [
 		{
@@ -20,7 +20,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "aad985f0-fea5-4372-a08d-6e1eb6b9c4af"
 							}
 						],
 						"body": {
@@ -60,7 +60,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "05b76c41-e65c-4918-bace-57ac1f74ec59"
 							}
 						],
 						"body": {
@@ -100,7 +100,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "ac371dd8-e610-4314-b4d9-4bdc15db5392"
 							}
 						],
 						"body": {
@@ -140,7 +140,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "7fd58e26-a61e-4f29-b0ba-fae6b45dcdd7"
 							}
 						],
 						"body": {
@@ -180,7 +180,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "716e5258-f1de-452e-8e15-d4011b897127"
 							}
 						],
 						"body": {
@@ -220,7 +220,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "0777ff3c-9a3b-4d0d-9ba2-4c4d9fa2e8b8"
 							}
 						],
 						"body": {
@@ -257,7 +257,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "9e7dc27c-75f7-4c84-a47f-1d506c047f29"
 							}
 						],
 						"body": {
@@ -285,6 +285,80 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Actualizar ingreso",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/update?x-access-token={{JWT_Token}}",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"update"
+							],
+							"query": [
+								{
+									"key": "x-access-token",
+									"value": "{{JWT_Token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar ingreso",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{JWT_Token}}",
+								"uuid": "f6713f7c-f9e0-41cc-b4d2-ac6f7e9bdec4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/delete",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"delete"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -302,7 +376,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "e913b193-42d9-41ba-a09e-b649ae08a99e"
 							}
 						],
 						"body": {
@@ -342,7 +416,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "d2db6c76-7878-4e3c-a02a-6ed0fbc2d011"
 							}
 						],
 						"body": {
@@ -382,7 +456,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "393654c0-480a-448d-96b1-f3b7459586ab"
 							}
 						],
 						"body": {
@@ -422,7 +496,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "543b5325-bc22-49bb-9ad7-2785d0e7217b"
 							}
 						],
 						"body": {
@@ -462,7 +536,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "6541114e-15a9-4bd5-83b6-967935b17653"
 							}
 						],
 						"body": {
@@ -502,7 +576,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "a93628cb-9af0-46c8-bcd9-bd487cfc2530"
 							}
 						],
 						"body": {
@@ -539,12 +613,12 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "eccffb66-0b8d-405a-8c8f-2bd78ad8d0bf"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 200.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -567,6 +641,74 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Actualizar gasto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/update",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar gasto",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{JWT_Token}}",
+								"uuid": "8e3bb4bd-d8c3-41c7-9b49-38908628c701"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/delete",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"delete"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -581,7 +723,7 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
-								"type": "text"
+								"uuid": "b6d3def6-b204-45da-b459-c017a7019956"
 							}
 						],
 						"body": {
@@ -644,7 +786,7 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json",
-								"type": "text"
+								"uuid": "04b6d9b7-60b1-4203-a24b-3d0c34e989a5"
 							}
 						],
 						"body": {
@@ -686,7 +828,7 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "fb832c65-bc77-4359-aca2-5ac118c32810"
 							}
 						],
 						"url": {
@@ -714,7 +856,100 @@
 							{
 								"key": "x-access-token",
 								"value": "{{JWT_Token}}",
-								"type": "text"
+								"uuid": "ad459d96-29f3-416c-9910-17af54e4f048"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/whoami",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"whoami"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar usuario logueado Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{JWT_Token}}",
+								"uuid": "43d3faae-fa2d-401a-8e20-12142ab00cbd"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/delete",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario logueado",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{JWT_Token}}",
+								"uuid": "e7c3ce35-e7bb-4b09-b79b-13a94ed9ffc7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"12345\",\r\n    \"email\": \"prueba@algo.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/update",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar saldo usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{JWT_Token}}",
+								"uuid": "93558bf2-3d13-480a-ab27-6030864ad4aa"
 							}
 						],
 						"url": {
@@ -735,6 +970,14 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Chequeo de salud",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
 	"variable": [

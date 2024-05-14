@@ -19,14 +19,13 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @cross_origin()
 def user_login():
     # creates dictionary of form data
-    username = request.json["username"]
-    password = request.json["password"]
-
-    if not username or not password:
-        # returns 401 if any email or / and password is missing
+    try:
+        username = request.json["username"]
+        password = request.json["password"]
+    except KeyError:
         return jsonify({
-            'message': 'Username o password invalidos'
-        }), 401 # Siempre se envia la misma respuesta ante 401 por motivos de ciberseguridad
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 401
 
     usuario = Usuario.query.filter_by(username=username).first()
 
@@ -41,11 +40,14 @@ def user_login():
             'message': 'Usuario no validado'
         }), 403
 
+<<<<<<< HEAD
     """if usuario.is_deleted:
         return jsonify({
             'message': 'Usuario eliminado'
         }), 403"""
 
+=======
+>>>>>>> develop
     if check_password_hash(usuario.password_hash, password):
         # generates the JWT Token
         token = jwt.encode({
@@ -64,10 +66,21 @@ def user_login():
 @bp.route('/signup', methods=['POST'])
 @cross_origin()
 def user_signup():
+<<<<<<< HEAD
 
     username = request.json["username"]
     password = request.json["password"]
     email = request.json["email"]
+=======
+    try:
+        username = request.json["username"]
+        password = request.json["password"]
+        email = request.json["email"]
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
+>>>>>>> develop
 
     # checking for existing user
     usuario = Usuario.query.filter_by(username=username).first()
@@ -78,6 +91,7 @@ def user_signup():
         usuario = Usuario(username = username, password_hash = generate_password_hash(password), email = email, is_verified=verified_on_creation)
 
         # ---------- INICIO DE VALIDACIONES ---------------------
+<<<<<<< HEAD
         if not username or not password or not email:
             return jsonify({
                 'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
@@ -87,6 +101,14 @@ def user_signup():
                 'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
                 'username_max_characters': f"{usuario.get_username_characters_limit()}",
                 'email_max_characters': f"{usuario.get_email_characters_limit()}"
+=======
+
+        if len(username) > usuario.username_char_limit or len(email) > usuario.email_char_limit: # 'superan los caracteres maximos permitidos'
+            return jsonify({
+                'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
+                'username_max_characters': f"{usuario.username_char_limit}",
+                'email_max_characters': f"{usuario.email_char_limit}"
+>>>>>>> develop
             }), 403
         if not validar_email(email):
             return jsonify({
@@ -97,9 +119,14 @@ def user_signup():
 
         # Agrego el usuario en la base de datos
         Usuario.create(usuario)
-        return jsonify({
-            'message': 'Usuario registrado correctamente'  # 'Usuario creado exitosamente en la base de datos'
-        }), 201
+        if not verified_on_creation:
+            return jsonify({
+                'message': 'Usuario registrado correctamente. Debe verificar el email para loguearse'
+            }), 201
+        else:
+            return jsonify({
+                'message': 'Usuario registrado correctamente'
+            }), 201
     else:
         # returns 202 if user already exists
         return jsonify({

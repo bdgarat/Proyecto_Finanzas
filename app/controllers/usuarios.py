@@ -13,15 +13,23 @@ from app import config as cfg
 
 bp = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 
+<<<<<<< HEAD
 @bp.route('/get_saldo_actual', methods=['GET'])
 @cross_origin()
 @token_required
 def get_saldo(current_user):
+=======
+@bp.route('/saldo', methods=['GET'])
+@cross_origin()
+@token_required
+def saldo(current_user):
+>>>>>>> develop
 
     # Obtengo el id de usuario del token
     current_user: Usuario
     id_usuario = current_user.get_id()
 
+<<<<<<< HEAD
     saldo_actual = 0.0
 
     ingresos = Ingreso.query.filter_by(id_usuario=id_usuario).all()
@@ -34,6 +42,20 @@ def get_saldo(current_user):
 
     return jsonify({
         'saldo_actual': saldo_actual
+=======
+    saldo = 0.0
+
+    ingresos = Ingreso.query.filter_by(id_usuario=id_usuario).all()
+    for ingreso in ingresos:
+        saldo += ingreso.monto
+
+    gastos = Gasto.query.filter_by(id_usuario=id_usuario).all()
+    for gasto in gastos:
+        saldo -= gasto.monto
+
+    return jsonify({
+        'saldo': saldo
+>>>>>>> develop
     }), 200
 @bp.route('/list', methods=['GET'])
 @cross_origin()
@@ -55,12 +77,17 @@ def get_all_users(current_user):
         # appending the user data json
         # to the response list
         output.append({
+            'id': usuario.get_id(),
             'username': usuario.username,
             'email': usuario.email,
             'created_on': usuario.created_on,
             'last_updated_on': usuario.last_updated_on,
             'is_admin': usuario.is_admin,
+<<<<<<< HEAD
             'is_verified': current_user.is_verified
+=======
+            'is_verified': usuario.is_verified
+>>>>>>> develop
         })
 
     return jsonify({'usuarios': output}), 200
@@ -73,6 +100,7 @@ def who_am_i(current_user):
     """Muestra info del usuario logueado via JWT"""
     current_user: Usuario
     output = {
+        'id': current_user.get_id(),
         'username': current_user.username,
         'email': current_user.email,
         'created_on': current_user.created_on,
@@ -82,6 +110,7 @@ def who_am_i(current_user):
     }
     return jsonify(output), 200
 
+<<<<<<< HEAD
 @bp.route('/update', methods=['POST'])
 @cross_origin()
 @token_required
@@ -90,6 +119,20 @@ def update(current_user):
     username = request.json["username"]
     password = request.json["password"]
     email = request.json["email"]
+=======
+@bp.route('/update', methods=['PUT'])
+@cross_origin()
+@token_required
+def update(current_user):
+    try:
+        username = request.json["username"]
+        password = request.json["password"]
+        email = request.json["email"]
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
+>>>>>>> develop
 
     # Obtengo el id de usuario del token
     current_user: Usuario
@@ -104,6 +147,7 @@ def update(current_user):
         }), 404
     else:
         # ---------- INICIO DE VALIDACIONES ---------------------
+<<<<<<< HEAD
         if not username or not password or not email:
             return jsonify({
                 'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
@@ -113,12 +157,23 @@ def update(current_user):
                 'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
                 'username_max_characters': f"{usuario.get_username_characters_limit()}",
                 'email_max_characters': f"{usuario.get_email_characters_limit()}"
+=======
+        if len(username) > usuario.username_char_limit or len(email) > usuario.email_char_limit: # 'superan los caracteres maximos permitidos'
+            return jsonify({
+                'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
+                'username_max_characters': f"{usuario.username_char_limit}",
+                'email_max_characters': f"{usuario.email_char_limit}"
+>>>>>>> develop
             }), 403
         if not validar_email(email):
             return jsonify({
                 'message': 'Email invalido'
             }), 403
+<<<<<<< HEAD
         if usuario.query.filter_by(username=username).first():
+=======
+        if usuario.query.filter_by(username=username).first() and not current_user.username:
+>>>>>>> develop
             return jsonify({
                 'message': "Nombre de usuario ya existente"
             }), 403
@@ -138,9 +193,20 @@ def update(current_user):
             usuario.email = email
         # Agrego el usuario en la base de datos
         usuario.update()
+<<<<<<< HEAD
         return jsonify({
             'message': 'Usuario actualizado correctamente'  # 'Usuario creado exitosamente en la base de datos'
         }), 200
+=======
+        if usuario.is_verified:
+            return jsonify({
+                'message': 'Usuario actualizado correctamente'  # 'Usuario creado exitosamente en la base de datos'
+            }), 200
+        else:
+            return jsonify({
+                'message': 'Usuario actualizado correctamente. Debe verificar su email'  # 'Usuario creado exitosamente en la base de datos pero debe verificar email
+            }), 200
+>>>>>>> develop
 
 
 @bp.route('/delete', methods=['DELETE'])

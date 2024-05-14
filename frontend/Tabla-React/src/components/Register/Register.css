@@ -48,10 +48,15 @@
     border:1px solid white;
     border-radius: 14px;
 }
+.alert-mensaje{
+    color:red;
+    margin-bottom: 5px;
+}
 .button-form-usuario{
     display:flex;
     justify-content: space-around;
     height:7vh;
+    margin-top:15px;
 }
 .button-f{
     width:45%;

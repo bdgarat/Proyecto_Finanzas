@@ -15,6 +15,7 @@ class Usuario(UserMixin, db.Model):
     _password_hash_char_limit = 256
     _email_char_limit = 50
 
+<<<<<<< HEAD
     _id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
     _username: so.Mapped[str] = so.mapped_column(sa.String(_username_char_limit), index=True, unique=True)
     _password_hash: so.Mapped[str] = so.mapped_column(sa.String(_password_hash_char_limit))
@@ -137,11 +138,56 @@ class Usuario(UserMixin, db.Model):
 
     def __repr__(self):
         return '<Usuario {}>'.format(self._username)
+=======
+    id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
+    username: so.Mapped[str] = so.mapped_column(sa.String(_username_char_limit), index=True, unique=True)
+    password_hash: so.Mapped[str] = so.mapped_column(sa.String(_password_hash_char_limit))
+    email: so.Mapped[str] = so.mapped_column(sa.String(_email_char_limit))
+    created_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now()) #default=lambda: datetime.now(timezone.utc))
+    last_updated_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now(), server_onupdate=db.func.now())
+    imagen: so.Mapped[Optional[LargeBinary]] = so.mapped_column(sa.LargeBinary)
+    # saldo_actual: so.Mapped[float] = so.mapped_column(sa.Float)
+    is_admin: so.Mapped[bool] = so.mapped_column(sa.Boolean)
+    is_verified: so.Mapped[bool] = so.mapped_column(sa.Boolean)
+    # is_deleted: so.Mapped[bool] = so.mapped_column(sa.Boolean)
+
+    def __init__(self, username, password_hash, email, imagen = None, is_admin = False, is_verified = False):
+        self.username = username
+        self.password_hash = password_hash
+        self.email = email
+        if imagen:
+            self.imagen = imagen
+        self.is_admin = is_admin
+        self.created_on = db.func.now()
+        self.last_updated_on = db.func.now()
+        self.is_verified = is_verified
+
+    def __repr__(self):
+        return '<Usuario {}>'.format(self.username)
+>>>>>>> develop
 
     """@login.user_loader
     def load_user(user_id):
         return db.session.get(Usuario, int(user_id))"""
 
+<<<<<<< HEAD
+=======
+    @property
+    def username_char_limit(self):
+        """Devuelve el limite de caracteres del campo 'username'"""
+        return self._username_char_limit
+
+    @property
+    def email_char_limit(self):
+        """Devuelve el limite de caracteres del campo 'email'"""
+        return self._email_char_limit
+
+    @property
+    def password_hash_char_limit(self):
+        """Devuelve el limite de caracteres del campo 'password_hash'"""
+        return self._password_hash_char_limit
+
+>>>>>>> develop
     @classmethod
     def create(cls, user):
         """Crea un usuario en la base de datos"""
@@ -164,6 +210,7 @@ class Usuario(UserMixin, db.Model):
         """Devuelve el saldo actual del usuario"""
         return self._saldo_actual
 
+<<<<<<< HEAD
     def get_username_characters_limit(self):
         """Devuelve el limite de caracteres del campo 'username'"""
         return self._username_char_limit
@@ -175,6 +222,8 @@ class Usuario(UserMixin, db.Model):
     def get_password_hash_characters_limit(self):
         """Devuelve el limite de caracteres del campo 'password_hash'"""
         return self._password_hash_char_limit
+=======
+>>>>>>> develop
 
     def add_imagen(self, imagen):
         """Agrega la imagen al perfil del usuario"""
