@@ -35,6 +35,14 @@ class Ingreso(db.Model):
         self.created_on = db.func.now()
         self.last_updated_on = db.func.now()
 
+    @property
+    def tipo_char_limit(self):
+        return self._tipo_char_limit
+
+    @property
+    def descripcion_char_limit(self):
+        return self._descripcion_char_limit
+
     @classmethod
     def create(cls, ingreso):
         """Crea un ingreso en la base de datos"""

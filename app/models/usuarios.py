@@ -45,6 +45,21 @@ class Usuario(UserMixin, db.Model):
     def load_user(user_id):
         return db.session.get(Usuario, int(user_id))"""
 
+    @property
+    def username_char_limit(self):
+        """Devuelve el limite de caracteres del campo 'username'"""
+        return self._username_char_limit
+
+    @property
+    def email_char_limit(self):
+        """Devuelve el limite de caracteres del campo 'email'"""
+        return self._email_char_limit
+
+    @property
+    def password_hash_char_limit(self):
+        """Devuelve el limite de caracteres del campo 'password_hash'"""
+        return self._password_hash_char_limit
+
     @classmethod
     def create(cls, user):
         """Crea un usuario en la base de datos"""
@@ -67,17 +82,6 @@ class Usuario(UserMixin, db.Model):
         """Devuelve el saldo actual del usuario"""
         return self._saldo_actual
 
-    def get_username_characters_limit(self):
-        """Devuelve el limite de caracteres del campo 'username'"""
-        return self._username_char_limit
-
-    def get_email_characters_limit(self):
-        """Devuelve el limite de caracteres del campo 'email'"""
-        return self._email_char_limit
-
-    def get_password_hash_characters_limit(self):
-        """Devuelve el limite de caracteres del campo 'password_hash'"""
-        return self._password_hash_char_limit
 
     def add_imagen(self, imagen):
         """Agrega la imagen al perfil del usuario"""
