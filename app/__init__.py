@@ -44,6 +44,10 @@ def token_required(f):
             # decoding the payload to fetch the stored details
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
             current_user = Usuario.query.filter_by(id=data["id"]).first()
+            if not current_user:
+                return jsonify({
+                    'message': 'JWT Token no asociado a ningun usuario'
+                }), 404
         except:
             return jsonify({
                 'message': 'JWT Token invalido'
