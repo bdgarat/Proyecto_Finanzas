@@ -92,9 +92,14 @@ def user_signup():
 
         # Agrego el usuario en la base de datos
         Usuario.create(usuario)
-        return jsonify({
-            'message': 'Usuario registrado correctamente'  # 'Usuario creado exitosamente en la base de datos'
-        }), 201
+        if not verified_on_creation:
+            return jsonify({
+                'message': 'Usuario registrado correctamente. Debe verificar el email para loguearse'
+            }), 201
+        else:
+            return jsonify({
+                'message': 'Usuario registrado correctamente'
+            }), 201
     else:
         # returns 202 if user already exists
         return jsonify({
