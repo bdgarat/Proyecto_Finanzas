@@ -46,7 +46,12 @@ def get_all(current_user):
 @token_required
 def get_all_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
-    monto = request.json['value']
+    try:
+        monto = request.json['value']
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     current_user: Usuario
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.filter_by(monto=monto).all()
@@ -72,7 +77,12 @@ def get_all_by_monto(current_user):
 @token_required
 def get_first_by_monto(current_user):
     # Me fijo si el usuario logueado (token) es admin
-    monto = request.json['value']
+    try:
+        monto = request.json['value']
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     current_user: Usuario
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingreso = Ingreso.query.filter_by(monto=monto).first()
@@ -95,8 +105,13 @@ def get_first_by_monto(current_user):
 @token_required
 def get_all_between_fechas(current_user):
     # Me fijo si el usuario logueado (token) es admin
-    fecha_inicio = request.json['fecha_inicio']
-    fecha_fin = request.json['fecha_fin']
+    try:
+        fecha_inicio = request.json['fecha_inicio']
+        fecha_fin = request.json['fecha_fin']
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     current_user: Usuario
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.filter(
@@ -126,7 +141,12 @@ def get_all_between_fechas(current_user):
 @token_required
 def get_all_by_tipo(current_user):
     # Me fijo si el usuario logueado (token) es admin
-    tipo = request.json['value']
+    try:
+        tipo = request.json['value']
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     current_user: Usuario
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.filter_by(tipo=tipo).all()
@@ -151,7 +171,12 @@ def get_all_by_tipo(current_user):
 @token_required
 def get_first_by_tipo(current_user):
     # Me fijo si el usuario logueado (token) es admin
-    tipo = request.json['value']
+    try:
+        tipo = request.json['value']
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     current_user: Usuario
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingreso = Ingreso.query.filter_by(tipo=tipo).first()
@@ -169,15 +194,20 @@ def get_first_by_tipo(current_user):
     return jsonify({'ingreso': output}), 200
 
 
-@bp.route('/add', methods=['PUT'])
+@bp.route('/add', methods=['POST'])
 @cross_origin()
 @token_required
 def add(current_user):
 
     # Obtengo los datos necesarios para crear el elemento desde json enviado en el body
-    descripcion = request.json["descripcion"]
-    monto = request.json["monto"]
-    tipo = request.json["tipo"]
+    try:
+        descripcion = request.json["descripcion"]
+        monto = request.json["monto"]
+        tipo = request.json["tipo"]
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     try:
         fecha = request.json["fecha"]
     except KeyError:
@@ -202,15 +232,11 @@ def add(current_user):
     # Creo el elemento
     ingreso = Ingreso(id_usuario, descripcion, monto, tipo, fecha)
 
-    if not monto or not tipo:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
-    if len(descripcion) > ingreso.get_descripcion_characters_limit() or len(tipo) > ingreso.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
+    if len(descripcion) > ingreso.descripcion_char_limit or len(tipo) > ingreso.tipo_char_limit: # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
-            'descripcion_max_characters': f"{ingreso.get_descripcion_characters_limit()}",
-            'tipo_max_characters': f"{ingreso.get_tipo_characters_limit()}"
+            'descripcion_max_characters': f"{ingreso.descripcion_char_limit}",
+            'tipo_max_characters': f"{ingreso.tipo_char_limit}"
         }), 403
 
     # ---------- FIN DE VALIDACIONES ---------------------
@@ -222,16 +248,21 @@ def add(current_user):
         'message': 'Ingreso registrado exitosamente'
     }), 201
 
-@bp.route('/update', methods=['POST'])
+@bp.route('/update', methods=['PUT'])
 @cross_origin()
 @token_required
 def update(current_user):
 
     # Obtengo los datos necesarios para actualizar el elemento desde json enviado en el body
-    id_ingreso = request.json["id"]
-    descripcion = request.json["descripcion"]
-    monto = request.json["monto"]
-    tipo = request.json["tipo"]
+    try:
+        id_ingreso = request.json["id"]
+        descripcion = request.json["descripcion"]
+        monto = request.json["monto"]
+        tipo = request.json["tipo"]
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     try:
         fecha = request.json["fecha"]
     except KeyError:
@@ -261,15 +292,11 @@ def update(current_user):
             'message': 'No se ha encontrado el elemento'
         }), 404
 
-    if not monto or not tipo:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
-    if len(descripcion) > ingreso.get_descripcion_characters_limit() or len(tipo) > ingreso.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
+    if len(descripcion) > ingreso.descripcion_char_limit or len(tipo) > ingreso.tipo_char_limit: # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
-            'descripcion_max_characters': f"{ingreso.get_descripcion_characters_limit()}",
-            'tipo_max_characters': f"{ingreso.get_tipo_characters_limit()}"
+            'descripcion_max_characters': f"{ingreso.descripcion_char_limit}",
+            'tipo_max_characters': f"{ingreso.tipo_char_limit}"
         }), 403
 
     # ---------- FIN DE VALIDACIONES ---------------------
@@ -278,7 +305,8 @@ def update(current_user):
     ingreso.descripcion = descripcion
     ingreso.monto = monto
     ingreso.tipo = tipo
-    ingreso.fecha = fecha
+    if fecha:
+        ingreso.fecha = fecha
 
     # Actualizo el elemento en la base de datos
     ingreso.update()
@@ -292,8 +320,12 @@ def update(current_user):
 @token_required
 def delete(current_user):
     # Obtengo los datos necesarios para eliminar el elemento desde json enviado en el body
-    id_ingreso = request.json["id"]
-
+    try:
+        id_ingreso = request.json["id"]
+    except KeyError:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 403
     # Obtengo el id de usuario del token
     current_user: Usuario
     id_usuario = current_user.get_id()
