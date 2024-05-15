@@ -37,10 +37,8 @@ function Register() {
   }
   const handleRegister=(event)=>{
     event.preventDefault();
-    console.log(igualEmail,igualPassword)
     if(!igualEmail && !igualPassword)
       {
-        console.log("estoy en el envio de los datos")
         axios({
           method:"post",
           url:"http://127.0.0.1:5000/auth/signup",
@@ -49,20 +47,33 @@ function Register() {
             email:values.email,
             password:values.password,
           }
-        }).then(()=>Swall.fire({
-          title:"Envio exitoso",
-          text:"El envío de los datos se realizo con exito",
-          icon:"success",
-          background:"#282828",
-          confirmButtonText:"OK",
-          confirmButtonColor:"#274227",
-          color:"white"
+        }).then((res)=>{
+          if(res.status !=201){
+            Swall.fire({
+              title:"No se envio el formulario",
+              text: "Intente nuevamente",
+              icon:"error",
+              background:"#282828",
+              confirmButtonText:"OK",
+              confirmButtonColor:"#274227",
+              color:"white"
+            })
+          }else{
+           Swall.fire({
+            title:"Envio exitoso",
+            text:"El envío de los datos se realizo con exito",
+            icon:"success",
+            background:"#282828",
+            confirmButtonText:"OK",
+            confirmButtonColor:"#274227",
+            color:"white"
+           
         }).
         then(response=>{
           if(response.isConfirmed){
             goToLogin()
           }
-        }))
+        })}})
         .catch((err)=>Swall.fire({
           title:"No se envio el formulario",
           text: "Intente nuevamente",
