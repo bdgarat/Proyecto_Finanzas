@@ -2,6 +2,8 @@ import React,{useState} from 'react'
 import './Register.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Swall from 'sweetalert2'
+
 function Register() {
   const navigate = new useNavigate();
   const [values,setValues]=useState({
@@ -11,10 +13,10 @@ function Register() {
     password:"",
     repeatPassword:""
   })
-  const [conditions,setConditions]=useState({
-    igualEmail:false,
-    igualPassword:false,
-  })
+  const [igualEmail,setIgualEmail]=useState(false);
+  
+  const [igualPassword, setIgualPassword] = useState(false);
+
 
   const handleInputChange = (event)=>{
     const {name,value}= event.target;
@@ -35,9 +37,10 @@ function Register() {
   }
   const handleRegister=(event)=>{
     event.preventDefault();
-    console.log(values);
-    if(!conditions.igualEmail && conditions.igualPassword)
+    console.log(igualEmail,igualPassword)
+    if(!igualEmail && !igualPassword)
       {
+        console.log("estoy en el envio de los datos")
         axios({
           method:"post",
           url:"http://127.0.0.1:5000/auth/signup",
@@ -46,41 +49,55 @@ function Register() {
             email:values.email,
             password:values.password,
           }
-        }).then(()=>goToLogin())
-        .catch((err)=>console.log(err))
+        }).then(()=>Swall.fire({
+          title:"Envio exitoso",
+          text:"El envío de los datos se realizo con exito",
+          icon:"success",
+          background:"#282828",
+          confirmButtonText:"OK",
+          confirmButtonColor:"#274227",
+          color:"white"
+        }).
+        then(response=>{
+          if(response.isConfirmed){
+            goToLogin()
+          }
+        }))
+        .catch((err)=>Swall.fire({
+          title:"No se envio el formulario",
+          text: "Intente nuevamente",
+          icon:"error",
+          background:"#282828",
+          confirmButtonText:"OK",
+          confirmButtonColor:"#274227",
+          color:"white"
+        }))
       }
+      else{console.log("no estoy en el registro")}
   }
   function goToLogin()
   {
-    console.log("estoy en goToLogin");
+    
     navigate('/'); 
   } 
   function equalsEmails(){
 
     if(values.repeatEmail != values.email)
       {
-        setConditions({
-          igualEmail:true
-        })
+        setIgualEmail(true);
       }
       else{
-        setConditions({
-          igualEmail:false
-        })
+        setIgualEmail(false);
       }
   }
 
   function equalsPassword(){
     if(values.repeatPassword != values.password)
       {
-        setConditions({
-          igualPassword:true
-        })
+        setIgualPassword(true);
       }
       else{
-        setConditions({
-          igualPassword:false
-        })
+        setIgualPassword(false);
       }
   }
   return (
@@ -91,7 +108,7 @@ function Register() {
        
        <div className='entrada'>
           <label className='label-form' > Name  </label>
-          <input className='input-form' name="username" type="text" required value={values.username} 
+          <input className='input-form' name="username" type="text" required value={values.username} maxLength={30} minLength={5} 
           placeholder="ingrese su nombre" onChange={handleInputChange}/>
        </div>
         
@@ -106,18 +123,18 @@ function Register() {
           <input className='input-form' type="email" name="repeatEmail" required value={values.repeatEmail} 
           onChange={handleInputChange} onBlur={handleRepeat} />
         </div>
-        {conditions.igualEmail && <p className="alert-mensaje">Los emails ingresados no son iguales</p>}
+        {igualEmail && <p className="alert-mensaje">Los emails ingresados no son iguales</p>}
         <div className='entrada'> 
           <label className='label-form'>password</label>
           <input className='input-form' type="password" name="password" value={values.password} required
-          onChange={handleInputChange} />
+          onChange={handleInputChange} onBlur={handleRepeat} />
         </div>
         <div className='entrada'>
           <label className='label-from'>repeat password</label>
           <input className='input-form' type="password" required value={values.repeatPassword}
-        name='repeatPassword' onChange={handleInputChange}/>
+        name='repeatPassword' onChange={handleInputChange} onBlur={handleRepeat}/>
         </div>
-        {conditions.igualPassword && <p className="alert-mensaje">Las contraseñas ingresadas no son iguales</p>}
+        {igualPassword && <p className="alert-mensaje">Las contraseñas ingresadas no son iguales</p>}
         
       <div className='button-form-usuario'>
          <button className='button-f' type="submit">Registrarse</button>
