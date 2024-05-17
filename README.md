@@ -14,7 +14,7 @@
 # Para crear el entorno virtual
 $ virtualenv -p python3 venv
 # Para iniciar el entorno virtual
-$ . venv/bin/activate
+$ .venv/bin/activate
 # Instalar las dependencias dentro del entorno virtual
 $ pip3 install -r requirements.txt
 # En el directorio raiz
