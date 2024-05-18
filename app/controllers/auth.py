@@ -44,9 +44,8 @@ def user_login():
         # generates the JWT Token
         token = jwt.encode({
             'id': usuario.id,
-            'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=120)
+            'exp': datetime.datetime.now() + datetime.timedelta(minutes=120)
         }, app.config['SECRET_KEY'])
-
         return jsonify({'token': token}), 200
     # returns 403 if password is wrong
     return jsonify({

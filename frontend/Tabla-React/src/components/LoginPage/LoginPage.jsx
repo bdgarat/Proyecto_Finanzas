@@ -19,6 +19,7 @@ function LoginPage(){
          .then((resp)=> {login(resp.status)}
         )
          .catch((err)=>{
+            console.log(err);
             setError(true);
          }
         )
@@ -66,7 +67,7 @@ function LoginPage(){
                     <input className="input-login" type="password" name="password" onChange={e=>handlePass(e)}></input>
                     <div className="contenedor-botones">
                     <button className="boton-login" type="submit" variant="primary" onClick={obtenerPermiso} >Login</button>
-                    <button onClick={llevarARegistros} className="boton-login">Sing Up</button>
+                    <button onClick={llevarARegistros} className="boton-login">Registrarse</button>
                     </div>
                 </form>
                 {error && <p id="login-mensaje">Los datos ingresados no son validos</p>}
