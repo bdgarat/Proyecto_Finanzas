@@ -5,7 +5,7 @@
     height:100vh;
     align-items: center;
     justify-content: center;
-    background-image: url('../../recursos/oscuro06.jpg');
+    background-color: #00bfff;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -19,7 +19,7 @@
 }
 .container-formulario{
     display: flex;
-    background-color:#282828;
+    background-color:#179fcd;
     flex-direction: column;
     width:700px;
     height:95vh;
@@ -44,8 +44,8 @@
 }
 .input-form{
     height:50px;
-    background-color: darkgray;
-    border:1px solid white;
+    background-color: white;
+    border:1px solid black;
     border-radius: 14px;
 }
 .alert-mensaje{
@@ -60,4 +60,6 @@
 }
 .button-f{
     width:45%;
+    background-color: white;
+    border-radius: 10px;
 }
