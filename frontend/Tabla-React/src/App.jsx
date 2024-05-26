@@ -1,31 +1,37 @@
-import { createBrowserRouter , RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import Home from './components/Home/Home';
 import Register from './components/Register/Register'
-import { useState } from 'react';
+import Gastos from './components/Home/Gastos/Gastos';
+import { UserContextProvider } from './Context/UserContext';
 import './App.css'
-
 
 const router = createBrowserRouter([
   {
-    path:"/",
-    element: <div><LoginPage></LoginPage></div>
+    path: "/",
+    render: {},
+    element: <div><LoginPage /></div>
   },
   {
-    path:"home",
-    element:<div><Home/></div>
+    path: "home",
+    element: <div><Home /></div>
   },
   {
-    path:'register',
-    element:<div><Register/></div>
+    path: 'register',
+    element: <div><Register /></div>
+  },
+  {
+    path: 'gastos',
+    element: <div><Gastos /></div>
   }
 ])
 
 export default function App() {
-  const [user, setUser] = useState([]);
   return (
     <div>
-      <RouterProvider router={router}/>
+      <UserContextProvider>
+        <RouterProvider router={router} />
+      </UserContextProvider>
     </div>
   );
 }

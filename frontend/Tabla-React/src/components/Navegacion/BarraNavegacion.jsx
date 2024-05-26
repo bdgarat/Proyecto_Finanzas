@@ -1,7 +1,12 @@
 import React from 'react'
 import './Navegacion.css'
 import  imgLogin from '../../recursos/imgNavBar/usuario2.png'
-function BarraNavegacion() {
+import  { Link, useNavigate } from "react-router-dom"
+function BarraNavegacion(p) {
+  const navigate = useNavigate();
+  function goGastos(){
+    navigate('/gastos');
+  }
   return (
     <div className='Barra-Navegacion'>
         <div className='Barra-Usuario'>
@@ -9,9 +14,9 @@ function BarraNavegacion() {
             <h1 className="titulo-navBar">Aplicacion Finanzas</h1>
           </div>
             <div className="Barra_Navegacion_Links">
-              <a href="" className="">Gastos</a>
-              <a href="" className="">Ingresos</a>
-              < a href="" className="">Sobre nosotros</a>
+              <Link to="/gastos">Gastos</Link>
+              <Link to="/ingreso">Ingresos</Link>
+              <Link to="/sobre_nosotros">Sobre nosotros</Link>
               <a href="" className=""></a>
             </div>
             <div className="contenedor-usuario">

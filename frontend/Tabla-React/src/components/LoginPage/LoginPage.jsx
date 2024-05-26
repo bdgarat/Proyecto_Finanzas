@@ -1,14 +1,16 @@
 import './loginPage.css';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
-function LoginPage(){
+function LoginPage(handleToken){
     const [name,setName] = useState('');
     const [pass,setPass] = useState('');
     const [error,setError] = useState(false);
+    const [token,setToken] = useState('');
     const navigate = useNavigate();
-    function obtenerPermiso (){
-          axios({
+    async function obtenerPermiso (){
+        try{
+         const resp =  await axios({
             method:"post",
             url:"http://127.0.0.1:5000/auth/login",
             data:{
@@ -16,14 +18,12 @@ function LoginPage(){
                 password:pass
             }
          })
-         .then((resp)=> {login(resp.status)}
-        )
-         .catch((err)=>{
-            console.log(err);
-            setError(true);
-         }
-        )
-    };
+        login(resp.status);
+        }catch(e)
+        {
+            login(e.status);
+        }
+    }
      
       function login(response){
         if(response == 201 || response ==200)
