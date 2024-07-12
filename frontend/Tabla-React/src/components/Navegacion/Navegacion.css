@@ -1,44 +1,14 @@
-
-
 .Barra-Navegacion{
     width:100%;
     height:16vh;
-    background-color:#00bfff;
+    background-color:cornflowerblue;
     display:flex;
     flex-direction:row;
     justify-content:space-around;
 }
-.Barra-Usuario{
-    width:100%;
-    height:16vh;
-    display:flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.contenedor-titulo-navBar{
-    width:30%;
-    font-size: 20px;
-}
-.titulo-navBar{
-    text-transform: uppercase;
-    color:#f5fffa;
-}
-.Barra_Navegacion_Links{
-    width:40%;
+.Barra-Navegacion-Links{
+    width:50%;
     height:100%;
-    justify-content: space-around;
     display:flex;
-    align-items: center;
-}
-.contenedor-usuario{
-    width:20%;
-    display:flex;
-    flex-direction:row;
-    align-items: center;
-}
-.logo_usuario{
-    width:100px;
-    height:10vh;
-    border-radius: 50%;
-    margin-right:2%;
+    justify-content: space-between;
 }

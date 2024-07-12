@@ -1,28 +1,34 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './components/LoginPage/LoginPage';
-import Home from './components/Home/Home';
-import Register from './components/Register/Register'
-import Gastos from './components/Home/Gastos/Gastos';
+import LoginPage from './Routes/LoginPage/LoginPage';
+import Home from './Routes/Home/Home';
+import Register from './Routes/Register/Register'
+import Gastos from './Routes/Home/Gastos/Gastos';
 import { UserContextProvider } from './Context/UserContext';
 import './App.css'
+import ProtectedRoutes from './Routes/ProtectedRoutes';
 
 const router = createBrowserRouter([
   {
     path: "/",
     render: {},
-    element: <div><LoginPage /></div>
+    element: <LoginPage />
   },
   {
     path: "home",
-    element: <div><Home /></div>
+    element: <ProtectedRoutes />,
+    children:{ 
+      path:"/home",
+      element:<Home/>
+    }
+
   },
   {
     path: 'register',
-    element: <div><Register /></div>
+    element: <Register />
   },
   {
     path: 'gastos',
-    element: <div><Gastos /></div>
+    element: <Gastos />
   }
 ])
 
