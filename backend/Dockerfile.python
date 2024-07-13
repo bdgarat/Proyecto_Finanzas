@@ -1,0 +1,9 @@
+FROM python:3.12-slim-bookworn
+
+WORKDIR /app
+
+COPY . .
+RUN pip install --no-cache-dir -r requeriments.txt
+
+EXPOSE 5000
+CMD ["uvicorn" ,"min:app", "--reload", "--host", "--port", "8000"]
