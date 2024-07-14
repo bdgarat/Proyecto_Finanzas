@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './Pages/LoginPage/LoginPage';
-import Register from './Pages/Register/Register'
-import Dashboard from './Pages/Dashboard/Dashboard.';
+import LoginPage from './Pages/loginPage/LoginPage';
+import Register from './Pages/register/Register'
+import Dashboard from './Pages/dashboard/Dashboard.';
+import Gastos from './Pages/gastos/Gastos';
 import { UserContextProvider } from './Context/UserContext';
 import './App.css'
 import Protected from './Pages/Protected';
@@ -27,6 +28,18 @@ const router = createBrowserRouter([
         element:<Dashboard/>
       }
     ]
+  },
+  {
+    path:"gastos",
+    element:<Gastos/>
+  },
+  {
+    path:"ingresos",
+    element:<Ingresos/>
+  },
+  {
+    path:"calculos",
+    element:<Calculos/>
   }
   
 ])

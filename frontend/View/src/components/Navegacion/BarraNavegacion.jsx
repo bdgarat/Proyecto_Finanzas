@@ -1,13 +1,14 @@
 import React from 'react'
 import './Navegacion.css'
+import { Link } from 'react-router-dom'
 function BarraNavegacion() {
   return (
     <div className='Barra-Navegacion'>
         <div className='Barra-Usuario'>
             <div className="Barra-Navegacion-Links">
-              <a href="" className="">Gastos</a>
-              <a href="" className="">Ingresos</a>
-              <a href="" className=""></a>
+              <Link to="gastos"   className="">Gastos</Link>
+              <Link to="ingresos" className="">Ingresos</Link>
+              <Link to="calculos" className="">Calculos</Link>
             </div>
             <icon className="">Icono</icon>
         </div>
