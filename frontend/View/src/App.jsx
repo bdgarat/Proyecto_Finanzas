@@ -3,7 +3,8 @@ import LoginPage from './Pages/loginPage/LoginPage';
 import Register from './Pages/register/Register'
 import Dashboard from './Pages/dashboard/Dashboard.';
 import Gastos from './Pages/gastos/Gastos';
-import { UserContextProvider } from './Context/UserContext';
+import Ingresos from './Pages/ingresos/Ingresos';
+import Calculos from './Pages/calculos/Calculos';
 import './App.css'
 import Protected from './Pages/Protected';
 import { AuthProvider } from './Auth/AuthProvider';
@@ -11,7 +12,6 @@ import { AuthProvider } from './Auth/AuthProvider';
 const router = createBrowserRouter([
   {
     path: "/",
-    render: {},
     element: <LoginPage />
   },
   
@@ -47,12 +47,9 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <div>
-      <UserContextProvider>
         <AuthProvider>
           <RouterProvider router={router} />  
         </AuthProvider>
-
-      </UserContextProvider>
     </div>
   );
 }
