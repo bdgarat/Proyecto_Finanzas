@@ -8,6 +8,7 @@ import Calculos from './Pages/calculos/Calculos';
 import './App.css'
 import Protected from './Pages/Protected';
 import { AuthProvider } from './Auth/AuthProvider';
+import IngresarGasto from './Pages/gastos/IngresarGasto';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path:"gastos",
     element:<Gastos/>
+  },
+  {
+    path:"ingresarGasto",
+    element:<IngresarGasto/>
   },
   {
     path:"ingresos",

@@ -56,7 +56,7 @@ function Register() {
             password:values.password,
           }
         }).then((res)=>{
-          if(res.status !=201){
+          if(res.status !=202){
             Swall.fire({
               title:"No se envio el formulario",
               text: "Intente nuevamente",

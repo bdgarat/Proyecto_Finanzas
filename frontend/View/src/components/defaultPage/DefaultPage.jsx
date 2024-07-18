@@ -8,6 +8,7 @@ function DefaultPage({children}) {
         <nav>
           <div className="Barra-Usuario">
             <ul className="Barra-Navegacion-Links">
+              <Link to="/dashboard">Dashboard</Link>
               <Link to="/gastos" className="">
                 Gastos
               </Link>

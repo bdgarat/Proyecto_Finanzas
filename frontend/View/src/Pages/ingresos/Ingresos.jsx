@@ -1,8 +1,14 @@
 import React from 'react'
+import DefaultPage from '../../components/defaultPage/DefaultPage'
 
 function Ingresos() {
   return (
-    <div>Ingresos</div>
+    
+    <div>
+      <DefaultPage>
+      
+      </DefaultPage>
+    </div>
   )
 }
 
