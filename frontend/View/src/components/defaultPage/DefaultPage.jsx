@@ -19,7 +19,6 @@ function DefaultPage({children}) {
                 Calculos
               </Link>
             </ul>
-            <icon className="">Icono</icon>
           </div>
         </nav>
       </header>
