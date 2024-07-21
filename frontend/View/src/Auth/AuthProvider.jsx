@@ -1,16 +1,14 @@
 import React,{useContext,createContext,useState,useEffect} from 'react'
 const AuthContext = createContext({
-    isAuthenticated:false,
+    isAuth: false,
+    cambiarEstado:(estado)=>{}
 })
 export function AuthProvider({children}) {
-
-   
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  return (
-    <AuthContext.Provider value={isAuthenticated}>
-        {children}
-    </AuthContext.Provider>
-  )
+    const [isAuth, setIsAuth] = useState(false);
+  function cambiarEstado(estado)
+  {
+    setIsAuth(estado);
+  }
+  return  <AuthContext.Provider value={{isAuth,cambiarEstado}}>{children} </AuthContext.Provider>
 }
-export const  useAuth = ()=> useContext(AuthContext);
+export const  useAuth = ()=> {return useContext(AuthContext)};
