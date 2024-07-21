@@ -32,20 +32,44 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "gastos",
-    element: <Gastos />,
+    path: "/",
+    element: <Protected />,
+    children: [
+      {
+        path: "gastos",
+        element: <Gastos />,
+      },
+    ],
   },
   {
-    path: "ingresarGasto",
-    element: <IngresarGasto />,
+    path: "/",
+    element: <Protected />,
+    children: [
+      {
+        path: "ingresarGasto",
+        element: <IngresarGasto />,
+      },
+    ],
   },
   {
-    path: "ingresos",
-    element: <Ingresos />,
+    path: "/",
+    element: <Protected />,
+    children: [
+      {
+        path: "ingresos",
+        element: <Ingresos />,
+      },
+    ],
   },
   {
-    path: "calculos",
-    element: <Calculos />,
+    path: "/",
+    element: <Protected />,
+    children: [
+      {
+        path: "calculos",
+        element: <Calculos />,
+      },
+    ],
   },
 ]);
 

@@ -9,7 +9,7 @@ function Gastos() {
   const editContext = useContext(GastosContext);
    async function obtenerLosGastos(){
     const gastos = await obtenerGastos();
-    editContext.setDataGastos(gastos);
+    editContext.setData(gastos);
   }
   useEffect(()=>{
     obtenerLosGastos();
@@ -51,7 +51,7 @@ function Gastos() {
         {editContext.isNew? <IngresarGasto/>:null}
         <div className="container-gasto">
           <ul>
-            {editContext.dataGastos.map((element) => (
+            {editContext.data.map((element) => (
               <div key={element.id}>
                 <li>
                   {element.fecha}
@@ -64,12 +64,12 @@ function Gastos() {
               </div>
             ))}
           </ul>
-          {editContext.isEdit ? (
+        </div>
+        {editContext.isEdit ? (
             <div>
                 <EditarGastos />
             </div>
           ) : null}
-        </div>
       </DefaultPage>
     </div>
   );
