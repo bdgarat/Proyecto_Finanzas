@@ -1,9 +1,10 @@
 import React, { useEffect,useContext } from 'react'
 import DefaultPage from '../../components/defaultPage/DefaultPage';
 import { GastosContext } from '../../utils/context/GastosContextP';
-import { getIngresos } from '../../utils/requests/peticionesIngresos';
+import { getIngresos, removeIngreso } from '../../utils/requests/peticionesIngresos';
 import NuevoIngreso from './NuevoIngreso';
-
+import EditarIngresos from './EditarIngresos';
+import Swal from 'sweetalert2';
 function Ingresos() {
   const context = useContext(GastosContext);
   useEffect(()=>{
@@ -13,6 +14,33 @@ function Ingresos() {
   {
     const response = await getIngresos();
     context.setData(response);
+  }
+  function handleEdit(element)
+  {
+    context.isEdit ? context.setIsEdit(false):context.setIsEdit(true);
+    context.setDataEditable(element);
+  }
+  async function handleRemove(id)
+  {
+    const response = await removeIngreso(id);
+    if (response == 200) {
+      Swal.fire({
+        title: "Se elimino correctamente",
+        text: "Se elimino su gasto correctamente",
+        icon: "success",
+      }).then((event) => {
+        if (event.isConfirmed) {
+          editContext.setIsEdit(false);
+        }
+      });
+      editContext.setData(await obtenerGastos());
+    } else {
+      Swal.fire({
+        title: "No se pudo eliminar",
+        text: "No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
+        icon: "error",
+      });
+    }
   }
   return (
     <div>
@@ -24,11 +52,12 @@ function Ingresos() {
             
             <div key={element.id}>
               <li>{element.monto}{element.tipo}{element.fecha}{element.descripcion}</li>
-              <button>Eidtar</button>
-              <button>Eliminar</button>
+              <button onClick={()=>{handleEdit(element)}}>Eidtar</button>
+              <button onClick={()=>{handleRemove(element.id)}}>Eliminar</button>
             </div>
           ))}
         </ul>
+        {context.isEdit?<EditarIngresos/>:null}
       </DefaultPage>
     </div>
   );

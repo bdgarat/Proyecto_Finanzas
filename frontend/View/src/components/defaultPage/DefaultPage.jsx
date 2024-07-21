@@ -15,9 +15,6 @@ function DefaultPage({children}) {
               <Link to="/ingresos" className="">
                 Ingresos
               </Link>
-              <Link to="/calculos" className="">
-                Calculos
-              </Link>
             </ul>
           </div>
         </nav>

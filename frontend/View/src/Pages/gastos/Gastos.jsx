@@ -32,7 +32,7 @@ function Gastos() {
           editContext.setIsEdit(false);
         }
       });
-      editContext.setDataGastos(await obtenerGastos());
+      editContext.setData(await obtenerGastos());
     } else {
       Swal.fire({
         title: "No se pudo eliminar",
