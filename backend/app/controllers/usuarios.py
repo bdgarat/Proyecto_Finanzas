@@ -35,6 +35,8 @@ def saldo(current_user):
     return jsonify({
         'saldo': saldo
     }), 200
+
+
 @bp.route('/list', methods=['GET'])
 @cross_origin()
 @token_required
@@ -48,10 +50,19 @@ def get_all_users(current_user):
             'message': 'No tiene permisos para esta operación'
         }), 401
 
+    page_number = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=10, type=int)
+    if page_size <= 0 or page_number <= 0:
+        return jsonify({
+            'message': 'Los campos de paginado no admiten valores negativos o cero'
+        }), 403
+    page_start = ((page_number - 1) * page_size)
+    page_end = page_start + (page_size - 1)
+
     # converting the query objects
     # to list of jsons
     output = []
-    for usuario in usuarios:
+    for usuario in usuarios[page_start:page_end + 1]:
         # appending the user data json
         # to the response list
         output.append({
@@ -60,11 +71,18 @@ def get_all_users(current_user):
             'email': usuario.email,
             'created_on': usuario.created_on,
             'last_updated_on': usuario.last_updated_on,
+            'last_login': usuario.last_login,
             'is_admin': usuario.is_admin,
             'is_verified': usuario.is_verified
         })
 
-    return jsonify({'usuarios': output}), 200
+    next_page = page_number + 1 if (len(usuarios) - 1) > page_end else None
+    return jsonify({'total_entries': len(usuarios),
+                    'page': page_number,
+                    'page_size': page_size,
+                    'next_page': next_page,
+                    'usuarios': output}), 200
+
 
 
 @bp.route('/whoami', methods=['GET'])

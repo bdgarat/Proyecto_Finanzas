@@ -8,6 +8,8 @@ from sqlalchemy import and_
 from app.models.ingresos import Ingreso
 from app.models.usuarios import Usuario
 
+from app.utils.paginated_query import paginated_query
+
 bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
 
 
@@ -17,6 +19,9 @@ bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
 @cross_origin()
 @token_required
 def get_all(current_user):
+    """Devuelve un JSON con info de todos los ingresos generados por un usuario"""
+    page_number = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=10, type=int)
     # Me fijo si el usuario logueado (token) es admin
     current_user: Usuario
     if current_user.is_admin: # Si es admin, traigo los ingresos de todos los usuarios
@@ -25,27 +30,17 @@ def get_all(current_user):
         ingresos = Ingreso.query.filter_by(id_usuario=current_user.get_id()).all()
     # converting the query objects
     # to list of jsons
-    output = []
-    for ingreso in ingresos:
-        # appending the user data json
-        # to the response list
-        output.append({
-            'id': ingreso.id,
-            'monto': ingreso.monto,
-            'descripcion': ingreso.descripcion,
-            'fecha': ingreso.fecha,
-            'tipo': ingreso.tipo,
-            'id_usuario': ingreso.id_usuario
-        })
-
-    return jsonify({'ingresos': output}), 200
+    return paginated_query(page_number, page_size, ingresos, "ingresos")
 
 
 @bp.route('/get_all_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
 def get_all_by_monto(current_user):
-    # Me fijo si el usuario logueado (token) es admin
+    """Devuelve un JSON con info de todos los ingresos generados por un usuario en base al monto"""
+    page_number = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=10, type=int)
+
     try:
         monto = request.json['value']
     except KeyError:
@@ -58,17 +53,8 @@ def get_all_by_monto(current_user):
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
         ingresos = Ingreso.query.filter_by(id_usuario=current_user.get_id(), monto=monto).all()
     # convierto la lista obtenida a coleccion de json
-    output = []
-    for ingreso in ingresos:
-        output.append({
-            'id': ingreso.id,
-            'monto': ingreso.monto,
-            'descripcion': ingreso.descripcion,
-            'fecha': ingreso.fecha,
-            'tipo': ingreso.tipo,
-            'id_usuario': ingreso.id_usuario
-        })
-    return jsonify({'ingresos': output}), 200
+
+    return paginated_query(page_number, page_size, ingresos, "ingresos")
 
 
 
@@ -76,6 +62,7 @@ def get_all_by_monto(current_user):
 @cross_origin()
 @token_required
 def get_first_by_monto(current_user):
+    """Devuelve un JSON con info del primer ingreso generado por un usuario en base al monto"""
     # Me fijo si el usuario logueado (token) es admin
     try:
         monto = request.json['value']
@@ -104,7 +91,10 @@ def get_first_by_monto(current_user):
 @cross_origin()
 @token_required
 def get_all_between_fechas(current_user):
-    # Me fijo si el usuario logueado (token) es admin
+    """Devuelve un JSON con info de todos los ingresos generados por un usuario entre la fecha inicio y fecha fin"""
+    page_number = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=10, type=int)
+
     try:
         fecha_inicio = request.json['fecha_inicio']
         fecha_fin = request.json['fecha_fin']
@@ -122,25 +112,17 @@ def get_all_between_fechas(current_user):
             Ingreso.id_usuario == current_user.get_id(),
             and_(Ingreso.fecha >= fecha_inicio, Ingreso.fecha <= fecha_fin)
         ).all()
-    # convierto la lista obtenida a coleccion de json
-    output = []
-    for ingreso in ingresos:
-        output.append({
-            'id': ingreso.id,
-            'monto': ingreso.monto,
-            'descripcion': ingreso.descripcion,
-            'fecha': ingreso.fecha,
-            'tipo': ingreso.tipo,
-            'id_usuario': ingreso.id_usuario
-        })
-    return jsonify({'ingresos': output}), 200
 
+    return paginated_query(page_number, page_size, ingresos, "ingresos")
 
 @bp.route('/get_all_by_tipo', methods=['GET'])
 @cross_origin()
 @token_required
 def get_all_by_tipo(current_user):
-    # Me fijo si el usuario logueado (token) es admin
+    """Devuelve un JSON con info de todos los ingresos generados por un usuario en base al tipo"""
+    page_number = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=10, type=int)
+
     try:
         tipo = request.json['value']
     except KeyError:
@@ -153,23 +135,15 @@ def get_all_by_tipo(current_user):
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
         ingresos = Ingreso.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).all()
     # convierto la lista obtenida a coleccion de json
-    output = []
-    for ingreso in ingresos:
-        output.append({
-            'id': ingreso.id,
-            'monto': ingreso.monto,
-            'descripcion': ingreso.descripcion,
-            'fecha': ingreso.fecha,
-            'tipo': ingreso.tipo,
-            'id_usuario': ingreso.id_usuario
-        })
-    return jsonify({'ingresos': output}), 200
+
+    return paginated_query(page_number, page_size, ingresos, "ingresos")
 
 
 @bp.route('/get_first_by_tipo', methods=['GET'])
 @cross_origin()
 @token_required
 def get_first_by_tipo(current_user):
+    """Devuelve un JSON con info del primer ingreso generados por un usuario en base al tipo"""
     # Me fijo si el usuario logueado (token) es admin
     try:
         tipo = request.json['value']
@@ -198,7 +172,7 @@ def get_first_by_tipo(current_user):
 @cross_origin()
 @token_required
 def add(current_user):
-
+    """Agrega un ingreso al usuario logueado"""
     # Obtengo los datos necesarios para crear el elemento desde json enviado en el body
     try:
         descripcion = request.json["descripcion"]
@@ -252,7 +226,7 @@ def add(current_user):
 @cross_origin()
 @token_required
 def update(current_user):
-
+    """Actualiza un ingreso al usuario logueado"""
     # Obtengo los datos necesarios para actualizar el elemento desde json enviado en el body
     try:
         id_ingreso = request.json["id"]
@@ -319,6 +293,7 @@ def update(current_user):
 @cross_origin()
 @token_required
 def delete(current_user):
+    """Elimina un ingreso al usuario logueado"""
     # Obtengo los datos necesarios para eliminar el elemento desde json enviado en el body
     try:
         id_ingreso = request.json["id"]

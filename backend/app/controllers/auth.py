@@ -18,6 +18,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/login', methods=['POST'])
 @cross_origin()
 def user_login():
+    """Realiza el login del usuario"""
     # creates dictionary of form data
     try:
         username = request.json["username"]
@@ -46,7 +47,12 @@ def user_login():
             'id': usuario.id,
             'exp': datetime.datetime.now() + datetime.timedelta(hours=120)
         }, app.config['SECRET_KEY'])
+
+        usuario.last_login = datetime.datetime.now()
+        usuario.update()
+
         return jsonify({'token': token}), 200
+
     # returns 403 if password is wrong
     return jsonify({
             'message': 'Username o password invalidos' # 'Password incorrecta'
@@ -57,6 +63,7 @@ def user_login():
 @bp.route('/signup', methods=['POST'])
 @cross_origin()
 def user_signup():
+    """Genera un nuevo usuario"""
     try:
         username = request.json["username"]
         password = request.json["password"]

@@ -21,11 +21,10 @@ class Usuario(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(_email_char_limit))
     created_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now()) #default=lambda: datetime.now(timezone.utc))
     last_updated_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now(), server_onupdate=db.func.now())
+    last_login: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now())
     imagen: so.Mapped[Optional[LargeBinary]] = so.mapped_column(sa.LargeBinary)
-    # saldo_actual: so.Mapped[float] = so.mapped_column(sa.Float)
     is_admin: so.Mapped[bool] = so.mapped_column(sa.Boolean)
     is_verified: so.Mapped[bool] = so.mapped_column(sa.Boolean)
-    # is_deleted: so.Mapped[bool] = so.mapped_column(sa.Boolean)
 
     def __init__(self, username, password_hash, email, imagen = None, is_admin = False, is_verified = False):
         self.username = username
@@ -40,10 +39,6 @@ class Usuario(UserMixin, db.Model):
 
     def __repr__(self):
         return '<Usuario {}>'.format(self.username)
-
-    """@login.user_loader
-    def load_user(user_id):
-        return db.session.get(Usuario, int(user_id))"""
 
     @property
     def username_char_limit(self):
@@ -74,31 +69,3 @@ class Usuario(UserMixin, db.Model):
         """Elimina un usuario de la base de datos"""
         db.session.delete(self)
         db.session.commit()
-
-
-# Deprecated methods
-
-'''    def get_saldo(self):
-        """Devuelve el saldo actual del usuario"""
-        return self._saldo_actual
-
-
-    def add_imagen(self, imagen):
-        """Agrega la imagen al perfil del usuario"""
-        self._imagen = imagen
-        db.session.commit()
-
-    def substract_monto(self, unMonto: float) -> bool:
-        """Le quita a monto el valor traido por parametro y devuelve True. Si no se puede, no hace nada y devuelve False"""
-        if unMonto > self._saldo_actual:
-            return False
-        else:
-            self._saldo_actual -= unMonto
-            db.session.commit()
-            return True
-
-    def add_monto(self, unMonto: float) -> float:
-        """Le suma a monto el valor traido por parametro y devuelve el nuevo monto"""
-        self._saldo_actual += unMonto
-        db.session.commit()
-        return True'''
