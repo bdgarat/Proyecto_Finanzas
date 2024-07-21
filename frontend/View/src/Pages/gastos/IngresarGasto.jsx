@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import {setGasto} from './../../utils/requests/peticionGastos'
+import React, { useContext, useState } from 'react'
+import {obtenerGastos, setGasto} from './../../utils/requests/peticionGastos'
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { GastosContext } from '../../utils/context/GastosContextP';
 function IngresarGasto() {
-  const goTo = useNavigate();
+  const gastosContext = useContext(GastosContext)
   const [data, setData] = useState({
     gasto: 0,
     tipo: "",
@@ -23,7 +23,6 @@ function IngresarGasto() {
   async function handleSubmit(event) {
     event.preventDefault();
     let access = localStorage.getItem("access");
-    console.log(access);
     let respuesta = await setGasto(data,access);
     if(respuesta == 201)
     {
@@ -31,7 +30,12 @@ function IngresarGasto() {
             title:"Se ingreso correctamente",
             text:"Se ingreso su gasto correctamente",
             icon:"success"
-        }).then()
+        }).then((event)=>{
+          if(event.isConfirmed){
+            gastosContext.setIsNew(false);
+          }
+        })
+        gastosContext.setDataGastos(await obtenerGastos());
     }else
     {
         Swal.fire({
@@ -75,7 +79,7 @@ function IngresarGasto() {
         placeholder="describa que fue en lo que gasto"
       ></textarea>
       <input type="submit" content="enviar" />
-      <button onClick={()=>{goTo('/gastos')}}>Volver</button>
+      <button onClick={()=>{gastosContext.setIsNew(false)}}>Volver</button>
     </form>
   );
 }

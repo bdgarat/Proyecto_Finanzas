@@ -9,15 +9,13 @@ function Dashboard() {
   {
     localStorage.removeItem("access");
     auth.isAuth = false;
-    navigate('/');
+    navigate("/");
   }
-  console.log(auth.isAuth);
   return (
     <div>
       <DefaultPage>
         <button onClick={borrarCredenciales}>Deslogearse</button>
       </DefaultPage>
-
     </div>
   )
 }

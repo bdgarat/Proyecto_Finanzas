@@ -9,52 +9,54 @@ import './App.css'
 import Protected from './Pages/Protected';
 import { AuthProvider } from './Auth/AuthProvider';
 import IngresarGasto from './Pages/gastos/IngresarGasto';
+import GastosContextP from './utils/context/GastosContextP';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />
+    element: <LoginPage />,
   },
-  
+
   {
-    path: 'register',
-    element: <Register />
+    path: "register",
+    element: <Register />,
   },
   {
-    path: '/',
-    element: <Protected/>,
+    path: "/",
+    element: <Protected />,
     children: [
       {
-        path:"dashboard",
-        element:<Dashboard/>
-      }
-    ]
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+    ],
   },
   {
-    path:"gastos",
-    element:<Gastos/>
+    path: "gastos",
+    element: <Gastos />,
   },
   {
-    path:"ingresarGasto",
-    element:<IngresarGasto/>
+    path: "ingresarGasto",
+    element: <IngresarGasto />,
   },
   {
-    path:"ingresos",
-    element:<Ingresos/>
+    path: "ingresos",
+    element: <Ingresos />,
   },
   {
-    path:"calculos",
-    element:<Calculos/>
-  }
-  
-])
+    path: "calculos",
+    element: <Calculos />,
+  },
+]);
 
 export default function App() {
   return (
     <div>
+      <GastosContextP>
         <AuthProvider>
-          <RouterProvider router={router} />  
+          <RouterProvider router={router} />
         </AuthProvider>
+      </GastosContextP>
     </div>
   );
 }

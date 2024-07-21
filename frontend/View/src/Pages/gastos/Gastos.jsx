@@ -1,29 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
 import DefaultPage from '../../components/defaultPage/DefaultPage';
-import { obtenerGastos } from '../../utils/requests/peticionGastos';
+import { obtenerGastos, removeGasto } from '../../utils/requests/peticionGastos';
 import EditarGastos from './EditarGastos';
-import { MyEditContext } from '../../utils/context/contextEditGasto';
+import { GastosContext } from '../../utils/context/GastosContextP';
+import IngresarGasto from './IngresarGasto';
+import Swal from 'sweetalert2';
 function Gastos() {
-  const goTo = useNavigate();
-  const [data,setData] = useState([]);
-  const[mostrarEditar,setMostrarEditar] = useState(false);
-  async function obtenerLosGastos(){
+  const editContext = useContext(GastosContext);
+   async function obtenerLosGastos(){
     const gastos = await obtenerGastos();
-    setData(gastos);
+    editContext.setDataGastos(gastos);
   }
   useEffect(()=>{
     obtenerLosGastos();
   },[])
+  function handleEdit(element)
+  {
+    editContext.isEdit ? editContext.setIsEdit(false):editContext.setIsEdit(true);
+    editContext.setDataEditable(element);
+  }
+  async function handleRemove(id)
+  {
+    const response = await removeGasto(id);
+    if (response == 200) {
+      Swal.fire({
+        title: "Se elimino correctamente",
+        text: "Se elimino su gasto correctamente",
+        icon: "success",
+      }).then((event) => {
+        if (event.isConfirmed) {
+          editContext.setIsEdit(false);
+        }
+      });
+      editContext.setDataGastos(await obtenerGastos());
+    } else {
+      Swal.fire({
+        title: "No se pudo eliminar",
+        text: "No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
+        icon: "error",
+      });
+    }
+  }
+  
   return (
     <div>
       <DefaultPage>
-        <button onClick={() => goTo("/ingresarGasto")}>
+        <button onClick={() => editContext.isNew? editContext.setIsNew(false):editContext.setIsNew(true)}>
           Agregar un nuevo gasto
         </button>
+        {editContext.isNew? <IngresarGasto/>:null}
         <div className="container-gasto">
           <ul>
-            {data.map((element) => (
+            {editContext.dataGastos.map((element) => (
               <div key={element.id}>
                 <li>
                   {element.fecha}
@@ -31,16 +59,16 @@ function Gastos() {
                   {element.tipo}
                   {element.descripcion}
                 </li>
-                <button>Editar</button>
-                <button>Eliminar</button>
+                <button onClick={()=>handleEdit(element)}>Editar</button>
+                <button onClick={()=>{handleRemove(element.id)}}>Eliminar</button>
               </div>
             ))}
           </ul>
-          {mostrarEditar ? <div>
-            <MyEditContext>
-            <EditarGastos value={{mostrarEditar,setMostrarEditar}} />
-            </MyEditContext>
-          </div>:null}
+          {editContext.isEdit ? (
+            <div>
+                <EditarGastos />
+            </div>
+          ) : null}
         </div>
       </DefaultPage>
     </div>

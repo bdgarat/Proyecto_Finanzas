@@ -1,12 +1,16 @@
-import React,{useState} from 'react'
-import { useNavigate } from 'react-router-dom';
-function EditarGastos() {
-    const goTo = useNavigate();
-  const [data, setData] = useState({
-    gasto: 0,
-    tipo: "",
-    descripcion: "",
-  });
+import React,{useContext, useState} from 'react'
+import Swal from 'sweetalert2';
+import { GastosContext } from '../../utils/context/GastosContextP';
+import { editGasto, obtenerGastos } from '../../utils/requests/peticionGastos';
+function EditarGastos({}) {
+    //const mostratEditar= useContext(MyEditContext)
+    const editContext = useContext(GastosContext);
+    const [data, setData] = useState({
+      id: editContext.dataEditable.id,
+      gasto: editContext.dataEditable.monto,
+      tipo: editContext.dataEditable.tipo,
+      descripcion: editContext.dataEditable.descripcion,
+    });
   //Esta función se ejecuta cada ves que cambia el valor de los inputs. Guarda los valores en el estado data
   //Se utiliza la etiqueta "name" de cada input para que se pueda referenciar al campo correcto de data,
   //y se toma el campo value que es el que tiene el valor del contenido actual del campo
@@ -21,19 +25,24 @@ function EditarGastos() {
   async function handleSubmit(event) {
     event.preventDefault();
     let access = localStorage.getItem("access");
-    console.log(access);
-    let respuesta = await setGasto(data,access);
-    if(respuesta == 201)
+    let respuesta = await editGasto(data,access);
+    if(respuesta == 200)
     {
         Swal.fire({
-            title:"Se ingreso correctamente",
-            text:"Se ingreso su gasto correctamente",
+            title:"Se edito correctamente",
+            text:"Se edito su gasto correctamente",
             icon:"success"
-        }).then()
+        }).then((event)=>{
+          if(event.isConfirmed)
+          {
+            editContext.setIsEdit(false);
+          }
+        })
+        editContext.setDataGastos(await obtenerGastos());
     }else
     {
         Swal.fire({
-            title:"No se pudo ingresar",
+            title:"No se pudo editar",
             text:"No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
             icon:"error"
         })
@@ -72,10 +81,10 @@ function EditarGastos() {
         }}
         placeholder="describa que fue en lo que gasto"
       ></textarea>
-      <input type="submit" content="enviar" />
+      <input type="submit" content="enviar"  />
       <button
         onClick={() => {
-          goTo("/gastos");
+          editContext.setIsEdit(false);
         }}
       >
         Volver
