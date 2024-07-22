@@ -14,6 +14,25 @@ export async function obtenerGastos()
       console.log(error);
    }
 }
+export async function obtenerGastoPorTipo(tipo)
+{
+   try{
+      let access = localStorage.getItem("access");
+      const response = await axios({
+         method:"get",
+         headers:{'x-access-token':access},
+         url:"127.0.0.1:5000/ingresos/get_all_by_tipo",
+         data:{
+            "value":tipo
+         }
+
+      })
+      console.log(response);
+      response.data;
+   }catch(error){
+      console.log(error);
+   }
+}
 export async function setGasto(data,access){
    try{
       const respuesta = await axios({

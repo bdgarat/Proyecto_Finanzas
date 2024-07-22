@@ -28,7 +28,7 @@ function NuevoIngreso() {
                 icon:"success"
             }).then((event)=>{
               if(event.isConfirmed){
-                gastosContext.setIsNew(false);
+                context.setIsNew(false);
               }
             })
             context.setData(await getIngresos());

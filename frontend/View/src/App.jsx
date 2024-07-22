@@ -4,7 +4,6 @@ import Register from './Pages/register/Register'
 import Dashboard from './Pages/dashboard/Dashboard.';
 import Gastos from './Pages/gastos/Gastos';
 import Ingresos from './Pages/ingresos/Ingresos';
-import Calculos from './Pages/calculos/Calculos';
 import './App.css'
 import Protected from './Pages/Protected';
 import { AuthProvider } from './Auth/AuthProvider';
@@ -58,16 +57,6 @@ const router = createBrowserRouter([
       {
         path: "ingresos",
         element: <Ingresos />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <Protected />,
-    children: [
-      {
-        path: "calculos",
-        element: <Calculos />,
       },
     ],
   },
