@@ -1,0 +1,5 @@
+Ver tema refresh token -OK-
+Paginado en queries -OK-
+Agregar ultimo logueo usuario -OK-
+OAuth2
+Verificar cuenta

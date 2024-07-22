@@ -13,21 +13,35 @@ from app.utils.email_validation import validar_email
 
 from app import config as cfg
 
+def generate_access_token(user_id):
+    return jwt.encode({
+        'id': user_id,
+        'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=15)
+    }, app.config['SECRET_KEY'], algorithm="HS256")
+
+def generate_refresh_token(user_id):
+    return jwt.encode({
+        'id': user_id,
+        'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=7)
+    }, app.config['REFRESH_SECRET_KEY'], algorithm="HS256")
+
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 # route for logging user in
 @bp.route('/login', methods=['POST'])
 @cross_origin()
 def user_login():
+    """Realiza el login del usuario"""
     # creates dictionary of form data
-    try:
-        username = request.json["username"]
-        password = request.json["password"]
-    except KeyError:
+    auth = request.json
+    if not auth or not auth.get('username') or not auth.get('password'):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 401
 
-    usuario = Usuario.query.filter_by(username=username).first()
+    username = auth.get('username')
+    password = auth.get('password')
+
+    usuario: Usuario = Usuario.query.filter_by(username=username).first()
 
     if not usuario:
         # returns 401 if user does not exist
@@ -42,11 +56,16 @@ def user_login():
 
     if check_password_hash(usuario.password_hash, password):
         # generates the JWT Token
-        token = jwt.encode({
-            'id': usuario.id,
-            'exp': datetime.datetime.now() + datetime.timedelta(hours=120)
-        }, app.config['SECRET_KEY'])
-        return jsonify({'token': token}), 200
+        access_token = generate_access_token(usuario.get_id())
+        refresh_token = generate_refresh_token(usuario.get_id())
+
+        usuario.last_login = datetime.datetime.now()
+        usuario.update()
+
+        return jsonify({'access_token': access_token, 'refresh_token': refresh_token})
+
+
+
     # returns 403 if password is wrong
     return jsonify({
             'message': 'Username o password invalidos' # 'Password incorrecta'
@@ -57,6 +76,7 @@ def user_login():
 @bp.route('/signup', methods=['POST'])
 @cross_origin()
 def user_signup():
+    """Genera un nuevo usuario"""
     try:
         username = request.json["username"]
         password = request.json["password"]
@@ -104,3 +124,20 @@ def user_signup():
         return jsonify({
             'message': 'Usuario existente'  # 'Usuario ya existe en la base de datos'
         }), 202
+
+@bp.route('/refresh', methods=['POST'])
+@cross_origin()
+def refresh():
+    token = request.json.get('refresh_token')
+    if not token:
+        return jsonify({'message': 'Token is missing!'}), 401
+
+    try:
+        data = jwt.decode(token, app.config['REFRESH_SECRET_KEY'], algorithms=["HS256"])
+        new_access_token = generate_access_token(data['id'])
+    except jwt.ExpiredSignatureError:
+        return jsonify({'message': 'Refresh token has expired!'}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({'message': 'Refresh token is invalid!'}), 401
+
+    return jsonify({'access_token': new_access_token})

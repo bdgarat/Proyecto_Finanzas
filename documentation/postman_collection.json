@@ -19,8 +19,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "aad985f0-fea5-4372-a08d-6e1eb6b9c4af"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -33,7 +32,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/list",
+							"raw": "127.0.0.1:5000/ingresos/list?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -44,6 +43,16 @@
 							"path": [
 								"ingresos",
 								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -59,8 +68,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "05b76c41-e65c-4918-bace-57ac1f74ec59"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -73,7 +81,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_by_monto",
+							"raw": "127.0.0.1:5000/ingresos/get_all_by_monto?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -84,6 +92,16 @@
 							"path": [
 								"ingresos",
 								"get_all_by_monto"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -99,8 +117,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "ac371dd8-e610-4314-b4d9-4bdc15db5392"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -113,7 +130,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_between_fechas",
+							"raw": "127.0.0.1:5000/ingresos/get_all_between_fechas?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -124,6 +141,16 @@
 							"path": [
 								"ingresos",
 								"get_all_between_fechas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -139,8 +166,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "7fd58e26-a61e-4f29-b0ba-fae6b45dcdd7"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -153,7 +179,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_by_tipo",
+							"raw": "127.0.0.1:5000/ingresos/get_all_by_tipo?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -164,6 +190,16 @@
 							"path": [
 								"ingresos",
 								"get_all_by_tipo"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -179,8 +215,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "716e5258-f1de-452e-8e15-d4011b897127"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -219,8 +254,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "0777ff3c-9a3b-4d0d-9ba2-4c4d9fa2e8b8"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -256,8 +290,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "9e7dc27c-75f7-4c84-a47f-1d506c047f29"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -290,7 +323,13 @@
 					"name": "Actualizar ingreso",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id\": 1,\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
@@ -330,8 +369,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "f6713f7c-f9e0-41cc-b4d2-ac6f7e9bdec4"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -375,8 +413,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "e913b193-42d9-41ba-a09e-b649ae08a99e"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -389,7 +426,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/list",
+							"raw": "127.0.0.1:5000/gastos/list?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -400,6 +437,16 @@
 							"path": [
 								"gastos",
 								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -415,8 +462,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "d2db6c76-7878-4e3c-a02a-6ed0fbc2d011"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -429,7 +475,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_by_monto",
+							"raw": "127.0.0.1:5000/gastos/get_all_by_monto?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -440,6 +486,16 @@
 							"path": [
 								"gastos",
 								"get_all_by_monto"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -455,8 +511,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "393654c0-480a-448d-96b1-f3b7459586ab"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -469,7 +524,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_between_fechas",
+							"raw": "127.0.0.1:5000/gastos/get_all_between_fechas?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -480,6 +535,16 @@
 							"path": [
 								"gastos",
 								"get_all_between_fechas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -495,8 +560,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "543b5325-bc22-49bb-9ad7-2785d0e7217b"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -509,7 +573,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_by_tipo",
+							"raw": "127.0.0.1:5000/gastos/get_all_by_tipo?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -520,6 +584,16 @@
 							"path": [
 								"gastos",
 								"get_all_by_tipo"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -535,8 +609,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "6541114e-15a9-4bd5-83b6-967935b17653"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -575,8 +648,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "a93628cb-9af0-46c8-bcd9-bd487cfc2530"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -612,13 +684,12 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "eccffb66-0b8d-405a-8c8f-2bd78ad8d0bf"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto6\",\r\n    \"monto\": 1,\r\n    \"tipo\": \"Supermercado\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -646,7 +717,13 @@
 					"name": "Actualizar gasto",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id\": 1,\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
@@ -680,8 +757,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "8e3bb4bd-d8c3-41c7-9b49-38908628c701"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -722,8 +798,7 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"uuid": "b6d3def6-b204-45da-b459-c017a7019956"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -769,9 +844,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Save JWT Token\", function () {\r",
+									"pm.test(\"Save login tokens\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.collectionVariables.set(\"JWT_Token\", jsonData.token);\r",
+									"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);\r",
+									"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);\r",
 									"});\r",
 									""
 								],
@@ -785,8 +861,7 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"uuid": "04b6d9b7-60b1-4203-a24b-3d0c34e989a5"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -814,6 +889,59 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Actualizar access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save new access token\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\": \"{{refresh_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/auth/refresh",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -827,12 +955,11 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "fb832c65-bc77-4359-aca2-5ac118c32810"
+								"value": "{{access_token}}"
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/usuarios/list",
+							"raw": "127.0.0.1:5000/usuarios/list?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -843,6 +970,16 @@
 							"path": [
 								"usuarios",
 								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -855,8 +992,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "ad459d96-29f3-416c-9910-17af54e4f048"
+								"value": "{{access_token}}"
 							}
 						],
 						"url": {
@@ -883,8 +1019,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "43d3faae-fa2d-401a-8e20-12142ab00cbd"
+								"value": "{{access_token}}"
 							}
 						],
 						"url": {
@@ -911,8 +1046,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "e7c3ce35-e7bb-4b09-b79b-13a94ed9ffc7"
+								"value": "{{access_token}}"
 							}
 						],
 						"body": {
@@ -948,12 +1082,11 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "{{JWT_Token}}",
-								"uuid": "93558bf2-3d13-480a-ab27-6030864ad4aa"
+								"value": "{{access_token}}"
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/usuarios/whoami",
+							"raw": "127.0.0.1:5000/usuarios/saldo",
 							"host": [
 								"127",
 								"0",
@@ -963,7 +1096,7 @@
 							"port": "5000",
 							"path": [
 								"usuarios",
-								"whoami"
+								"saldo"
 							]
 						}
 					},
@@ -987,6 +1120,14 @@
 		},
 		{
 			"key": "JWT_Token",
+			"value": ""
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
 			"value": ""
 		}
 	]
