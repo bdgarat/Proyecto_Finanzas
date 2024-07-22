@@ -1,7 +1,7 @@
 from functools import wraps
 
 import jwt
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, g
 from flask_cors import CORS, cross_origin
 
 from app.db import db
@@ -38,22 +38,18 @@ def token_required(f):
             token = request.headers['x-access-token']
         # return 401 if token is not passed
         if not token:
-            return jsonify({'message': 'Falta JWT Token'}), 401
+            return jsonify({'message': 'Falta el token'}), 401
 
         try:
             # decoding the payload to fetch the stored details
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
-            current_user = Usuario.query.filter_by(id=data["id"]).first()
-            if not current_user:
-                return jsonify({
-                    'message': 'JWT Token no asociado a ningun usuario'
-                }), 404
-        except:
-            return jsonify({
-                'message': 'JWT Token invalido'
-            }), 401
+            g.user_id = data['id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'El token ha expirado'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'message': 'El token es invalido'}), 401
         # returns the current logged in users context to the routes
-        return f(current_user, *args, **kwargs)
+        return f(*args, **kwargs)
 
     return decorated
 

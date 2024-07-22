@@ -1,8 +1,7 @@
-import jwt
 from flask_cors import cross_origin
 
 from app import token_required
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, g
 from sqlalchemy import and_
 
 from app.models.ingresos import Ingreso
@@ -18,12 +17,12 @@ bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
 @bp.route('/list', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all(current_user):
+def get_all():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario"""
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
     # Me fijo si el usuario logueado (token) es admin
-    current_user: Usuario
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin: # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.all()
     else: # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
@@ -36,7 +35,7 @@ def get_all(current_user):
 @bp.route('/get_all_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all_by_monto(current_user):
+def get_all_by_monto():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario en base al monto"""
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
@@ -47,7 +46,7 @@ def get_all_by_monto(current_user):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
-    current_user: Usuario
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.filter_by(monto=monto).all()
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
@@ -61,7 +60,7 @@ def get_all_by_monto(current_user):
 @bp.route('/get_first_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
-def get_first_by_monto(current_user):
+def get_first_by_monto():
     """Devuelve un JSON con info del primer ingreso generado por un usuario en base al monto"""
     # Me fijo si el usuario logueado (token) es admin
     try:
@@ -70,7 +69,7 @@ def get_first_by_monto(current_user):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
-    current_user: Usuario
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingreso = Ingreso.query.filter_by(monto=monto).first()
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
@@ -90,7 +89,7 @@ def get_first_by_monto(current_user):
 @bp.route('/get_all_between_fechas', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all_between_fechas(current_user):
+def get_all_between_fechas():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario entre la fecha inicio y fecha fin"""
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
@@ -102,7 +101,7 @@ def get_all_between_fechas(current_user):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
-    current_user: Usuario
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.filter(
             Ingreso.fecha >= fecha_inicio, Ingreso.fecha <= fecha_fin
@@ -118,7 +117,7 @@ def get_all_between_fechas(current_user):
 @bp.route('/get_all_by_tipo', methods=['GET'])
 @cross_origin()
 @token_required
-def get_all_by_tipo(current_user):
+def get_all_by_tipo():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario en base al tipo"""
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
@@ -129,7 +128,7 @@ def get_all_by_tipo(current_user):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
-    current_user: Usuario
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.filter_by(tipo=tipo).all()
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
@@ -142,7 +141,7 @@ def get_all_by_tipo(current_user):
 @bp.route('/get_first_by_tipo', methods=['GET'])
 @cross_origin()
 @token_required
-def get_first_by_tipo(current_user):
+def get_first_by_tipo():
     """Devuelve un JSON con info del primer ingreso generados por un usuario en base al tipo"""
     # Me fijo si el usuario logueado (token) es admin
     try:
@@ -151,7 +150,7 @@ def get_first_by_tipo(current_user):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
-    current_user: Usuario
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingreso = Ingreso.query.filter_by(tipo=tipo).first()
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
@@ -171,7 +170,7 @@ def get_first_by_tipo(current_user):
 @bp.route('/add', methods=['POST'])
 @cross_origin()
 @token_required
-def add(current_user):
+def add():
     """Agrega un ingreso al usuario logueado"""
     # Obtengo los datos necesarios para crear el elemento desde json enviado en el body
     try:
@@ -187,9 +186,6 @@ def add(current_user):
     except KeyError:
         fecha = None
 
-    # Obtengo el id de usuario del token
-    current_user: Usuario
-    id_usuario = current_user.get_id()
 
     # ---------- INICIO DE VALIDACIONES ---------------------
 
@@ -204,7 +200,7 @@ def add(current_user):
         }), 403
 
     # Creo el elemento
-    ingreso = Ingreso(id_usuario, descripcion, monto, tipo, fecha)
+    ingreso = Ingreso(g.user_id, descripcion, monto, tipo, fecha)
 
     if len(descripcion) > ingreso.descripcion_char_limit or len(tipo) > ingreso.tipo_char_limit: # 'superan los caracteres maximos permitidos'
         return jsonify({
@@ -225,7 +221,7 @@ def add(current_user):
 @bp.route('/update', methods=['PUT'])
 @cross_origin()
 @token_required
-def update(current_user):
+def update():
     """Actualiza un ingreso al usuario logueado"""
     # Obtengo los datos necesarios para actualizar el elemento desde json enviado en el body
     try:
@@ -243,8 +239,7 @@ def update(current_user):
         fecha = None
 
     # Obtengo el id de usuario del token
-    current_user: Usuario
-    id_usuario = current_user.get_id()
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
 
     # ---------- INICIO DE VALIDACIONES ---------------------
 
@@ -261,7 +256,7 @@ def update(current_user):
     # Busco el elemento
     ingreso = Ingreso.query.filter_by(id=id_ingreso).first()
 
-    if not (ingreso and (current_user.is_admin or ingreso.id_usuario != id_usuario)):
+    if not (ingreso and (current_user.is_admin or ingreso.id_usuario != g.user_id)):
         return jsonify({
             'message': 'No se ha encontrado el elemento'
         }), 404
@@ -292,7 +287,7 @@ def update(current_user):
 @bp.route('/delete', methods=['DELETE'])
 @cross_origin()
 @token_required
-def delete(current_user):
+def delete():
     """Elimina un ingreso al usuario logueado"""
     # Obtengo los datos necesarios para eliminar el elemento desde json enviado en el body
     try:
@@ -302,12 +297,11 @@ def delete(current_user):
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
     # Obtengo el id de usuario del token
-    current_user: Usuario
-    id_usuario = current_user.get_id()
+    current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
 
     ingreso = Ingreso.query.filter_by(id=id_ingreso).first()
 
-    if not (ingreso and (current_user.is_admin or ingreso.id_usuario != id_usuario)):
+    if not (ingreso and (current_user.is_admin or ingreso.id_usuario != g.user_id)):
         return jsonify({
             'message': 'No se ha encontrado el elemento'
         }), 404
