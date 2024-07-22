@@ -56,6 +56,17 @@ $ flask db migrate
 $ flask db upgrade
 ```
 
+IMPORTANTE: En caso de que exista algun error en la migracion de modelos a db, borrar el directorio "backend/migrations" y ejecutar las siguientes instrucciones:
+
+```bash
+# Inicializa el servicio de migraciones a db
+$ flask db init
+# Agregar los cambios de modelos a db
+$ flask db migrate
+# Commitear los cambios de modelos a db
+$ flask db upgrade
+```
+
 Hecho esto, ejecutar el backend con el siguiente comando:
 
 ```bash
