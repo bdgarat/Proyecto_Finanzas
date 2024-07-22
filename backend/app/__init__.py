@@ -1,6 +1,6 @@
 from functools import wraps
 
-import jwt
+import jwt, datetime
 from flask import Flask, request, jsonify, g
 from flask_cors import CORS, cross_origin
 
@@ -21,6 +21,7 @@ app.config[
     "SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{db_config.get('USER')}:{db_config.get('PASSWORD')}@{db_config.get('HOST')}/{db_config.get('DATABASE')}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = cfg.SECRET_KEY
+app.config["REFRESH_SECRET_KEY"] = cfg.REFRESH_SECRET_KEY
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 db.init_app(app)

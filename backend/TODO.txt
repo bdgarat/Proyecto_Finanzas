@@ -1,4 +1,4 @@
-Ver tema refresh token
+Ver tema refresh token -OK-
 Paginado en queries -OK-
 Agregar ultimo logueo usuario -OK-
 OAuth2
