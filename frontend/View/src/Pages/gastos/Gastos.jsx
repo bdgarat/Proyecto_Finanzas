@@ -5,6 +5,7 @@ import EditarGastos from './EditarGastos';
 import { GastosContext } from '../../utils/context/GastosContextP';
 import IngresarGasto from './IngresarGasto';
 import Swal from 'sweetalert2';
+import FilterMenu from '../../components/FilterMenu';
 function Gastos() {
   const editContext = useContext(GastosContext);
    async function obtenerLosGastos(){
@@ -27,12 +28,11 @@ function Gastos() {
         title: "Se elimino correctamente",
         text: "Se elimino su gasto correctamente",
         icon: "success",
-      }).then((event) => {
+      }).then(async(event) => {
         if (event.isConfirmed) {
-          editContext.setIsEdit(false);
+          editContext.setData(await obtenerGastos());
         }
       });
-      editContext.setData(await obtenerGastos());
     } else {
       Swal.fire({
         title: "No se pudo eliminar",
@@ -45,6 +45,7 @@ function Gastos() {
   return (
     <div>
       <DefaultPage>
+        <FilterMenu/>
         <button onClick={() => editContext.isNew? editContext.setIsNew(false):editContext.setIsNew(true)}>
           Agregar un nuevo gasto
         </button>

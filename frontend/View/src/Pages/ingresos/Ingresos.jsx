@@ -28,12 +28,13 @@ function Ingresos() {
         title: "Se elimino correctamente",
         text: "Se elimino su gasto correctamente",
         icon: "success",
-      }).then((event) => {
-        if (event.isConfirmed) {
-          editContext.setIsEdit(false);
+        cancelButtonText:"Cancelar"
+      }).then(async(event)=>{
+        if(event.isConfirmed)
+        {
+          context.setData( await obtenerIngresos());
         }
-      });
-      editContext.setData(await obtenerGastos());
+      })
     } else {
       Swal.fire({
         title: "No se pudo eliminar",
