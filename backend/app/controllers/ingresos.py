@@ -1,3 +1,5 @@
+import datetime
+
 from flask_cors import cross_origin
 
 from app import token_required
@@ -21,15 +23,25 @@ def get_all():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario"""
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
-    # Me fijo si el usuario logueado (token) es admin
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
-    if current_user.is_admin: # Si es admin, traigo los ingresos de todos los usuarios
+    if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.all()
-    else: # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
+    else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
         ingresos = Ingreso.query.filter_by(id_usuario=current_user.get_id()).all()
+
     # converting the query objects
     # to list of jsons
-    return paginated_query(page_number, page_size, ingresos, "ingresos")
+    output = []
+    for content in ingresos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Ingresos")
 
 
 @bp.route('/get_all_by_monto', methods=['GET'])
@@ -37,38 +49,51 @@ def get_all():
 @token_required
 def get_all_by_monto():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario en base al monto"""
-    page_number = request.args.get('page', default=1, type=int)
-    page_size = request.args.get('page_size', default=10, type=int)
 
     try:
-        monto = request.json['value']
-    except KeyError:
+        monto = float(request.args.get('monto'))
+    except (ValueError, TypeError):
+        return jsonify({"message": "El monto ingresado es invalido"}), 400
+
+    # Realizo los seteos necesarios para el paginado
+    page_number = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=10, type=int)
+    if page_size <= 0 or page_number <= 0:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+            'message': 'Los campos de paginado no admiten valores negativos o cero'
+        }), 400
+    # Me fijo si el usuario logueado (token) es admin
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingresos = Ingreso.query.filter_by(monto=monto).all()
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
         ingresos = Ingreso.query.filter_by(id_usuario=current_user.get_id(), monto=monto).all()
-    # convierto la lista obtenida a coleccion de json
 
-    return paginated_query(page_number, page_size, ingresos, "ingresos")
-
-
+    # converting the query objects
+    # to list of jsons
+    output = []
+    for content in ingresos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Ingresos")
 
 @bp.route('/get_first_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
 def get_first_by_monto():
-    """Devuelve un JSON con info del primer ingreso generado por un usuario en base al monto"""
-    # Me fijo si el usuario logueado (token) es admin
+    """Devuelve un JSON con info de el primer ingreso en base al monto"""
+
     try:
-        monto = request.json['value']
-    except KeyError:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        monto = float(request.args.get('monto'))
+    except (ValueError, TypeError):
+        return jsonify({"message": "El monto ingresado es invalido"}), 400
+
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
         ingreso = Ingreso.query.filter_by(monto=monto).first()
@@ -91,70 +116,118 @@ def get_first_by_monto():
 @token_required
 def get_all_between_fechas():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario entre la fecha inicio y fecha fin"""
+    # Realizo los seteos necesarios para el paginado
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
-
-    try:
-        fecha_inicio = request.json['fecha_inicio']
-        fecha_fin = request.json['fecha_fin']
-    except KeyError:
+    if page_size <= 0 or page_number <= 0:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+            'message': 'Los campos de paginado no admiten valores negativos o cero'
+        }), 400
+    # Obtengo el rango de fechas a buscar
+    fecha_inicio = request.args.get('fecha_inicio')
+    fecha_fin = request.args.get('fecha_fin')
+    try:
+        fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d') # Formato con fecha y hora: '%Y-%m-%d %H:%M:%S'
+        fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d') # Formato con fecha y hora: '%Y-%m-%d %H:%M:%S'
+    except ValueError:
+        return jsonify({'error': 'Formato de fecha incorrecto'}), 400
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
-    if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
+    if current_user.is_admin:  # Si es admin, traigo los elementos de todos los usuarios
         ingresos = Ingreso.query.filter(
             Ingreso.fecha >= fecha_inicio, Ingreso.fecha <= fecha_fin
         ).all()
-    else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
+    else:  # Si NO es admin, traigo solo los elementos que le pertenecen al usuario logueado
         ingresos = Ingreso.query.filter(
             Ingreso.id_usuario == current_user.get_id(),
             and_(Ingreso.fecha >= fecha_inicio, Ingreso.fecha <= fecha_fin)
         ).all()
+    # converting the query objects
+    # to list of jsons
+    output = []
+    for content in ingresos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Ingresos")
 
-    return paginated_query(page_number, page_size, ingresos, "ingresos")
 
 @bp.route('/get_all_by_tipo', methods=['GET'])
 @cross_origin()
 @token_required
 def get_all_by_tipo():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario en base al tipo"""
+    # Realizo los seteos necesarios para el paginado
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
-
-    try:
-        tipo = request.json['value']
-    except KeyError:
+    if page_size <= 0 or page_number <= 0:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+            'message': 'Los campos de paginado no admiten valores negativos o cero'
+        }), 400
+
+    # Obtengo el tipo de ingreso
+    tipo = request.args.get('tipo')
+    if not tipo:
+        return jsonify({
+            'message': 'El tipo ingresado es invalido'
+        }), 400
+
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
-        ingresos = Ingreso.query.filter_by(tipo=tipo).all()
+        # ingresos = Ingreso.query.filter_by(tipo=tipo).all()
+        ingresos = Ingreso.query.filter(
+            Ingreso.tipo.like(f'%{tipo}%')
+        ).all()
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
-        ingresos = Ingreso.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).all()
+        # ingresos = Ingreso.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).all()
+        ingresos = Ingreso.query.filter(
+            Ingreso.id_usuario == current_user.get_id(),
+            Ingreso.tipo.like(f'%{tipo}%')
+        ).all()
     # convierto la lista obtenida a coleccion de json
 
-    return paginated_query(page_number, page_size, ingresos, "ingresos")
+    # converting the query objects
+    # to list of jsons
+    output = []
+    for content in ingresos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Ingresos")
 
 
 @bp.route('/get_first_by_tipo', methods=['GET'])
 @cross_origin()
 @token_required
-def get_first_by_tipo():
+def get_first_gasto_by_tipo():
     """Devuelve un JSON con info del primer ingreso generados por un usuario en base al tipo"""
-    # Me fijo si el usuario logueado (token) es admin
-    try:
-        tipo = request.json['value']
-    except KeyError:
+
+    # Obtengo el tipo de ingreso
+    tipo = request.args.get('tipo')
+    if not tipo:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+            'message': 'El tipo ingresado es invalido'
+        }), 400
+
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los ingresos de todos los usuarios
-        ingreso = Ingreso.query.filter_by(tipo=tipo).first()
+        ingreso = Ingreso.query.filter(
+            Ingreso.tipo.like(f'%{tipo}%')
+        ).first()
     else:  # Si NO es admin, traigo solo los ingresos que le pertenecen al usuario logueado
-        ingreso = Ingreso.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).first()
+        ingreso = Ingreso.query.filter(
+            Ingreso.id_usuario == current_user.get_id(),
+            Ingreso.tipo.like(f'%{tipo}%')
+        ).first()
     # Convierto el ingreso traido a json
     output = {
         'id': ingreso.id,
@@ -180,7 +253,7 @@ def add():
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
     try:
         fecha = request.json["fecha"]
     except KeyError:
@@ -193,11 +266,11 @@ def add():
         if float(monto) < 0.0:
             return jsonify({
                 'message': 'monto negativo'  # 'No se permite crear elementos con monto negativo'
-            }), 403
+            }), 400
     except ValueError:
         return jsonify({
             'message': "Valor invalido en 'monto'"  # 'No se permite crear elementos con monto invalido'
-        }), 403
+        }), 400
 
     # Creo el elemento
     ingreso = Ingreso(g.user_id, descripcion, monto, tipo, fecha)
@@ -207,7 +280,7 @@ def add():
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{ingreso.descripcion_char_limit}",
             'tipo_max_characters': f"{ingreso.tipo_char_limit}"
-        }), 403
+        }), 400
 
     # ---------- FIN DE VALIDACIONES ---------------------
 
@@ -232,7 +305,7 @@ def update():
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
     try:
         fecha = request.json["fecha"]
     except KeyError:
@@ -247,11 +320,11 @@ def update():
         if float(monto) < 0.0:
             return jsonify({
                 'message': 'monto negativo'  # 'No se permite crear ingresos con monto negativo'
-            }), 403
+            }), 400
     except ValueError:
         return jsonify({
             'message': "Valor invalido en 'monto'"  # 'No se permite crear ingresos con monto invalido'
-        }), 403
+        }), 400
 
     # Busco el elemento
     ingreso = Ingreso.query.filter_by(id=id_ingreso).first()
@@ -266,7 +339,7 @@ def update():
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{ingreso.descripcion_char_limit}",
             'tipo_max_characters': f"{ingreso.tipo_char_limit}"
-        }), 403
+        }), 400
 
     # ---------- FIN DE VALIDACIONES ---------------------
 
@@ -295,7 +368,7 @@ def delete():
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
     # Obtengo el id de usuario del token
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
 

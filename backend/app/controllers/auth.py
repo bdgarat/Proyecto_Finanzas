@@ -36,7 +36,7 @@ def user_login():
     if not auth or not auth.get('username') or not auth.get('password'):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 401
+        }), 400
 
     username = auth.get('username')
     password = auth.get('password')
@@ -64,8 +64,6 @@ def user_login():
 
         return jsonify({'access_token': access_token, 'refresh_token': refresh_token})
 
-
-
     # returns 403 if password is wrong
     return jsonify({
             'message': 'Username o password invalidos' # 'Password incorrecta'
@@ -84,7 +82,7 @@ def user_signup():
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
 
     # checking for existing user
     usuario = Usuario.query.filter_by(username=username).first()
@@ -101,11 +99,11 @@ def user_signup():
                 'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
                 'username_max_characters': f"{usuario.username_char_limit}",
                 'email_max_characters': f"{usuario.email_char_limit}"
-            }), 403
+            }), 400
         if not validar_email(email):
             return jsonify({
                 'message': 'Email invalido'  # 'email no cumple con sintaxis'
-            }), 403
+            }), 400
 
         # ---------- FIN DE VALIDACIONES ---------------------
 

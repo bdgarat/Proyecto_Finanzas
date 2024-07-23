@@ -11,6 +11,8 @@ from app.utils.email_validation import validar_email
 
 from app import config as cfg
 
+from app.utils.paginated_query import paginated_query
+
 bp = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 
 @bp.route('/saldo', methods=['GET'])
@@ -51,17 +53,11 @@ def get_all_users():
 
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
-    if page_size <= 0 or page_number <= 0:
-        return jsonify({
-            'message': 'Los campos de paginado no admiten valores negativos o cero'
-        }), 403
-    page_start = ((page_number - 1) * page_size)
-    page_end = page_start + (page_size - 1)
 
     # converting the query objects
     # to list of jsons
     output = []
-    for usuario in usuarios[page_start:page_end + 1]:
+    for usuario in usuarios:
         # appending the user data json
         # to the response list
         output.append({
@@ -75,12 +71,7 @@ def get_all_users():
             'is_verified': usuario.is_verified
         })
 
-    next_page = page_number + 1 if (len(usuarios) - 1) > page_end else None
-    return jsonify({'total_entries': len(usuarios),
-                    'page': page_number,
-                    'page_size': page_size,
-                    'next_page': next_page,
-                    'usuarios': output}), 200
+    return paginated_query(page_number, page_size, output, "Usuarios")
 
 
 

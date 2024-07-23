@@ -1,3 +1,5 @@
+import datetime
+
 from flask_cors import cross_origin
 
 from app import token_required
@@ -27,7 +29,19 @@ def get_all():
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
         gastos = Gasto.query.filter_by(id_usuario=current_user.get_id()).all()
 
-    return paginated_query(page_number, page_size, gastos, "Gastos")
+    # converting the query objects
+    # to list of jsons
+    output = []
+    for content in gastos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Gastos")
 
 
 @bp.route('/get_all_by_monto', methods=['GET'])
@@ -35,19 +49,19 @@ def get_all():
 @token_required
 def get_all_by_monto():
     """Devuelve un JSON con info de todos los gastos generados por un usuario en base al monto"""
+
     try:
-        monto = request.json['value']
-    except KeyError:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        monto = float(request.args.get('monto'))
+    except (ValueError, TypeError):
+        return jsonify({"message": "El monto ingresado es invalido"}), 400
+
     # Realizo los seteos necesarios para el paginado
     page_number = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
     if page_size <= 0 or page_number <= 0:
         return jsonify({
             'message': 'Los campos de paginado no admiten valores negativos o cero'
-        }), 403
+        }), 400
     # Me fijo si el usuario logueado (token) es admin
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
@@ -55,20 +69,31 @@ def get_all_by_monto():
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
         gastos = Gasto.query.filter_by(id_usuario=current_user.get_id(), monto=monto).all()
 
-    return paginated_query(page_number, page_size, gastos, "Gastos")
+    # converting the query objects
+    # to list of jsons
+    output = []
+    for content in gastos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Gastos")
 
 @bp.route('/get_first_by_monto', methods=['GET'])
 @cross_origin()
 @token_required
 def get_first_by_monto():
     """Devuelve un JSON con info de el primer gasto en base al monto"""
-    # Me fijo si el usuario logueado (token) es admin
+
     try:
-        monto = request.json['value']
-    except KeyError:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        monto = float(request.args.get('monto'))
+    except (ValueError, TypeError):
+        return jsonify({"message": "El monto ingresado es invalido"}), 400
+
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
         gasto = Gasto.query.filter_by(monto=monto).first()
@@ -97,15 +122,15 @@ def get_all_between_fechas():
     if page_size <= 0 or page_number <= 0:
         return jsonify({
             'message': 'Los campos de paginado no admiten valores negativos o cero'
-        }), 403
+        }), 400
     # Obtengo el rango de fechas a buscar
+    fecha_inicio = request.args.get('fecha_inicio')
+    fecha_fin = request.args.get('fecha_fin')
     try:
-        fecha_inicio = request.json['fecha_inicio']
-        fecha_fin = request.json['fecha_fin']
-    except KeyError:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d') # Formato con fecha y hora: '%Y-%m-%d %H:%M:%S'
+        fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d') # Formato con fecha y hora: '%Y-%m-%d %H:%M:%S'
+    except ValueError:
+        return jsonify({'error': 'Formato de fecha incorrecto'}), 400
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los elementos de todos los usuarios
         gastos = Gasto.query.filter(
@@ -116,8 +141,19 @@ def get_all_between_fechas():
             Gasto.id_usuario == current_user.get_id(),
             and_(Gasto.fecha >= fecha_inicio, Gasto.fecha <= fecha_fin)
         ).all()
-
-    return paginated_query(page_number, page_size, gastos, "Gastos")
+    # converting the query objects
+    # to list of jsons
+    output = []
+    for content in gastos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Gastos")
 
 
 @bp.route('/get_all_by_tipo', methods=['GET'])
@@ -131,22 +167,42 @@ def get_all_by_tipo():
     if page_size <= 0 or page_number <= 0:
         return jsonify({
             'message': 'Los campos de paginado no admiten valores negativos o cero'
-        }), 403
+        }), 400
+
     # Obtengo el tipo de gasto
-    try:
-        tipo = request.json['value']
-    except KeyError:
+    tipo = request.args.get('tipo')
+    if not tipo:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+            'message': 'El tipo ingresado es invalido'
+        }), 400
+
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
-        gastos = Gasto.query.filter_by(tipo=tipo).all()
+        # gastos = Gasto.query.filter_by(tipo=tipo).all()
+        gastos = Gasto.query.filter(
+            Gasto.tipo.like(f'%{tipo}%')
+        ).all()
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
-        gastos = Gasto.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).all()
+        # gastos = Gasto.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).all()
+        gastos = Gasto.query.filter(
+            Gasto.id_usuario == current_user.get_id(),
+            Gasto.tipo.like(f'%{tipo}%')
+        ).all()
     # convierto la lista obtenida a coleccion de json
 
-    return paginated_query(page_number, page_size, gastos, "Gastos")
+    # converting the query objects
+    # to list of jsons
+    output = []
+    for content in gastos:
+        output.append({
+            'id': content.id,
+            'monto': content.monto,
+            'descripcion': content.descripcion,
+            'fecha': content.fecha,
+            'tipo': content.tipo,
+            'id_usuario': content.id_usuario
+        })
+    return paginated_query(page_number, page_size, output, "Gastos")
 
 
 @bp.route('/get_first_by_tipo', methods=['GET'])
@@ -154,18 +210,24 @@ def get_all_by_tipo():
 @token_required
 def get_first_gasto_by_tipo():
     """Devuelve un JSON con info del primer gasto generados por un usuario en base al tipo"""
-    # Me fijo si el usuario logueado (token) es admin
-    try:
-        tipo = request.json['value']
-    except KeyError:
+
+    # Obtengo el tipo de gasto
+    tipo = request.args.get('tipo')
+    if not tipo:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+            'message': 'El tipo ingresado es invalido'
+        }), 400
+
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los gastos de todos los usuarios
-        gasto = Gasto.query.filter_by(tipo=tipo).first()
+        gasto = Gasto.query.filter(
+            Gasto.tipo.like(f'%{tipo}%')
+        ).first()
     else:  # Si NO es admin, traigo solo los gastos que le pertenecen al usuario logueado
-        gasto = Gasto.query.filter_by(id_usuario=current_user.get_id(), tipo=tipo).first()
+        gasto = Gasto.query.filter(
+            Gasto.id_usuario == current_user.get_id(),
+            Gasto.tipo.like(f'%{tipo}%')
+        ).first()
     # Convierto el gasto traido a json
     output = {
         'id': gasto.id,
@@ -190,7 +252,7 @@ def add():
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
     try:
         fecha = request.json["fecha"]
     except KeyError:
@@ -202,11 +264,11 @@ def add():
         if float(monto) < 0.0:
             return jsonify({
                 'message': 'monto negativo'  # 'No se permite crear elementos con monto negativo'
-            }), 403
+            }), 400
     except ValueError:
         return jsonify({
             'message': "Valor invalido en 'monto'"  # 'No se permite crear elementos con monto invalido'
-        }), 403
+        }), 400
 
     # Creo el elemento
     gasto = Gasto(g.user_id, descripcion, monto, tipo, fecha)
@@ -216,7 +278,7 @@ def add():
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{gasto.descripcion_char_limit}",
             'tipo_max_characters': f"{gasto.tipo_char_limit}"
-        }), 403
+        }), 400
 
     # ---------- FIN DE VALIDACIONES ---------------------
 
@@ -241,7 +303,7 @@ def update():
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
     try:
         fecha = request.json["fecha"]
     except KeyError:
@@ -256,11 +318,11 @@ def update():
         if float(monto) < 0.0:
             return jsonify({
                 'message': 'monto negativo'  # 'No se permite crear gastos con monto negativo'
-            }), 403
+            }), 400
     except ValueError:
         return jsonify({
             'message': "Valor invalido en 'monto'"  # 'No se permite crear gastos con monto invalido'
-        }), 403
+        }), 400
 
     # Busco el elemento
     gasto = Gasto.query.filter_by(id=id_gasto).first()
@@ -275,7 +337,7 @@ def update():
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{gasto.descripcion_char_limit}",
             'tipo_max_characters': f"{gasto.tipo_char_limit}"
-        }), 403
+        }), 400
 
     # ---------- FIN DE VALIDACIONES ---------------------
 
@@ -304,7 +366,7 @@ def delete():
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
     # Obtengo el id de usuario del token
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
 
