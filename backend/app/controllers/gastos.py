@@ -131,6 +131,10 @@ def get_all_between_fechas():
         fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d') # Formato con fecha y hora: '%Y-%m-%d %H:%M:%S'
     except ValueError:
         return jsonify({'error': 'Formato de fecha incorrecto'}), 400
+
+    if fecha_fin <= fecha_inicio:
+        return jsonify({'error': 'La fecha de inicio debe ser anterior a la fecha de fin'}), 400
+
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
     if current_user.is_admin:  # Si es admin, traigo los elementos de todos los usuarios
         gastos = Gasto.query.filter(
