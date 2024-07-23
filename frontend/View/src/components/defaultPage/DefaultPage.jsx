@@ -2,10 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 function DefaultPage({children}) {
   return (
-    <div>
-      <header>
-        <h1>Aplicacion Finanzas</h1>
-        <nav>
+    <div >
+      <header className="header-container">
+        <h1 className="titulo-principal">Aplicacion Finanzas</h1>
+        <nav className="nav-container">
           <div className="Barra-Usuario">
             <ul className="Barra-Navegacion-Links">
               <Link to="/dashboard">Dashboard</Link>
