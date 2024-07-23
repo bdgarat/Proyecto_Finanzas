@@ -40,6 +40,7 @@ function IngresarGasto() {
             icon:"success"
         }).then((event)=>{
           if(event.isConfirmed){
+            context.setIsUpdate(true);
             context.setIsNew(false);
           }
         })

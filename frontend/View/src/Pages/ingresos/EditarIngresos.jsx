@@ -42,6 +42,7 @@ function EditarIngresos() {
           if(event.isConfirmed)
           {
             editContext.setIsEdit(false);
+            editContext.setIsUpdate(true);
           }
         })
     }else

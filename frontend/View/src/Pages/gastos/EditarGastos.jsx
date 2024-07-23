@@ -42,6 +42,7 @@ function EditarGastos() {
           if(event.isConfirmed)
           {
             context.setIsEdit(false);
+            context.setIsUpdate(true);
           }
         })    
     }else

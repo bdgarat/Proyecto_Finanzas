@@ -6,5 +6,6 @@ export default function GastosContextP({children}){
   const [isNew, setIsNew] = useState(false);
   const [dataEditable,setDataEditable] = useState({});
   const [data,setData] = useState([]);
-    return <GastosContext.Provider value={{ isEdit, setIsEdit, dataEditable, setDataEditable, data, setData,isNew,setIsNew }}>{children}</GastosContext.Provider>;
+  const [isUpdate,setIsUpdate] = useState(false);
+    return <GastosContext.Provider value={{ isEdit, setIsEdit, dataEditable, setDataEditable, data, setData,isNew,setIsNew,isUpdate,setIsUpdate }}>{children}</GastosContext.Provider>;
 }

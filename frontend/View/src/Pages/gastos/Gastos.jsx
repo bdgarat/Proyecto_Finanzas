@@ -21,7 +21,8 @@ function Gastos() {
   }
   useEffect(()=>{
     obtenerLosGastos();
-  },[])
+    context.setIsUpdate(false);
+  },[context.isUpdate])
   function handleEdit(element)
   {
     context.isEdit ? context.setIsEdit(false):context.setIsEdit(true);
@@ -41,6 +42,7 @@ function Gastos() {
         text: "Se elimino su gasto correctamente",
         icon: "success",
       })
+      context.setIsUpdate(true);
     } else {
       Swal.fire({
         title: "No se pudo eliminar",

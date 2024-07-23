@@ -11,7 +11,8 @@ function Ingresos() {
   const auth = useAuth();
   useEffect(()=>{
      obtenerIngresos();
-  },[context.data])
+     context.setIsUpdate(false);
+  },[context.isUpdate])
   async function obtenerIngresos()
   {
     let response = await getIngresos(auth.getAccess());
@@ -43,6 +44,7 @@ function Ingresos() {
         icon: "success",
         cancelButtonText:"Cancelar"
       })
+      context.setIsUpdate(true);
     } else {
       Swal.fire({
         title: "No se pudo eliminar",

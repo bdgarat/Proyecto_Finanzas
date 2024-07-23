@@ -35,6 +35,7 @@ function NuevoIngreso() {
             }).then((event)=>{
               if(event.isConfirmed){
                 context.setIsNew(false);
+                context.setIsUpdate(true);
               }
             })
         }else
