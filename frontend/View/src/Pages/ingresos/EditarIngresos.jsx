@@ -3,8 +3,10 @@ import { useContext,useState } from 'react';
 import { GastosContext } from '../../utils/context/GastosContextP';
 import { editIngreso, getIngresos } from '../../utils/requests/peticionesIngresos';
 import Swal from 'sweetalert2';
+import { useAuth } from '../../Auth/AuthProvider';
 function EditarIngresos() {
     const editContext = useContext(GastosContext);
+    const auth = useAuth();
     const [data, setData] = useState({
       id: editContext.dataEditable.id,
       monto: editContext.dataEditable.monto,
@@ -24,8 +26,12 @@ function EditarIngresos() {
   //Esta función se ejecuta cuando el usuario da un click en el boton enviar
   async function handleSubmit(event) {
     event.preventDefault();
-    let access = localStorage.getItem("access");
-    let respuesta = await editIngreso(data,access);
+    let respuesta = await editIngreso(data,auth.getAccess());
+    if(respuesta == 401)
+    {
+      auth.updateToken();
+      respuesta = await editIngreso(data,auth.getAccess());
+    }
     if(respuesta == 200)
     {
         Swal.fire({
@@ -38,7 +44,6 @@ function EditarIngresos() {
             editContext.setIsEdit(false);
           }
         })
-        editContext.setData(await getIngresos());
     }else
     {
         Swal.fire({

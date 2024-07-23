@@ -5,15 +5,23 @@ import { getIngresos, removeIngreso } from '../../utils/requests/peticionesIngre
 import NuevoIngreso from './NuevoIngreso';
 import EditarIngresos from './EditarIngresos';
 import Swal from 'sweetalert2';
+import {useAuth} from './../../Auth/AuthProvider'
 function Ingresos() {
   const context = useContext(GastosContext);
+  const auth = useAuth();
   useEffect(()=>{
      obtenerIngresos();
-  },[])
+  },[context.data])
   async function obtenerIngresos()
   {
-    const response = await getIngresos();
-    context.setData(response);
+    let response = await getIngresos(auth.getAccess());
+    if(response.status == 401)
+    {
+      auth.updateToken();
+      response = await getIngresos(auth.getAccess());
+
+    }
+    context.setData(response.data.ingresos);
   }
   function handleEdit(element)
   {
@@ -22,18 +30,18 @@ function Ingresos() {
   }
   async function handleRemove(id)
   {
-    const response = await removeIngreso(id);
+    let response = await removeIngreso(id,auth.getAccess());
+    if(response == 401)
+    {
+      auth.updateToken();
+      response = await removeIngreso(id,auth.getAccess());
+    }
     if (response == 200) {
       Swal.fire({
         title: "Se elimino correctamente",
         text: "Se elimino su gasto correctamente",
         icon: "success",
         cancelButtonText:"Cancelar"
-      }).then(async(event)=>{
-        if(event.isConfirmed)
-        {
-          context.setData( await obtenerIngresos());
-        }
       })
     } else {
       Swal.fire({

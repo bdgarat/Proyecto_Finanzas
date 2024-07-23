@@ -1,14 +1,13 @@
 import axios from "axios";
-export async function getIngresos()
+export async function getIngresos(access)
 {
    try{
-      let access = localStorage.getItem("access")
       const respuesta = await axios({
          method:'get',
          headers:{'x-access-token':access},
          url:"http://127.0.0.1:5000/ingresos/list"
       })
-      return respuesta.data.ingresos;
+      return respuesta;
    }catch(error)
    {
       console.log(error);
@@ -35,7 +34,6 @@ export async function setIngreso(data,access){
  }
  export async function editIngreso(data,access){
     try{
-        console.log(data);
        const respuesta = await axios({
           method:'put',
           url:'http://127.0.0.1:5000/ingresos/update',
@@ -53,9 +51,8 @@ export async function setIngreso(data,access){
        console.log(error);
     }
  }
- export async function removeIngreso(id){
+ export async function removeIngreso(id,access){
     try{
-       const access = localStorage.getItem("access")
        const response = await axios({
           method:"delete",
           url:"http://127.0.0.1:5000/ingresos/delete",

@@ -2,8 +2,10 @@ import React, { useContext,useState } from 'react'
 import { GastosContext } from '../../utils/context/GastosContextP';
 import { getIngresos, setIngreso } from '../../utils/requests/peticionesIngresos';
 import Swal from 'sweetalert2';
+import { useAuth } from '../../Auth/AuthProvider';
 function NuevoIngreso() {
     const context = useContext(GastosContext);
+    const auth = useAuth();
     const [data,setData] = useState({
         ingreso:0,
         tipo:"",
@@ -18,8 +20,12 @@ function NuevoIngreso() {
       }
       async function handleSubmit(event) {
         event.preventDefault();
-        let access = localStorage.getItem("access");
-        let respuesta = await setIngreso(data,access);
+        let respuesta = await setIngreso(data,auth.getAccess());
+        if(respuesta == 401)
+        {
+          auth.updateToken();
+          respuesta = await setIngreso(data,auth.getAccess());
+        }
         if(respuesta == 201)
         {
             Swal.fire({
@@ -31,7 +37,6 @@ function NuevoIngreso() {
                 context.setIsNew(false);
               }
             })
-            context.setData(await getIngresos());
         }else
         {
             Swal.fire({
