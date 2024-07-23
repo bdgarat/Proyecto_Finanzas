@@ -21,7 +21,7 @@ function Gastos() {
   }
   useEffect(()=>{
     obtenerLosGastos();
-  },[context.data])
+  },[])
   function handleEdit(element)
   {
     context.isEdit ? context.setIsEdit(false):context.setIsEdit(true);

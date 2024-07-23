@@ -17,23 +17,41 @@ export async function obtenerGastos(access)
       console.log(error);
    }
 }
-export async function obtenerGastoPorTipo(tipo)
+export async function obtenerGastoPorMonto(monto,access)
 {
    try{
-      let access = localStorage.getItem("access");
+      const respuesta = await axios({
+         method:'get',
+         headers:{'x-access-token':access},
+         url:"http://127.0.0.1:5000/gastos/get_all_by_monto",
+         params:{
+            "monto":monto,
+            "page":1,
+            "page_size":10
+         }
+      })
+      return respuesta;
+   }catch(error)
+   {
+      console.log(error);
+   }
+}
+export async function obtenerGastoPorTipo(tipo,access)
+{
+   try{
       const response = await axios({
          method:"get",
          headers:{'x-access-token':access},
-         url:"127.0.0.1:5000/ingresos/get_all_by_tipo",
-         data:{
-            "value":tipo
-         }
-
+         params:{
+            "page":1,
+            "page_size":10,
+            "tipo":tipo,
+         },
+         url:"http://127.0.0.1:5000/gastos/get_all_by_tipo",
       })
-      console.log(response);
-      response.data;
+      return response;
    }catch(error){
-      console.log(error);
+      console.error(error);
    }
 }
 export async function setGasto(data,access){
