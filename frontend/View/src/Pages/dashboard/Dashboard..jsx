@@ -7,8 +7,8 @@ function Dashboard() {
   const navigate = useNavigate();
   function borrarCredenciales()
   {
-    localStorage.removeItem("access");
-    auth.isAuth = false;
+    localStorage.removeItem("refresh");
+    auth.setIsAuth(false);
     navigate("/");
   }
   return (

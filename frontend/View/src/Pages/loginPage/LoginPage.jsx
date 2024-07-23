@@ -11,12 +11,14 @@ function LoginPage(){
     const auth = useAuth();
 
     useEffect(()=>{
-      if(localStorage.getItem('access') && localStorage.getItem('user'))
+      let data =localStorage.getItem('refresh');
+      if( data !=null)
       {
-        auth.isAuth = true;
+        auth.setIsAuth(true);
+        auth.updateToken();
         navigate('/dashboard');
       }
-    },[])
+    },[]);
     function obtenerPermiso (){
           axios({
             method:"post",
@@ -36,12 +38,12 @@ function LoginPage(){
     };
      
       function login(response){
-        console.log(response);
         if( response.status ==200)
             {
                 setError(false);
-                auth.isAuth = true;
-                localStorage.setItem("access",response.data.token);
+                auth.setIsAuth(true);
+                auth.setAccess(response.data.access_token);
+                localStorage.setItem("refresh",response.data.refresh_token);
                 localStorage.setItem("user",name);
                 navigate('/dashboard');
             }

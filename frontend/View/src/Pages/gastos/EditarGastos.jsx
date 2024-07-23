@@ -2,14 +2,16 @@ import React,{useContext, useState} from 'react'
 import Swal from 'sweetalert2';
 import { GastosContext } from '../../utils/context/GastosContextP';
 import { editGasto, obtenerGastos } from '../../utils/requests/peticionGastos';
-function EditarGastos({}) {
-    //const mostratEditar= useContext(MyEditContext)
-    const editContext = useContext(GastosContext);
+import { useAuth } from '../../Auth/AuthProvider';
+function EditarGastos() {
+    //const mostratEditar= useContext(Mycontext)
+    const auth = useAuth();
+    const context = useContext(GastosContext);
     const [data, setData] = useState({
-      id: editContext.dataEditable.id,
-      gasto: editContext.dataEditable.monto,
-      tipo: editContext.dataEditable.tipo,
-      descripcion: editContext.dataEditable.descripcion,
+      id: context.dataEditable.id,
+      gasto: context.dataEditable.monto,
+      tipo: context.dataEditable.tipo,
+      descripcion: context.dataEditable.descripcion,
     });
   //Esta función se ejecuta cada ves que cambia el valor de los inputs. Guarda los valores en el estado data
   //Se utiliza la etiqueta "name" de cada input para que se pueda referenciar al campo correcto de data,
@@ -24,8 +26,12 @@ function EditarGastos({}) {
   //Esta función se ejecuta cuando el usuario da un click en el boton enviar
   async function handleSubmit(event) {
     event.preventDefault();
-    let access = localStorage.getItem("access");
+    let access = auth.getAccess();
     let respuesta = await editGasto(data,access);
+    if(respuesta == 401){
+      auth.updateToken();
+      respuesta = await editGasto(data,access);
+    }
     if(respuesta == 200)
     {
         Swal.fire({
@@ -35,10 +41,9 @@ function EditarGastos({}) {
         }).then((event)=>{
           if(event.isConfirmed)
           {
-            editContext.setIsEdit(false);
+            context.setIsEdit(false);
           }
-        })
-        editContext.setDataGastos(await obtenerGastos());
+        })    
     }else
     {
         Swal.fire({
@@ -84,7 +89,7 @@ function EditarGastos({}) {
       <input type="submit" content="enviar"  />
       <button
         onClick={() => {
-          editContext.setIsEdit(false);
+          context.setIsEdit(false);
         }}
       >
         Volver

@@ -2,8 +2,10 @@ import React, { useContext, useState } from 'react'
 import {obtenerGastos, setGasto} from './../../utils/requests/peticionGastos'
 import Swal from 'sweetalert2';
 import { GastosContext } from '../../utils/context/GastosContextP';
+import { useAuth } from '../../Auth/AuthProvider';
 function IngresarGasto() {
-  const gastosContext = useContext(GastosContext)
+  const context = useContext(GastosContext);
+  const auth = useAuth();
   const [data, setData] = useState({
     gasto: 0,
     tipo: "",
@@ -22,8 +24,14 @@ function IngresarGasto() {
   //Esta función se ejecuta cuando el usuario da un click en el boton enviar
   async function handleSubmit(event) {
     event.preventDefault();
-    let access = localStorage.getItem("access");
+    let access = auth.getAccess();
     let respuesta = await setGasto(data,access);
+    if(respuesta ==401)
+    {
+      auth.updateToken();
+      respuesta = await setGasto(data,access);
+
+    }
     if(respuesta == 201)
     {
         Swal.fire({
@@ -32,10 +40,9 @@ function IngresarGasto() {
             icon:"success"
         }).then((event)=>{
           if(event.isConfirmed){
-            gastosContext.setIsNew(false);
+            context.setIsNew(false);
           }
         })
-        gastosContext.setData(await obtenerGastos());
     }else
     {
         Swal.fire({
@@ -79,7 +86,7 @@ function IngresarGasto() {
         placeholder="describa que fue en lo que gasto"
       ></textarea>
       <input type="submit" content="enviar" />
-      <button onClick={()=>{gastosContext.setIsNew(false)}}>Volver</button>
+      <button onClick={()=>{context.setIsNew(false)}}>Volver</button>
     </form>
   );
 }

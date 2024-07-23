@@ -56,7 +56,8 @@ function Register() {
             password:values.password,
           }
         }).then((res)=>{
-          if(res.status !=202){
+          console.log(res);
+          if(res.status !=201){
             Swall.fire({
               title:"No se envio el formulario",
               text: "Intente nuevamente",
@@ -128,48 +129,96 @@ function Register() {
   {
     return (
       <div className="container">
-       <div className="container-formulario">
-       <h1 className="title-formulario">Crear usuario</h1>
-        <form className="formulario" onSubmit={handleRegister}>
-         
-         <div className='entrada'>
-            <label className='label-form' > Name  </label>
-            <input className='input-form' name="username" type="text" required value={values.username} maxLength={30} minLength={5} 
-            placeholder="ingrese su nombre" onChange={handleInputChange}/>
-         </div>
-          
-          <div className='entrada'>
-            <label className='label-form'>email</label>
-            <input className='input-form' type="email" name="email" value={values.email} required 
-            onChange={handleInputChange} onBlur={handleRepeat}/>
-          </div>
-  
-          <div className='entrada'>
-            <label className='label-form'>repeat email</label>
-            <input className='input-form' type="email" name="repeatEmail" required value={values.repeatEmail} 
-            onChange={handleInputChange} onBlur={handleRepeat} />
-          </div>
-          {igualEmail && <p className="alert-mensaje">Los emails ingresados no son iguales</p>}
-          <div className='entrada'> 
-            <label className='label-form'>password</label>
-            <input className='input-form' type="password" name="password" value={values.password} required
-            onChange={handleInputChange} onBlur={handleRepeat} />
-          </div>
-          <div className='entrada'>
-            <label className='label-from'>repeat password</label>
-            <input className='input-form' type="password" required value={values.repeatPassword}
-          name='repeatPassword' onChange={handleInputChange} onBlur={handleRepeat}/>
-          </div>
-          {igualPassword && <p className="alert-mensaje">Las contraseñas ingresadas no son iguales</p>}
-          
-        <div className='button-form-usuario'>
-           <button className='button-f' type="submit">Registrarse</button>
-           <button className='button-f' onClick={goToLogin}>Cancelar</button>
+        <div className="container-formulario">
+          <h1 className="title-formulario">Crear usuario</h1>
+          <form className="formulario" onSubmit={handleRegister}>
+            <div className="entrada">
+              <label className="label-form"> Name </label>
+              <input
+                className="input-form"
+                name="username"
+                type="text"
+                required
+                value={values.username}
+                maxLength={30}
+                minLength={5}
+                placeholder="ingrese su nombre"
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="entrada">
+              <label className="label-form">email</label>
+              <input
+                className="input-form"
+                type="email"
+                name="email"
+                value={values.email}
+                required
+                onChange={handleInputChange}
+                onBlur={handleRepeat}
+              />
+            </div>
+
+            <div className="entrada">
+              <label className="label-form">repeat email</label>
+              <input
+                className="input-form"
+                type="email"
+                name="repeatEmail"
+                required
+                value={values.repeatEmail}
+                onChange={handleInputChange}
+                onBlur={handleRepeat}
+              />
+            </div>
+            {igualEmail && (
+              <p className="alert-mensaje">
+                Los emails ingresados no son iguales
+              </p>
+            )}
+            <div className="entrada">
+              <label className="label-form">password</label>
+              <input
+                className="input-form"
+                type="password"
+                name="password"
+                value={values.password}
+                required
+                onChange={handleInputChange}
+                onBlur={handleRepeat}
+              />
+            </div>
+            <div className="entrada">
+              <label className="label-from">repeat password</label>
+              <input
+                className="input-form"
+                type="password"
+                required
+                value={values.repeatPassword}
+                name="repeatPassword"
+                onChange={handleInputChange}
+                onBlur={handleRepeat}
+              />
+            </div>
+            {igualPassword && (
+              <p className="alert-mensaje">
+                Las contraseñas ingresadas no son iguales
+              </p>
+            )}
+
+            <div className="button-form-usuario">
+              <button className="button-f" type="submit">
+                Registrarse
+              </button>
+              <button className="button-f" onClick={goToLogin}>
+                Cancelar
+              </button>
+            </div>
+          </form>
         </div>
-        </form>
-       </div>
       </div>
-    )
+    );
   }
 }
 
