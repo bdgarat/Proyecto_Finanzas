@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { useAuth } from "./../../Auth/AuthProvider";
 import FilterMenu from "../../components/FilterMenu";
 import { FilterContext } from "../../utils/context/FilterProvider";
+import Target from "./../../components/Target";
 function Ingresos() {
   const context = useContext(GastosContext);
   const auth = useAuth();
@@ -19,12 +20,12 @@ function Ingresos() {
     obtenerIngresos();
     filter.setIsFilter(false);
     context.setIsUpdate(false);
-  }, [context.isUpdate,filter.getIsFilter()]);
+  }, [context.isUpdate, filter.getIsFilter()]);
   async function obtenerIngresos() {
-    let response = await getIngresos(auth.getAccess(),filter.getDataFilter());
+    let response = await getIngresos(auth.getAccess(), filter.getDataFilter());
     if (response.status == 401) {
       auth.updateToken();
-      response = await getIngresos(auth.getAccess(),filter.getDataFilter());
+      response = await getIngresos(auth.getAccess(), filter.getDataFilter());
     }
     context.setData(response.data.ingresos);
   }
@@ -68,28 +69,11 @@ function Ingresos() {
         {context.isNew ? <NuevoIngreso /> : null}
         <ul>
           {context.data.map((element) => (
-            <div key={element.id}>
-              <li>
-                {element.monto}
-                {element.tipo}
-                {element.fecha}
-                {element.descripcion}
-              </li>
-              <button
-                onClick={() => {
-                  handleEdit(element);
-                }}
-              >
-                Eidtar
-              </button>
-              <button
-                onClick={() => {
-                  handleRemove(element.id);
-                }}
-              >
-                Eliminar
-              </button>
-            </div>
+            <Target
+              element={element}
+              handleEdit={handleEdit}
+              handleRemove={handleRemove}
+            />
           ))}
         </ul>
         {context.isEdit ? <EditarIngresos /> : null}
