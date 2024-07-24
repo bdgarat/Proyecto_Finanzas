@@ -14,7 +14,7 @@ function Dashboard() {
   return (
     <div>
       <DefaultPage>
-        <button onClick={borrarCredenciales}>Deslogearse</button>
+        <button onClick={borrarCredenciales}>Desloguearse</button>
       </DefaultPage>
     </div>
   )

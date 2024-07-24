@@ -1,7 +1,8 @@
 import React, {useContext, useState} from 'react'
-import { GastosContext } from '../utils/context/GastosContextP'
-import {useAuth} from '../Auth/AuthProvider'
-import { FilterContext } from '../utils/context/FilterProvider';
+import { GastosContext } from '../../utils/context/GastosContextP'
+import {useAuth} from '../../Auth/AuthProvider'
+import { FilterContext } from '../../utils/context/FilterProvider';
+import style from './filterMenu.module.css'
 function FilterMenu() {
     const context = useContext(GastosContext);
     const auth = useAuth();
@@ -15,8 +16,8 @@ function FilterMenu() {
         filter.setIsFilter(true);
     }
     return (
-    <div>
-        <form>
+    <div className={style.filterMenu}>
+        <form className={style.form}>
             <label>Monto</label>
             <input type="number" name="monto" placeholder='' value={filter.getDataFilter().monto} onChange={(event)=>{handleInputs(event)}} />
             <label>Tipo</label>

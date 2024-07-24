@@ -8,10 +8,10 @@ import EditarGastos from "./EditarGastos";
 import { GastosContext } from "../../utils/context/GastosContextP";
 import IngresarGasto from "./IngresarGasto";
 import Swal from "sweetalert2";
-import FilterMenu from "../../components/FilterMenu";
+import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
-import Target from "./../../components/Target";
+import Cards from "../../components/cards/Cards";
 function Gastos() {
   const context = useContext(GastosContext);
   const auth = useAuth();
@@ -68,17 +68,7 @@ function Gastos() {
           Agregar un nuevo gasto
         </button>
         {context.isNew ? <IngresarGasto /> : null}
-        <div className="container-gasto">
-          <ul>
-            {context.data.map((element) => (
-              <Target
-                element={element}
-                handleEdit={handleEdit}
-                handleRemove={handleRemove}
-              />
-            ))}
-          </ul>
-        </div>
+        <Cards data={context.data} handleEdit={handleEdit} handleRemove={handleRemove}/>
         {context.isEdit ? (
           <div>
             <EditarGastos />

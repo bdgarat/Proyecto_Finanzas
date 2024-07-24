@@ -1,0 +1,13 @@
+.filterMenu{
+    display: flex;
+    width:90%;
+}
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+label{
+    margin:0 10px;
+}

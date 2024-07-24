@@ -107,7 +107,7 @@ function LoginPage(){
                       Login
                     </button>
                     <button onClick={llevarARegistros} className={style.boton_login}>
-                      Sing Up
+                      Sign Up
                     </button>
                   </div>
                 </form>

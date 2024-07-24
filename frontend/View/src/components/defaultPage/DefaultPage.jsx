@@ -5,7 +5,7 @@ function DefaultPage({ children }) {
   return (
     <div className={style.container}>
       <header className={style.header_container}>
-        <h1 className={style.titulo_principal}>Aplicacion Finanzas</h1>
+        <h1 className={style.titulo_principal}>Aplicación Finanzas</h1>
         <nav className={style.nav_container}>
           <ul className={style.barra_navegacion_links}>
             <Link className={style.navBar_link} to="/dashboard">

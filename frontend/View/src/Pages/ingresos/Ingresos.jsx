@@ -9,9 +9,9 @@ import NuevoIngreso from "./NuevoIngreso";
 import EditarIngresos from "./EditarIngresos";
 import Swal from "sweetalert2";
 import { useAuth } from "./../../Auth/AuthProvider";
-import FilterMenu from "../../components/FilterMenu";
+import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { FilterContext } from "../../utils/context/FilterProvider";
-import Target from "./../../components/Target";
+import Cards from "../../components/cards/Cards";
 function Ingresos() {
   const context = useContext(GastosContext);
   const auth = useAuth();
@@ -67,15 +67,7 @@ function Ingresos() {
           Agregar un nuevo ingreso
         </button>
         {context.isNew ? <NuevoIngreso /> : null}
-        <ul>
-          {context.data.map((element) => (
-            <Target
-              element={element}
-              handleEdit={handleEdit}
-              handleRemove={handleRemove}
-            />
-          ))}
-        </ul>
+        <Cards data={context.data} handleEdit={handleEdit} handleRemove={handleRemove}/>
         {context.isEdit ? <EditarIngresos /> : null}
       </DefaultPage>
     </div>
