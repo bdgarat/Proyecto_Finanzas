@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import FilterMenu from "../../components/FilterMenu";
 import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
+import Target from "./../../components/Target";
 function Gastos() {
   const context = useContext(GastosContext);
   const auth = useAuth();
@@ -20,7 +21,7 @@ function Gastos() {
     response = await obtenerGastos(auth.getAccess(), filter.getDataFilter());
     if (response.status == 401) {
       auth.updateToken();
-      response = await obtenerGastos(auth.getAccess(),filter.getDataFilter());
+      response = await obtenerGastos(auth.getAccess(), filter.getDataFilter());
     }
     context.setData(response.data.gastos);
   }
@@ -70,22 +71,11 @@ function Gastos() {
         <div className="container-gasto">
           <ul>
             {context.data.map((element) => (
-              <div key={element.id}>
-                <li>
-                  <p>{element.fecha}</p>
-                  <p>{element.monto}</p>
-                  <p>{element.tipo}</p>
-                  <p>{element.descripcion}</p>
-                </li>
-                <button onClick={() => handleEdit(element)}>Editar</button>
-                <button
-                  onClick={() => {
-                    handleRemove(element.id);
-                  }}
-                >
-                  Eliminar
-                </button>
-              </div>
+              <Target
+                element={element}
+                handleEdit={handleEdit}
+                handleRemove={handleRemove}
+              />
             ))}
           </ul>
         </div>
