@@ -1,14 +1,15 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './Pages/loginPage/LoginPage';
-import Register from './Pages/register/Register'
-import Dashboard from './Pages/dashboard/Dashboard.';
-import Gastos from './Pages/gastos/Gastos';
-import Ingresos from './Pages/ingresos/Ingresos';
-import './App.css'
-import Protected from './Pages/Protected';
-import { AuthProvider } from './Auth/AuthProvider';
-import IngresarGasto from './Pages/gastos/IngresarGasto';
-import GastosContextP from './utils/context/GastosContextP';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginPage from "./Pages/loginPage/LoginPage";
+import Register from "./Pages/register/Register";
+import Dashboard from "./Pages/dashboard/Dashboard.";
+import Gastos from "./Pages/gastos/Gastos";
+import Ingresos from "./Pages/ingresos/Ingresos";
+import "./App.css";
+import Protected from "./Pages/Protected";
+import { AuthProvider } from "./Auth/AuthProvider";
+import IngresarGasto from "./Pages/gastos/IngresarGasto";
+import GastosContextP from "./utils/context/GastosContextP";
+import FilterProvider from "./utils/context/FilterProvider";
 
 const router = createBrowserRouter([
   {
@@ -65,11 +66,13 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <div>
-      <GastosContextP>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
-      </GastosContextP>
+      <FilterProvider>
+        <GastosContextP>
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
+        </GastosContextP>
+      </FilterProvider>
     </div>
   );
 }

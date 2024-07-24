@@ -1,18 +1,37 @@
 import axios from "axios";
-export async function getIngresos(access)
-{
-   try{
-      const respuesta = await axios({
-         method:'get',
-         headers:{'x-access-token':access},
-         url:"http://127.0.0.1:5000/ingresos/list"
-      })
-      return respuesta;
-   }catch(error)
-   {
-      console.log(error);
+export async function getIngresos(access, data) {
+   let respuesta = null;
+   try {
+     if (data.monto != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
+       respuesta = await axios({
+         method: "get",
+         headers: { "x-access-token": access },
+         url: "http://127.0.0.1:5000/ingresos/get_all",
+         params: {
+           page: 1,
+           page_size: 10,
+           monto: data.monto,
+           tipo: data.tipo,
+           fecha_inicio: data.fecha_inicio,
+           fecha_fin: data.fecha_fin,
+         },
+       });
+     } else {
+       respuesta = await axios({
+         method: "get",
+         headers: { "x-access-token": access },
+         url: "http://127.0.0.1:5000/ingresos/get_all",
+         params: {
+           page: 1,
+           page_size: 10,
+         },
+       });
+     }
+     return respuesta;
+   } catch (error) {
+     console.log(error);
    }
-}
+ }
 export async function setIngreso(data,access){
     try{
        const respuesta = await axios({

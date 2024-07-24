@@ -1,48 +1,30 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { GastosContext } from '../utils/context/GastosContextP'
-import { obtenerGastoPorMonto, obtenerGastoPorTipo } from '../utils/requests/peticionGastos';
 import {useAuth} from '../Auth/AuthProvider'
+import { FilterContext } from '../utils/context/FilterProvider';
 function FilterMenu() {
     const context = useContext(GastosContext);
     const auth = useAuth();
-    async function busquedaPorTipo(value)
-    {
-        if(value != "")
-        {
-            let response = await obtenerGastoPorTipo(value,auth.getAccess());
-            if(response.status == 401){
-                auth.updateToken();
-                response = await obtenerGastoPorTipo(value,auth.getAccess());
-            }
-            console.log(response);
-            context.setData(response.data.gastos); 
-        }
-    }
-    async function busquedaPorMonto(value)
-    {
-        if(value != "")
-        {
-            let response = await obtenerGastoPorMonto(value,auth.getAccess());
-            if(response.status == 401){
-                auth.updateToken();
-                response = await obtenerGastoPorMonto(value,auth.getAccess());
-            }
-            context.setData(response.data.gastos); 
-        }
+    const filter = useContext(FilterContext);
+    function handleInputs(event){
+        let {name,value} = event.target;
+        filter.setDataFilter({
+            ...filter.getDataFilter(),
+            [name]:value
+        })
+        filter.setIsFilter(true);
     }
     return (
     <div>
         <form>
             <label>Monto</label>
-            <input type="number" onBlur={(event)=>{busquedaPorMonto(event.target.value)}} />
+            <input type="number" name="monto" placeholder='' value={filter.getDataFilter().monto} onChange={(event)=>{handleInputs(event)}} />
             <label>Tipo</label>
-            <input type="text" onBlur={(event)=>{busquedaPorTipo(event.target.value)}}/>
+            <input type="text" name="tipo" value={filter.getDataFilter().tipo} onChange={(event)=>{handleInputs(event)}}/>
             <label>Fecha inicial</label>
-            <input type="date"/>
+            <input type="date" name="fecha_inicio" value={filter.getDataFilter().fecha_inicio} onChange={(event)=>{handleInputs(event)}}/>
             <label>Fecha final</label>
-            <input type="date"/>
-            <label>Solo el primero</label>
-            <input type="checkbox"/>
+            <input type="date" name="fecha_fin" value={filter.getDataFilter().fecha_final} onChange={(event)=>{handleInputs(event)}}/>
         </form>
     </div>
   )

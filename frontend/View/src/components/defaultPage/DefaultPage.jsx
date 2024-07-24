@@ -1,26 +1,31 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-function DefaultPage({children}) {
+import React from "react";
+import { Link } from "react-router-dom";
+import style from "./defaultPage.module.css";
+function DefaultPage({ children }) {
   return (
-    <div >
-      <header className="header-container">
-        <h1 className="titulo-principal">Aplicacion Finanzas</h1>
-        <nav className="nav-container">
-          <div className="Barra-Usuario">
-            <ul className="Barra-Navegacion-Links">
-              <Link to="/dashboard">Dashboard</Link>
-              <Link to="/gastos" className="">
-                Gastos
-              </Link>
-              <Link to="/ingresos" className="">
-                Ingresos
-              </Link>
-            </ul>
-          </div>
+    <div className={style.container}>
+      <header className={style.header_container}>
+        <h1 className={style.titulo_principal}>Aplicacion Finanzas</h1>
+        <nav className={style.nav_container}>
+          <ul className={style.barra_navegacion_links}>
+            <Link className={style.navBar_link} to="/dashboard">
+              Dashboard
+            </Link>
+            <Link className={style.navBar_link} to="/gastos">
+              Gastos
+            </Link>
+            <Link className={style.navBar_link} to="/ingresos">
+              Ingresos
+            </Link>
+          </ul>
         </nav>
+        <div className={style.dataUser}>
+          <span>{localStorage.getItem("user")}</span>
+          <img src="#" alt="Foto o imagen del usuario" />
+        </div>
       </header>
-      <main>{children}</main>
-      <footer>
+      <main className={style.principal}>{children}</main>
+      <footer className={style.footer_container}>
         <h3>Aplicacion Finanzas</h3>
         <p>Autores: Brian Garat y Sebastián Butcovich</p>
       </footer>
