@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "475c364f-1bd5-4f00-9fae-aff8eaa38e99",
+		"_postman_id": "477ab3fb-a6dd-479e-b1f8-d33e56db29b9",
 		"name": "Proyecto_Finanzas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29172403"
+		"_exporter_id": "9496920"
 	},
 	"item": [
 		{
@@ -11,9 +11,6 @@
 			"item": [
 				{
 					"name": "Obtener todos los ingresos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -22,17 +19,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/list?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&monto=2000.0&tipo=super",
 							"host": [
 								"127",
 								"0",
@@ -42,7 +30,7 @@
 							"port": "5000",
 							"path": [
 								"ingresos",
-								"list"
+								"get_all"
 							],
 							"query": [
 								{
@@ -52,92 +40,24 @@
 								{
 									"key": "page_size",
 									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los ingresos por monto",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_by_monto?monto=500&page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_all_by_monto"
-							],
-							"query": [
+								},
 								{
 									"key": "monto",
-									"value": "500"
+									"value": "2000.0"
 								},
 								{
-									"key": "page",
-									"value": "1"
+									"key": "tipo",
+									"value": "super"
 								},
-								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los ingresos entre fechas",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_between_fechas?fecha_inicio=2024-03-18&fecha_fin=2024-03-18&page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_all_between_fechas"
-							],
-							"query": [
 								{
 									"key": "fecha_inicio",
-									"value": "2024-03-18"
+									"value": "2024-07-23",
+									"disabled": true
 								},
 								{
 									"key": "fecha_fin",
-									"value": "2024-03-18"
-								},
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "page_size",
-									"value": "10"
+									"value": "2024-07-24",
+									"disabled": true
 								}
 							]
 						}
@@ -145,7 +65,7 @@
 					"response": []
 				},
 				{
-					"name": "Obtener todos los ingresos por tipo",
+					"name": "Obtener un ingreso",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -155,7 +75,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_by_tipo?tipo=super&page=1&page_size=10",
+							"raw": "127.0.0.1:5000/ingresos/get?monto=500.0&tipo=super",
 							"host": [
 								"127",
 								"0",
@@ -165,86 +85,26 @@
 							"port": "5000",
 							"path": [
 								"ingresos",
-								"get_all_by_tipo"
-							],
-							"query": [
-								{
-									"key": "tipo",
-									"value": "super"
-								},
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener el primer ingreso por tipo",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_first_by_tipo?tipo=super",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_first_by_tipo"
-							],
-							"query": [
-								{
-									"key": "tipo",
-									"value": "super"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener el primer ingreso por monto",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_first_by_monto?monto=500",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_first_by_monto"
+								"get"
 							],
 							"query": [
 								{
 									"key": "monto",
-									"value": "500"
+									"value": "500.0"
+								},
+								{
+									"key": "tipo",
+									"value": "super"
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-07-24",
+									"disabled": true
 								}
 							]
 						}
@@ -308,7 +168,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/update?x-access-token={{JWT_Token}}",
+							"raw": "127.0.0.1:5000/gastos/update",
 							"host": [
 								"127",
 								"0",
@@ -319,12 +179,6 @@
 							"path": [
 								"gastos",
 								"update"
-							],
-							"query": [
-								{
-									"key": "x-access-token",
-									"value": "{{JWT_Token}}"
-								}
 							]
 						}
 					},
@@ -340,17 +194,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/delete",
+							"raw": "127.0.0.1:5000/gastos/delete?id=1",
 							"host": [
 								"127",
 								"0",
@@ -361,6 +206,12 @@
 							"path": [
 								"gastos",
 								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -394,7 +245,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/list?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&monto=2000&tipo=super",
 							"host": [
 								"127",
 								"0",
@@ -404,7 +255,7 @@
 							"port": "5000",
 							"path": [
 								"gastos",
-								"list"
+								"get_all"
 							],
 							"query": [
 								{
@@ -414,133 +265,24 @@
 								{
 									"key": "page_size",
 									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los gastos por monto",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_by_monto?monto=500&page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_all_by_monto"
-							],
-							"query": [
+								},
 								{
 									"key": "monto",
-									"value": "500"
+									"value": "2000"
 								},
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los gastos entre fechas",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_between_fechas?fecha_inicio=2024-07-23&fecha_fin=2024-07-24&page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_all_between_fechas"
-							],
-							"query": [
-								{
-									"key": "fecha_inicio",
-									"value": "2024-07-23"
-								},
-								{
-									"key": "fecha_fin",
-									"value": "2024-07-24"
-								},
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los gastos por tipo",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_by_tipo?tipo=super&page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_all_by_tipo"
-							],
-							"query": [
 								{
 									"key": "tipo",
 									"value": "super"
 								},
 								{
-									"key": "page",
-									"value": "1"
+									"key": "fecha_inicio",
+									"value": "2024-07-23",
+									"disabled": true
 								},
 								{
-									"key": "page_size",
-									"value": "10"
+									"key": "fecha_fin",
+									"value": "2024-07-24",
+									"disabled": true
 								}
 							]
 						}
@@ -548,7 +290,7 @@
 					"response": []
 				},
 				{
-					"name": "Obtener el primer gasto por tipo",
+					"name": "Obtener un gasto",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -574,39 +316,6 @@
 								{
 									"key": "tipo",
 									"value": "super"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener el primer gasto por monto",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_first_by_monto?monto=500",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_first_by_monto"
-							],
-							"query": [
-								{
-									"key": "monto",
-									"value": "500"
 								}
 							]
 						}
@@ -696,17 +405,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/delete",
+							"raw": "127.0.0.1:5000/gastos/delete?id=1",
 							"host": [
 								"127",
 								"0",
@@ -717,6 +417,12 @@
 							"path": [
 								"gastos",
 								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
