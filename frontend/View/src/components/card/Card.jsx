@@ -1,16 +1,23 @@
 import React, { useContext,useState } from 'react'
 import style from './card.module.css'
-import { GastosContext } from '../../utils/context/GastosContextP';
+import { CardsContext} from '../../utils/context/CardsProvider';
 import UpdateComponent from '../inComponent/UpdateComponent';
 function Card({element,handleRemove,requestEdit}) {
-    const context = useContext(GastosContext);
+    const context = useContext(CardsContext);
     const [isEdit,setIsEdit] = useState(false);
     function handleEdit(element) {
-       isEdit? setIsEdit(false):setIsEdit(true);
+       if(isEdit && context.isEdit){
+        setIsEdit(false) 
+        context.setIsEdit(false);
+       }else if(!isEdit && !context.isEdit && !context.isNew){
+        setIsEdit(true);
+        context.setIsEdit(true);
+       }
+       
         context.setDataEditable(element);
       }
   return (
-    <div >
+    <div className={style.container}>
         <li className={style.card}>
         <div>
           {element.monto}

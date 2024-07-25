@@ -1,10 +1,9 @@
 import React, { useContext,useState } from 'react'
-import { GastosContext } from '../../utils/context/GastosContextP';
-import { getIngresos, setIngreso } from '../../utils/requests/peticionesIngresos';
+import { CardsContext } from '../../utils/context/CardsProvider';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../Auth/AuthProvider';
 function NewComponent({newRequest}) {
-    const context = useContext(GastosContext);
+    const context = useContext(CardsContext);
     const auth = useAuth();
     const [data,setData] = useState({
         monto:0,
@@ -49,7 +48,7 @@ function NewComponent({newRequest}) {
       }
   return (
     <form onSubmit={(event)=>{handleSubmit(event)}}>
-        <label>Ingreso</label>
+        <label>Monto</label>
       <input
         type="number"
         name="monto"

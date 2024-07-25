@@ -1,16 +1,16 @@
 import React from 'react'
 import { useContext,useState } from 'react';
-import { GastosContext } from '../../utils/context/GastosContextP';
+import { CardsContext } from '../../utils/context/CardsProvider';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../Auth/AuthProvider';
 function UpdateComponent({editRequest, editFunction}) {
-    const editContext = useContext(GastosContext);
+    const context = useContext(CardsContext);
     const auth = useAuth();
     const [data, setData] = useState({
-      id: editContext.dataEditable.id,
-      monto: editContext.dataEditable.monto,
-      tipo: editContext.dataEditable.tipo,
-      descripcion: editContext.dataEditable.descripcion,
+      id: context.dataEditable.id,
+      monto: context.dataEditable.monto,
+      tipo: context.dataEditable.tipo,
+      descripcion: context.dataEditable.descripcion,
     });
   //Esta función se ejecuta cada ves que cambia el valor de los inputs. Guarda los valores en el estado data
   //Se utiliza la etiqueta "name" de cada input para que se pueda referenciar al campo correcto de data,
@@ -41,7 +41,8 @@ function UpdateComponent({editRequest, editFunction}) {
           if(event.isConfirmed)
           {
             editFunction(false);
-            editContext.setIsUpdate(true);
+            context.setIsUpdate(true);
+            context.setIsEdit(false);
           }
         })
     }else
@@ -55,7 +56,7 @@ function UpdateComponent({editRequest, editFunction}) {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <label>Gasto</label>
+      <label>Monto</label>
       <input
         type="number"
         name="monto"

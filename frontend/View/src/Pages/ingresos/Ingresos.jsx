@@ -1,20 +1,19 @@
 import React, { useEffect, useContext } from "react";
 import DefaultPage from "../../components/defaultPage/DefaultPage";
-import { GastosContext } from "../../utils/context/GastosContextP";
+import { CardsContext } from "../../utils/context/CardsProvider";
 import {
   getIngresos,
   removeIngreso,
   setIngreso,
-  editIngreso
+  editIngreso,
 } from "../../utils/requests/peticionesIngresos";
 import Swal from "sweetalert2";
 import { useAuth } from "./../../Auth/AuthProvider";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
-import NewComponent from "../../components/inComponent/NewComponent";
 function Ingresos() {
-  const context = useContext(GastosContext);
+  const context = useContext(CardsContext);
   const auth = useAuth();
   const filter = useContext(FilterContext);
   useEffect(() => {
@@ -56,20 +55,15 @@ function Ingresos() {
     }
   }
   return (
-    <div>
       <DefaultPage>
         <FilterMenu></FilterMenu>
-        <button
-          onClick={() => {
-            context.isNew ? context.setIsNew(false) : context.setIsNew(true);
-          }}
-        >
-          Agregar un nuevo ingreso
-        </button>
-        {context.isNew ? <NewComponent newRequest={setIngreso} /> : null}
-        <Cards data={context.data} handleEdit={handleEdit} handleRemove={handleRemove} requestEdit={editIngreso}/>
+        <Cards
+          data={context.data}
+          handleRemove={handleRemove}
+          requestEdit={editIngreso}
+          requestAdd={setIngreso}
+        />
       </DefaultPage>
-    </div>
   );
 }
 

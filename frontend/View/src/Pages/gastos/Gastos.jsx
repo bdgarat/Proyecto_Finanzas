@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import DefaultPage from "../../components/defaultPage/DefaultPage";
 import {
   obtenerGastos,
@@ -6,15 +6,14 @@ import {
   removeGasto,
   setGasto,
 } from "../../utils/requests/peticionGastos";
-import { GastosContext } from "../../utils/context/GastosContextP";
+import { CardsContext } from "../../utils/context/CardsProvider";
 import Swal from "sweetalert2";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
-import NewComponent from "../../components/inComponent/NewComponent";
 function Gastos() {
-  const context = useContext(GastosContext);
+  const context = useContext(CardsContext);
   const auth = useAuth();
   const filter = useContext(FilterContext);
   async function obtenerLosGastos() {
@@ -60,19 +59,11 @@ function Gastos() {
     <div>
       <DefaultPage>
         <FilterMenu />
-        <button
-          onClick={() =>
-            context.isNew ? context.setIsNew(false) : context.setIsNew(true)
-          }
-        >
-          Agregar un nuevo gasto
-        </button>
-        {context.isNew ? <NewComponent newRequest={setGasto} /> : null}
         <Cards
           data={context.data}
-          handleEdit={handleEdit}
           handleRemove={handleRemove}
           requestEdit={editGasto}
+          requestAdd={setGasto}
         />
         
       </DefaultPage>

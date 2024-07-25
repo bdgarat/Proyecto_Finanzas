@@ -1,11 +1,7 @@
-import React, {useContext, useState} from 'react'
-import { GastosContext } from '../../utils/context/GastosContextP'
-import {useAuth} from '../../Auth/AuthProvider'
+import React, {useContext} from 'react'
 import { FilterContext } from '../../utils/context/FilterProvider';
 import style from './filterMenu.module.css'
 function FilterMenu() {
-    const context = useContext(GastosContext);
-    const auth = useAuth();
     const filter = useContext(FilterContext);
     function handleInputs(event){
         let {name,value} = event.target;
