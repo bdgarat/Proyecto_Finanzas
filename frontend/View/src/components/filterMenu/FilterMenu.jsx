@@ -9,7 +9,8 @@ function FilterMenu() {
             ...filter.getDataFilter(),
             [name]:value
         })
-        filter.setIsFilter(true);
+        if(!(filter.getDataFilter().fecha_inicio != "" && filter.getDataFilter().fecha_final == "") )
+            filter.setIsFilter(true);
     }
     return (
     <div className={style.filterMenu}>
