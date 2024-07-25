@@ -7,7 +7,6 @@ import Ingresos from "./Pages/ingresos/Ingresos";
 import "./App.css";
 import Protected from "./Pages/Protected";
 import { AuthProvider } from "./Auth/AuthProvider";
-import IngresarGasto from "./Pages/gastos/IngresarGasto";
 import GastosContextP from "./utils/context/GastosContextP";
 import FilterProvider from "./utils/context/FilterProvider";
 
@@ -38,16 +37,6 @@ const router = createBrowserRouter([
       {
         path: "gastos",
         element: <Gastos />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <Protected />,
-    children: [
-      {
-        path: "ingresarGasto",
-        element: <IngresarGasto />,
       },
     ],
   },

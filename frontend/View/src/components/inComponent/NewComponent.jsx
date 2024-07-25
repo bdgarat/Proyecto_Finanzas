@@ -3,11 +3,11 @@ import { GastosContext } from '../../utils/context/GastosContextP';
 import { getIngresos, setIngreso } from '../../utils/requests/peticionesIngresos';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../Auth/AuthProvider';
-function NuevoIngreso() {
+function NewComponent({newRequest}) {
     const context = useContext(GastosContext);
     const auth = useAuth();
     const [data,setData] = useState({
-        ingreso:0,
+        monto:0,
         tipo:"",
         descripcion:""
     });
@@ -20,11 +20,11 @@ function NuevoIngreso() {
       }
       async function handleSubmit(event) {
         event.preventDefault();
-        let respuesta = await setIngreso(data,auth.getAccess());
+        let respuesta = await newRequest(data,auth.getAccess());
         if(respuesta == 401)
         {
           auth.updateToken();
-          respuesta = await setIngreso(data,auth.getAccess());
+          respuesta = await newRequest(data,auth.getAccess());
         }
         if(respuesta == 201)
         {
@@ -52,9 +52,9 @@ function NuevoIngreso() {
         <label>Ingreso</label>
       <input
         type="number"
-        name="ingreso"
+        name="monto"
         placeholder="ingrese el monto"
-        value={data.gasto}
+        value={data.monto}
         onChange={(e) => {
           handleInputs(e);
         }}
@@ -86,4 +86,4 @@ function NuevoIngreso() {
   )
 }
 
-export default NuevoIngreso
+export default NewComponent

@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import DefaultPage from "../../components/defaultPage/DefaultPage";
 import {
   obtenerGastos,
+  editGasto,
   removeGasto,
+  setGasto,
 } from "../../utils/requests/peticionGastos";
-import EditarGastos from "./EditarGastos";
 import { GastosContext } from "../../utils/context/GastosContextP";
-import IngresarGasto from "./IngresarGasto";
 import Swal from "sweetalert2";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
+import NewComponent from "../../components/inComponent/NewComponent";
 function Gastos() {
   const context = useContext(GastosContext);
   const auth = useAuth();
@@ -31,7 +32,6 @@ function Gastos() {
     context.setIsUpdate(false);
   }, [context.isUpdate, filter.getIsFilter()]);
   function handleEdit(element) {
-    context.isEdit ? context.setIsEdit(false) : context.setIsEdit(true);
     context.setDataEditable(element);
   }
   async function handleRemove(id) {
@@ -67,13 +67,14 @@ function Gastos() {
         >
           Agregar un nuevo gasto
         </button>
-        {context.isNew ? <IngresarGasto /> : null}
-        <Cards data={context.data} handleEdit={handleEdit} handleRemove={handleRemove}/>
-        {context.isEdit ? (
-          <div>
-            <EditarGastos />
-          </div>
-        ) : null}
+        {context.isNew ? <NewComponent newRequest={setGasto} /> : null}
+        <Cards
+          data={context.data}
+          handleEdit={handleEdit}
+          handleRemove={handleRemove}
+          requestEdit={editGasto}
+        />
+        
       </DefaultPage>
     </div>
   );

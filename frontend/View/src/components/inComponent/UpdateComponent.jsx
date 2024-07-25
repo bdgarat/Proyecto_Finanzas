@@ -1,10 +1,9 @@
 import React from 'react'
 import { useContext,useState } from 'react';
 import { GastosContext } from '../../utils/context/GastosContextP';
-import { editIngreso, getIngresos } from '../../utils/requests/peticionesIngresos';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../Auth/AuthProvider';
-function EditarIngresos() {
+function UpdateComponent({editRequest, editFunction}) {
     const editContext = useContext(GastosContext);
     const auth = useAuth();
     const [data, setData] = useState({
@@ -26,11 +25,11 @@ function EditarIngresos() {
   //Esta función se ejecuta cuando el usuario da un click en el boton enviar
   async function handleSubmit(event) {
     event.preventDefault();
-    let respuesta = await editIngreso(data,auth.getAccess());
+    let respuesta = await editRequest(data,auth.getAccess());
     if(respuesta == 401)
     {
       auth.updateToken();
-      respuesta = await editIngreso(data,auth.getAccess());
+      respuesta = await editRequest(data,auth.getAccess());
     }
     if(respuesta == 200)
     {
@@ -41,7 +40,7 @@ function EditarIngresos() {
         }).then((event)=>{
           if(event.isConfirmed)
           {
-            editContext.setIsEdit(false);
+            editFunction(false);
             editContext.setIsUpdate(true);
           }
         })
@@ -90,7 +89,7 @@ function EditarIngresos() {
       <input type="submit" content="enviar"  />
       <button
         onClick={() => {
-          editContext.setIsEdit(false);
+         editFunction(false);
         }}
       >
         Volver
@@ -99,4 +98,4 @@ function EditarIngresos() {
   );
 }
 
-export default EditarIngresos
+export default UpdateComponent

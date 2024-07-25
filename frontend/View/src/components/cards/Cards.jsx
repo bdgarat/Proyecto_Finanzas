@@ -1,34 +1,14 @@
 import React from "react";
 import style from "./cards.module.css";
-function Card({ data, handleEdit, handleRemove }) {
+import Card from "../card/Card";
+function Cards({ data, handleEdit, handleRemove,requestEdit }) {
   return (
     <ul>
       {data.map((element) => (
-        <li className={style.card}>
-        <div>
-          {element.monto}
-          {new Date(element.fecha).toLocaleDateString()}
-        </div>
-        {element.tipo}
-        {element.descripcion}
-        <button
-          onClick={() => {
-            handleEdit(element);
-          }}
-        >
-          Editar
-        </button>
-        <button
-          onClick={() => {
-            handleRemove(element.id);
-          }}
-        >
-          Eliminar
-        </button>
-      </li>
+        <Card key={element.id} element={element} handleEdit={handleEdit} handleRemove={handleRemove} requestEdit={requestEdit}/>
       ))}
     </ul>
   );
 }
 
-export default Card;
+export default Cards;

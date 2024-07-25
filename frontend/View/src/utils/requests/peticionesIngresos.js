@@ -39,7 +39,7 @@ export async function setIngreso(data,access){
           url:'http://127.0.0.1:5000/ingresos/add',
           headers:{'x-access-token':access},
           data:{
-            "monto":data.ingreso,
+            "monto":data.monto,
             "descripcion":data.descripcion,
             "tipo":data.tipo
           }
