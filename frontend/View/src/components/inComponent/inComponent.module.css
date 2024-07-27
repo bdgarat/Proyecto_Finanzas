@@ -1,0 +1,22 @@
+.container{
+    margin:10px 0;
+    width:100%;
+    padding:20px;
+    align-items: center;
+    display: flex;
+    border:2px solid #333;
+    border-radius:10px;
+}
+
+.container_button{
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    height: 4vh;
+    margin:5px;
+}
+.button{
+    margin:5px;
+    padding:5px;
+    width:80%;
+}

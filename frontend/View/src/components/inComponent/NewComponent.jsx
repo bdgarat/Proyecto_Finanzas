@@ -1,54 +1,57 @@
-import React, { useContext,useState } from 'react'
-import { CardsContext } from '../../utils/context/CardsProvider';
-import Swal from 'sweetalert2';
-import { useAuth } from '../../Auth/AuthProvider';
-function NewComponent({newRequest}) {
-    const context = useContext(CardsContext);
-    const auth = useAuth();
-    const [data,setData] = useState({
-        monto:0,
-        tipo:"",
-        descripcion:""
+import React, { useContext, useState } from "react";
+import { CardsContext } from "../../utils/context/CardsProvider";
+import style from "./inComponent.module.css";
+import Swal from "sweetalert2";
+import { useAuth } from "../../Auth/AuthProvider";
+function NewComponent({ newRequest }) {
+  const context = useContext(CardsContext);
+  const auth = useAuth();
+  const [data, setData] = useState({
+    monto: 0,
+    tipo: "",
+    descripcion: "",
+  });
+  function handleInputs(evento) {
+    const { name, value } = evento.target;
+    setData({
+      ...data,
+      [name]: value,
     });
-    function handleInputs(evento) {
-        const { name, value } = evento.target;
-        setData({
-          ...data,
-          [name]: value,
-        });
-      }
-      async function handleSubmit(event) {
-        event.preventDefault();
-        let respuesta = await newRequest(data,auth.getAccess());
-        if(respuesta == 401)
-        {
-          auth.updateToken();
-          respuesta = await newRequest(data,auth.getAccess());
+  }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    let respuesta = await newRequest(data, auth.getAccess());
+    if (respuesta == 401) {
+      auth.updateToken();
+      respuesta = await newRequest(data, auth.getAccess());
+    }
+    if (respuesta == 201) {
+      Swal.fire({
+        title: "Se ingreso correctamente",
+        text: "Se ingreso un nuevo monto correctamente",
+        icon: "success",
+      }).then((event) => {
+        if (event.isConfirmed) {
+          context.setIsNew(false);
+          context.setIsUpdate(true);
         }
-        if(respuesta == 201)
-        {
-            Swal.fire({
-                title:"Se ingreso correctamente",
-                text:"Se ingreso un nuevo monto correctamente",
-                icon:"success"
-            }).then((event)=>{
-              if(event.isConfirmed){
-                context.setIsNew(false);
-                context.setIsUpdate(true);
-              }
-            })
-        }else
-        {
-            Swal.fire({
-                title:"No se pudo ingresar",
-                text:"No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
-                icon:"error"
-            })
-        }
-      }
+      });
+    } else {
+      Swal.fire({
+        title: "No se pudo ingresar",
+        text: "No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
+        icon: "error",
+      });
+    }
+  }
   return (
-    <form onSubmit={(event)=>{handleSubmit(event)}}>
-        <label>Monto</label>
+    <form
+      onSubmit={(event) => {
+        handleSubmit(event);
+      }}
+      className={style.container}
+    >
+      <label>Monto</label>
       <input
         type="number"
         name="monto"
@@ -79,10 +82,21 @@ function NewComponent({newRequest}) {
         }}
         placeholder="describa de donde proviene el ingreso"
       ></textarea>
-      <input type="submit" content="enviar" />
-      <button onClick={()=>{context.setIsNew(false)}}>Volver</button>
+      <div className={style.container_button}>
+        <button className={style.button} type="submit">
+          Enviar
+        </button>
+        <button
+          className={style.button}
+          onClick={() => {
+            context.setIsNew(false);
+          }}
+        >
+          Volver
+        </button>
+      </div>
     </form>
-  )
+  );
 }
 
-export default NewComponent
+export default NewComponent;

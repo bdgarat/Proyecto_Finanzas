@@ -50,7 +50,7 @@ function Card({ element, handleRemove, requestEdit }) {
         </div>
       </li>
       {isEdit ? (
-        <div>
+        <div className={style.container_edit_card}>
           <UpdateComponent editRequest={requestEdit} editFunction={setIsEdit} />
         </div>
       ) : null}

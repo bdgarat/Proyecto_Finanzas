@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import style from "./defaultPage.module.css";
+import iconUser from "./../../assets/avatar_png.png"
 function DefaultPage({ children }) {
   return (
     <div className={style.container}>
@@ -20,8 +21,8 @@ function DefaultPage({ children }) {
           </ul>
         </nav>
         <div className={style.dataUser}>
-          <span>{localStorage.getItem("user")}</span>
-          <img src="#" alt="Foto o imagen del usuario" />
+          <span className={style.userName}>{localStorage.getItem("user")}</span>
+          <img src={iconUser} alt="Foto o imagen del usuario" className={style.user_image} />
         </div>
       </header>
       <main className={style.principal}>{children}</main>

@@ -19,7 +19,7 @@ function Cards({ data, handleRemove, requestEdit,requestAdd }) {
         >
           Agregar
         </button>
-        {context.isNew  ? <NewComponent newRequest={requestAdd} /> : null}
+        {context.isNew  ? <div className={style.new_component}><NewComponent newRequest={requestAdd} /></div>:null}
       <ul className={style.card}>
         {data.map((element) => (
           <Card

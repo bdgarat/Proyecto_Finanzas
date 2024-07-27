@@ -5,6 +5,9 @@
     width:60%;
     margin:20px;
 }
+.new_component{
+    width:90%;
+}
 .card{
     display: flex;
     width:100%;

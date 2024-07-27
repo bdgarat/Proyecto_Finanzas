@@ -9,7 +9,7 @@
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  padding: 3% 0;
+  padding: 2% 0;
 }
 .header_container{
   color:white;
@@ -24,10 +24,20 @@
 .dataUser{
     position: relative;
     display: flex;
+    align-items: center;
 
+}
+.user_image{
+  border-radius: 50%;
+  height: 8vh;
+  margin:10px;
+}
+.userName{
+  font-size: 20px;
 }
 .nav_container{
     display: flex;
+    width:30%;
     justify-content: space-around;
 }
 .barra_navegacion_links{

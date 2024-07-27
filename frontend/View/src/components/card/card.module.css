@@ -6,7 +6,7 @@
 }
 .card{
     list-style-type: none;
-    width:90%;
+    width:100%;
     align-items: center;
     padding:10px;
     margin:5px;
@@ -34,9 +34,12 @@
     display: flex;
     justify-content: center;
     margin:5px;
+    height:4vh;
 }
 .button{
     margin:5px;
     width:9%;
-    height:9%;
+}
+.container_edit_card{
+    width:90%;
 }
