@@ -3,6 +3,7 @@ import { useContext,useState } from 'react';
 import { CardsContext } from '../../utils/context/CardsProvider';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../Auth/AuthProvider';
+import style from './updateComponent.module.css'
 function UpdateComponent({editRequest, editFunction}) {
     const context = useContext(CardsContext);
     const auth = useAuth();
@@ -55,7 +56,7 @@ function UpdateComponent({editRequest, editFunction}) {
     }
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={style.container}>
       <label>Monto</label>
       <input
         type="number"

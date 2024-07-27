@@ -6,6 +6,37 @@
 }
 .card{
     list-style-type: none;
-    border:1px solid #000;
     width:90%;
+    align-items: center;
+    padding:10px;
+    margin:5px;
+    border:2px solid #333;
+    border-radius: 10px;
+}
+.monto_fecha{
+    display: flex;
+    justify-content: space-between;
+}
+.monto{
+    width:10%;
+}
+.tipo{
+    width:25%;
+    display: flex;
+    justify-content: start;
+}
+.descripcion{
+    width:50%;
+    display: flex;
+    justify-content: start;
+}
+.container_button{
+    display: flex;
+    justify-content: center;
+    margin:5px;
+}
+.button{
+    margin:5px;
+    width:9%;
+    height:9%;
 }
