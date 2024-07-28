@@ -1,0 +1,45 @@
+.container{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card{
+    list-style-type: none;
+    width:100%;
+    align-items: center;
+    padding:10px;
+    margin:5px;
+    border:2px solid #333;
+    border-radius: 10px;
+}
+.monto_fecha{
+    display: flex;
+    justify-content: space-between;
+}
+.monto{
+    width:10%;
+}
+.tipo{
+    width:25%;
+    display: flex;
+    justify-content: start;
+}
+.descripcion{
+    width:50%;
+    display: flex;
+    justify-content: start;
+}
+.container_button{
+    display: flex;
+    justify-content: center;
+    margin:5px;
+    height:4vh;
+}
+.button{
+    margin:5px;
+    width:9%;
+}
+.container_edit_card{
+    width:90%;
+}

@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import DefaultPage from "../../components/defaultPage/DefaultPage";
 import {
   obtenerGastos,
+  editGasto,
   removeGasto,
+  setGasto,
 } from "../../utils/requests/peticionGastos";
-import EditarGastos from "./EditarGastos";
-import { GastosContext } from "../../utils/context/GastosContextP";
-import IngresarGasto from "./IngresarGasto";
+import { CardsContext } from "../../utils/context/CardsProvider";
 import Swal from "sweetalert2";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
 function Gastos() {
-  const context = useContext(GastosContext);
+  const context = useContext(CardsContext);
   const auth = useAuth();
   const filter = useContext(FilterContext);
   async function obtenerLosGastos() {
@@ -31,7 +31,6 @@ function Gastos() {
     context.setIsUpdate(false);
   }, [context.isUpdate, filter.getIsFilter()]);
   function handleEdit(element) {
-    context.isEdit ? context.setIsEdit(false) : context.setIsEdit(true);
     context.setDataEditable(element);
   }
   async function handleRemove(id) {
@@ -60,20 +59,13 @@ function Gastos() {
     <div>
       <DefaultPage>
         <FilterMenu />
-        <button
-          onClick={() =>
-            context.isNew ? context.setIsNew(false) : context.setIsNew(true)
-          }
-        >
-          Agregar un nuevo gasto
-        </button>
-        {context.isNew ? <IngresarGasto /> : null}
-        <Cards data={context.data} handleEdit={handleEdit} handleRemove={handleRemove}/>
-        {context.isEdit ? (
-          <div>
-            <EditarGastos />
-          </div>
-        ) : null}
+        <Cards
+          data={context.data}
+          handleRemove={handleRemove}
+          requestEdit={editGasto}
+          requestAdd={setGasto}
+        />
+        
       </DefaultPage>
     </div>
   );

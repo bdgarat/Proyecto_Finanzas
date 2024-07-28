@@ -34,12 +34,13 @@ export async function obtenerGastos(access, data) {
 }
 export async function setGasto(data, access) {
   try {
+    console.log(data);
     const respuesta = await axios({
       method: "post",
       url: "http://127.0.0.1:5000/gastos/add",
       headers: { "x-access-token": access },
       data: {
-        monto: data.gasto,
+        monto: data.monto,
         descripcion: data.descripcion,
         tipo: data.tipo,
       },
@@ -57,7 +58,7 @@ export async function editGasto(data, access) {
       headers: { "x-access-token": access },
       data: {
         id: data.id,
-        monto: data.gasto,
+        monto: data.monto,
         descripcion: data.descripcion,
         tipo: data.tipo,
       },
@@ -68,12 +69,13 @@ export async function editGasto(data, access) {
   }
 }
 export async function removeGasto(id, access) {
+  console.log(id, access);
   try {
     const response = await axios({
       method: "delete",
       url: "http://127.0.0.1:5000/gastos/delete",
       headers: { "x-access-token": access },
-      data: {
+      params: {
         id,
       },
     });

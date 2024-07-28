@@ -7,8 +7,7 @@ import Ingresos from "./Pages/ingresos/Ingresos";
 import "./App.css";
 import Protected from "./Pages/Protected";
 import { AuthProvider } from "./Auth/AuthProvider";
-import IngresarGasto from "./Pages/gastos/IngresarGasto";
-import GastosContextP from "./utils/context/GastosContextP";
+import CardsProvider from "./utils/context/CardsProvider";
 import FilterProvider from "./utils/context/FilterProvider";
 
 const router = createBrowserRouter([
@@ -46,16 +45,6 @@ const router = createBrowserRouter([
     element: <Protected />,
     children: [
       {
-        path: "ingresarGasto",
-        element: <IngresarGasto />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <Protected />,
-    children: [
-      {
         path: "ingresos",
         element: <Ingresos />,
       },
@@ -65,14 +54,12 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <div>
       <FilterProvider>
-        <GastosContextP>
+        <CardsProvider>
           <AuthProvider>
             <RouterProvider router={router} />
           </AuthProvider>
-        </GastosContextP>
+        </CardsProvider>
       </FilterProvider>
-    </div>
   );
 }

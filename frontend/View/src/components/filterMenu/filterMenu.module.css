@@ -1,12 +1,13 @@
 .filterMenu{
     display: flex;
     width:90%;
+    margin:20px;
 }
 .form{
     display: flex;
     justify-content: center;
     align-items: center;
-    width:100%;
+    width:90%;
 }
 label{
     margin:0 10px;
