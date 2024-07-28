@@ -30,6 +30,7 @@ export async function obtenerGastos(access, data) {
     return respuesta;
   } catch (error) {
     console.log(error);
+    return error.response.status;
   }
 }
 export async function setGasto(data, access) {
@@ -47,7 +48,7 @@ export async function setGasto(data, access) {
     });
     return respuesta.status;
   } catch (error) {
-    console.log(error);
+   return error.response.status;
   }
 }
 export async function editGasto(data, access) {
@@ -65,6 +66,7 @@ export async function editGasto(data, access) {
     });
     return respuesta.status;
   } catch (error) {
+    return error.response.status;
     console.log(error);
   }
 }
@@ -82,5 +84,6 @@ export async function removeGasto(id, access) {
     return response.status;
   } catch (error) {
     console.log(error);
+    return error.response.status;
   }
 }

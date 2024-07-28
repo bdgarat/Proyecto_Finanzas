@@ -1,7 +1,12 @@
 .filterMenu{
     display: flex;
-    width:90%;
-    margin:20px;
+    justify-content: center;
+    width:70%;
+    padding:10px;
+    border-radius: 0 0 10px 10px;
+    border-left:2px solid #222;
+    border-right:2px solid #222;
+    border-bottom:2px solid #222;
 }
 .form{
     display: flex;

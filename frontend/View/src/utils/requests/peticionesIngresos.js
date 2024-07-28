@@ -30,6 +30,7 @@ export async function getIngresos(access, data) {
      return respuesta;
    } catch (error) {
      console.log(error);
+     return error.response.status;
    }
  }
 export async function setIngreso(data,access){
@@ -48,6 +49,7 @@ export async function setIngreso(data,access){
     }catch(error)
     {
        console.log(error);
+       return error.response.status;
     }
     
  }
@@ -68,6 +70,7 @@ export async function setIngreso(data,access){
     }catch(error)
     {
        console.log(error);
+       return error.response.status;
     }
  }
  export async function removeIngreso(id,access){
@@ -84,5 +87,6 @@ export async function setIngreso(data,access){
     }catch(error)
     {
        console.log(error);
+       return error.response.status;
     }
  }
