@@ -19,6 +19,7 @@ function Gastos() {
   async function obtenerLosGastos() {
     let response = null;
     response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(), context.page);
+    console.log('Estoy en gastos',response)
     if (response.status == 401) {
       auth.updateToken();
       response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(),context.page,context.nextPage);

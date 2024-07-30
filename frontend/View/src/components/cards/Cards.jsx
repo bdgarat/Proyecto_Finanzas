@@ -35,14 +35,14 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
         </div>
       ) : null}
       <ul className={style.card}>
-        {data.map((element) => (
+        {data != null ?data.map((element) => (
           <Card
             key={element.id}
             element={element}
             handleRemove={handleRemove}
             requestEdit={requestEdit}
           />
-        ))}
+        )):<h3>No hay nada para mostrar</h3>}
       </ul>
       <div className={style.paginationButton}>
         <button

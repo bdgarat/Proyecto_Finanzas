@@ -39,6 +39,11 @@
 .button{
     margin:5px;
     width:9%;
+    transition: .5;
+}
+.button:active{
+    width:10%;
+    border-radius: 5px;
 }
 .container_edit_card{
     width:90%;

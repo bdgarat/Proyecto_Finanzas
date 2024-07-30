@@ -13,6 +13,12 @@
     text-align: center;
     font-size: 17px;
     background-color: #95c799;
+    box-shadow: 0 5px 0  #00a135;
+    color:white
+}
+.buttonAdd:active{
+    transform: translateY(5px);
+    box-shadow: 0 0px 0  #222;
 }
 .new_component{
     width:90%;
@@ -31,9 +37,14 @@
     justify-content: space-evenly;
 }
 .buttonPagination{
-    padding:10px;
+    padding:10px 10px;
     align-items: center;
     text-align: center;
+    transition: 0.5;
+}
+.buttonPagination:active{
+    border-radius: 5px;
+    padding: 12px 12px
 }
 .message{
     margin:15px;

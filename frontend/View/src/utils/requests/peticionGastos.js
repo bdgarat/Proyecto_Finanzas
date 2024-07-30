@@ -22,7 +22,7 @@ export async function obtenerGastos(access, data,page) {
         headers: { "x-access-token": access },
         url: "http://127.0.0.1:5000/gastos/get_all",
         params: {
-          page: 1,
+          page: page,
           page_size: 10,
         },
       });
