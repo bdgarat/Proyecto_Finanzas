@@ -28,8 +28,8 @@ function UpdateComponent({ editRequest, editFunction }) {
     event.preventDefault();
     let respuesta = await editRequest(data, auth.getAccess());
     if (respuesta == 401) {
-      auth.updateToken();
-      respuesta = await editRequest(data, auth.getAccess());
+      let access = auth.updateToken();
+      respuesta = await editRequest(data, access);
     }
     if (respuesta == 200) {
       Swal.fire({

@@ -22,8 +22,8 @@ function NewComponent({ newRequest }) {
     event.preventDefault();
     let respuesta = await newRequest(data, auth.getAccess());
     if (respuesta == 401) {
-      auth.updateToken();
-      respuesta = await newRequest(data, auth.getAccess());
+       let access = auth.updateToken();
+       respuesta = await newRequest(data, access);
     }
     if (respuesta == 201) {
       Swal.fire({
