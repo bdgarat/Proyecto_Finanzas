@@ -7,6 +7,7 @@
 }
 .buttonAdd{
     width:35%;
+    height: 4vh;
     border-radius: 20px;
     border:1px solid #00a135;
     text-align: center;
@@ -25,7 +26,7 @@
 .paginationButton{
     margin:20px 0;
     width:50%;
-    height: 4vh;
+    height: auto;
     display:flex;
     justify-content: space-evenly;
 }
@@ -33,4 +34,7 @@
     padding:10px;
     align-items: center;
     text-align: center;
+}
+.message{
+    margin:15px;
 }

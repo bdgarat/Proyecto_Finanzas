@@ -1,5 +1,5 @@
 import axios from "axios";
-export async function obtenerGastos(access, data) {
+export async function obtenerGastos(access, data,page) {
   let respuesta = null;
   try {
     if (data.monto != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
@@ -8,7 +8,7 @@ export async function obtenerGastos(access, data) {
         headers: { "x-access-token": access },
         url: "http://127.0.0.1:5000/gastos/get_all",
         params: {
-          page: 1,
+          page: page,
           page_size: 10,
           monto: data.monto,
           tipo: data.tipo,
@@ -30,7 +30,7 @@ export async function obtenerGastos(access, data) {
     return respuesta;
   } catch (error) {
     console.log(error);
-    return error.response.status;
+    return error.response;
   }
 }
 export async function setGasto(data, access) {
@@ -48,6 +48,7 @@ export async function setGasto(data, access) {
     });
     return respuesta.status;
   } catch (error) {
+    console.log(error);
    return error.response.status;
   }
 }

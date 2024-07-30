@@ -1,10 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import style from "./cards.module.css";
 import Card from "../card/Card";
 import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
-function Cards({ data, handleRemove, requestEdit, requestAdd }) {
+import { renderMatches } from "react-router-dom";
+function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
   const context = useContext(CardsContext);
+  const [isMessage, setIsMessage] = useState(false);
+  const [message, setMessage] = useState("");
+  useEffect(() => {
+    setTimeout(() => {
+      setIsMessage(false);
+    }, 3000);
+  }, [isMessage]);
   return (
     <div className={style.cards}>
       <div className={style.paginationButton}>
@@ -37,11 +45,65 @@ function Cards({ data, handleRemove, requestEdit, requestAdd }) {
         ))}
       </ul>
       <div className={style.paginationButton}>
-        <button className={style.buttonPagination}>Primera pagina</button>
-        <button className={style.buttonPagination}>Pagina anterior</button>
-        <button className={style.buttonPagination}>Pagina siguiente</button>
-        <button className={style.buttonPagination}>Ultima paginas</button>
+        <button
+          className={style.buttonPagination}
+          onClick={async () => {
+            if (context.page == 1) {
+              setMessage("ya me encuentro en la primera pagina");
+              setIsMessage(true);
+            } else {
+              await context.setPage(context.page - context.page--);
+              await obtenerDatos();
+            }
+          }}
+        >
+          Primera pagina
+        </button>
+        <button
+          className={style.buttonPagination}
+          onClick={async () => {
+            if (context.page == 1) {
+                setMessage("No hay página anterior");
+                setIsMessage(true);
+            } else {
+              context.setPage(context.page--);
+              await obtenerDatos();
+            }
+          }}
+        >
+          Pagina anterior
+        </button>
+        <button
+          className={style.buttonPagination}
+          onClick={async () => {
+            if (context.nextPage == null)
+              {
+                setMessage("No hay página siguiente");
+                setIsMessage(true);
+
+              } 
+              else{
+              context.setPage(context.page++);
+              await obtenerDatos();
+            }
+          }}
+        >
+          Pagina siguiente
+        </button>
+        <button className={style.buttonPagination} onClick={async ()=>{
+          if(context.nextPage == null)
+          {
+            setMessage("Ya te encontras en la última página");
+            setIsMessage(true);
+          }
+          else
+          {
+            context.setPage(context.page = context.lastPage);
+            await obtenerDatos();
+          }
+        }}>Ultima pagina</button>
       </div>
+      {isMessage ? <span className={style.message}>{message}</span> : null}
     </div>
   );
 }

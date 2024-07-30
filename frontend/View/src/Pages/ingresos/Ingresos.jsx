@@ -28,6 +28,9 @@ function Ingresos() {
       response = await getIngresos(auth.getAccess(), filter.getDataFilter());
     }
     context.setData(response.data.ingresos);
+    context.setPage(response.data.page);
+    context.setNextPage(response.data.next_page);
+    context.setLastPage(response.data.total_page);
   }
   function handleEdit(element) {
     context.setDataEditable(element);
@@ -62,6 +65,7 @@ function Ingresos() {
           handleRemove={handleRemove}
           requestEdit={editIngreso}
           requestAdd={setIngreso}
+          obtenerDatos={obtenerIngresos}
         />
       </DefaultPage>
   );

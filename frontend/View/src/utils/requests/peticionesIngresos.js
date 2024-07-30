@@ -49,7 +49,7 @@ export async function setIngreso(data,access){
     }catch(error)
     {
        console.log(error);
-       return error.response.status;
+       return error.response;
     }
     
  }

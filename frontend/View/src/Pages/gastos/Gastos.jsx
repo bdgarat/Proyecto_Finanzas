@@ -18,12 +18,15 @@ function Gastos() {
   const filter = useContext(FilterContext);
   async function obtenerLosGastos() {
     let response = null;
-    response = await obtenerGastos(auth.getAccess(), filter.getDataFilter());
+    response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(), context.page);
     if (response.status == 401) {
       auth.updateToken();
-      response = await obtenerGastos(auth.getAccess(), filter.getDataFilter());
+      response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(),context.page,context.nextPage);
     }
     context.setData(response.data.gastos);
+    context.setPage(response.data.page);
+    context.setNextPage(response.data.next_page);
+    context.setLastPage(response.data.total_pages);
   }
   useEffect(() => {
     obtenerLosGastos();
@@ -64,6 +67,7 @@ function Gastos() {
           handleRemove={handleRemove}
           requestEdit={editGasto}
           requestAdd={setGasto}
+          obtenerDatos={obtenerLosGastos}
         />
         
       </DefaultPage>
