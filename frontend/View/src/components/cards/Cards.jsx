@@ -35,7 +35,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
         </div>
       ) : null}
       <ul className={style.card}>
-        {data != null ?data.map((element) => (
+        {data != null && data.length != 0?data.map((element) => (
           <Card
             key={element.id}
             element={element}
@@ -57,7 +57,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
             }
           }}
         >
-          Primera pagina
+          Primera página
         </button>
         <button
           className={style.buttonPagination}
@@ -71,7 +71,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
             }
           }}
         >
-          Pagina anterior
+          Página anterior
         </button>
         <button
           className={style.buttonPagination}
@@ -88,7 +88,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
             }
           }}
         >
-          Pagina siguiente
+          Página siguiente
         </button>
         <button className={style.buttonPagination} onClick={async ()=>{
           if(context.nextPage == null)
@@ -101,7 +101,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
             context.setPage(context.page = context.lastPage);
             await obtenerDatos();
           }
-        }}>Ultima pagina</button>
+        }}>Última página</button>
       </div>
       {isMessage ? <span className={style.message}>{message}</span> : null}
     </div>

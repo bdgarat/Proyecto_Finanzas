@@ -22,18 +22,15 @@ function Ingresos() {
     context.setIsUpdate(false);
   }, [context.isUpdate, filter.getIsFilter()]);
   async function obtenerIngresos() {
-    let response = await getIngresos(auth.getAccess(), filter.getDataFilter());
+    let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),context.page);
     if (response.status == 401) {
       auth.updateToken();
-      response = await getIngresos(auth.getAccess(), filter.getDataFilter());
+      response = await getIngresos(auth.getAccess(), filter.getDataFilter(),context.page);
     }
     context.setData(response.data.ingresos);
     context.setPage(response.data.page);
     context.setNextPage(response.data.next_page);
     context.setLastPage(response.data.total_page);
-  }
-  function handleEdit(element) {
-    context.setDataEditable(element);
   }
   async function handleRemove(id) {
     let response = await removeIngreso(id, auth.getAccess());

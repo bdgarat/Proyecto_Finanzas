@@ -1,5 +1,5 @@
 import axios from "axios";
-export async function getIngresos(access, data) {
+export async function getIngresos(access, data,page) {
    let respuesta = null;
    try {
      if (data.monto != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
@@ -8,7 +8,7 @@ export async function getIngresos(access, data) {
          headers: { "x-access-token": access },
          url: "http://127.0.0.1:5000/ingresos/get_all",
          params: {
-           page: 1,
+           page: page,
            page_size: 10,
            monto: data.monto,
            tipo: data.tipo,
@@ -22,7 +22,7 @@ export async function getIngresos(access, data) {
          headers: { "x-access-token": access },
          url: "http://127.0.0.1:5000/ingresos/get_all",
          params: {
-           page: 1,
+           page: page,
            page_size: 10,
          },
        });
@@ -30,7 +30,7 @@ export async function getIngresos(access, data) {
      return respuesta;
    } catch (error) {
      console.log(error);
-     return error.response.status;
+     return error.response;
    }
  }
 export async function setIngreso(data,access){
@@ -49,7 +49,7 @@ export async function setIngreso(data,access){
     }catch(error)
     {
        console.log(error);
-       return error.response;
+       return error.response.status;
     }
     
  }

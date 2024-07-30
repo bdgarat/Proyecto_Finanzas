@@ -34,9 +34,6 @@ function Gastos() {
     filter.setIsFilter(false);
     context.setIsUpdate(false);
   }, [context.isUpdate, filter.getIsFilter()]);
-  function handleEdit(element) {
-    context.setDataEditable(element);
-  }
   async function handleRemove(id) {
     let response = await removeGasto(id, auth.getAccess());
     if (response == 401) {
