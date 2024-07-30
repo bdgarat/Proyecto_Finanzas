@@ -90,6 +90,7 @@ function UpdateComponent({ editRequest, editFunction }) {
           className={style.button}
           onClick={() => {
             editFunction(false);
+            context.setIsEdit(false);
           }}
         >
           Volver

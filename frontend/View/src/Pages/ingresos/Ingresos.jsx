@@ -5,39 +5,42 @@ import {
   getIngresos,
   removeIngreso,
   setIngreso,
-  editIngreso,
-} from "../../utils/requests/peticionesIngresos";
+  editIngreso,} 
+  from "../../utils/requests/peticionesIngresos";
 import Swal from "sweetalert2";
 import { useAuth } from "./../../Auth/AuthProvider";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
 import { invertirOrden } from "../../utils/functions/manipularArray";
+import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 function Ingresos() {
   const context = useContext(CardsContext);
   const auth = useAuth();
   const filter = useContext(FilterContext);
+  const pageContext = useContext(PaginadoContext);
   useEffect(() => {
+    pageContext.setPage(1);
     obtenerIngresos();
     filter.setIsFilter(false);
     context.setIsUpdate(false);
   }, [context.isUpdate, filter.getIsFilter()]);
   async function obtenerIngresos() {
-    let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),context.page);
+    let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),pageContext.getPage());
     if (response.status == 401) {
-      auth.updateToken();
-      response = await getIngresos(auth.getAccess(), filter.getDataFilter(),context.page);
+      let access = auth.updateToken();
+      response = await getIngresos(access, filter.getDataFilter(),pageContext.getPage());
     }
     context.setData(response.data.ingresos);
-    context.setPage(response.data.page);
-    context.setNextPage(response.data.next_page);
-    context.setLastPage(response.data.total_page);
+    pageContext.setPage(response.data.page);
+    pageContext.setNextPage(response.data.next_page);
+    pageContext.setLastPage(response.data.total_page);
   }
   async function handleRemove(id) {
     let response = await removeIngreso(id, auth.getAccess());
     if (response == 401) {
-      auth.updateToken();
-      response = await removeIngreso(id, auth.getAccess());
+      let access = auth.updateToken();
+      response = await removeIngreso(id, access);
     }
     if (response == 200) {
       Swal.fire({

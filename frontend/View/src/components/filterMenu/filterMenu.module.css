@@ -1,4 +1,6 @@
+
 .filterMenu{
+    visibility: visible;
     display: flex;
     justify-content: center;
     width:70%;

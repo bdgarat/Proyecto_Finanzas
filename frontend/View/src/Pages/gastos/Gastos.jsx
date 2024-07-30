@@ -13,24 +13,26 @@ import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
 import { invertirOrden } from "../../utils/functions/manipularArray";
+import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 function Gastos() {
   const context = useContext(CardsContext);
   const auth = useAuth();
   const filter = useContext(FilterContext);
+  var pagContext = useContext(PaginadoContext);
   async function obtenerLosGastos() {
     let response = null;
-    response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(), context.page);
-    console.log('Estoy en gastos',response)
+    response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(), pagContext.getPage());
     if (response.status == 401) {
-      auth.updateToken();
-      response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(),context.page,context.nextPage);
+      let access = await auth.updateToken();
+      response = await obtenerGastos(access, filter.getDataFilter(),pagContext.getPage());
     }
     context.setData(response.data.gastos);
-    context.setPage(response.data.page);
-    context.setNextPage(response.data.next_page);
-    context.setLastPage(response.data.total_pages);
+    pagContext.setPage(response.data.page);
+    pagContext.setNextPage(response.data.next_page);
+    pagContext.setLastPage(response.data.total_pages);
   }
   useEffect(() => {
+    pagContext.setPage(1);
     obtenerLosGastos();
     filter.setIsFilter(false);
     context.setIsUpdate(false);

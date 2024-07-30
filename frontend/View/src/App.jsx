@@ -9,6 +9,7 @@ import Protected from "./Pages/Protected";
 import { AuthProvider } from "./Auth/AuthProvider";
 import CardsProvider from "./utils/context/CardsProvider";
 import FilterProvider from "./utils/context/FilterProvider";
+import PaginadoProvider from "./utils/context/PaginadoProvider";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
+    <PaginadoProvider>
       <FilterProvider>
         <CardsProvider>
           <AuthProvider>
@@ -61,5 +63,6 @@ export default function App() {
           </AuthProvider>
         </CardsProvider>
       </FilterProvider>
+    </PaginadoProvider>
   );
 }

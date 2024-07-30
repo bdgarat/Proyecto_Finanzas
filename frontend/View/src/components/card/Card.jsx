@@ -34,6 +34,7 @@ function Card({ element, handleRemove, requestEdit }) {
           <button
             className={style.button}
             onClick={() => {
+
               handleEdit(element);
             }}
           >

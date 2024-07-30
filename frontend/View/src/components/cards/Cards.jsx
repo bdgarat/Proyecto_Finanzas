@@ -3,8 +3,10 @@ import style from "./cards.module.css";
 import Card from "../card/Card";
 import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
+import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
   const context = useContext(CardsContext);
+  const pagationContext = useContext(PaginadoContext);
   const [isMessage, setIsMessage] = useState(false);
   const [message, setMessage] = useState("");
   useEffect(() => {
@@ -12,6 +14,10 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
       setIsMessage(false);
     }, 3000);
   }, [isMessage]);
+  useEffect(()=>{
+    context.setIsEdit(false);
+    context.setIsNew(false);
+  },[])
   return (
     <div className={style.cards}>
       <div className={style.paginationButton}>
@@ -47,11 +53,11 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
         <button
           className={style.buttonPagination}
           onClick={async () => {
-            if (context.page == 1) {
+            if (pagationContext.getPage() == 1) {
               setMessage("ya me encuentro en la primera pagina");
               setIsMessage(true);
             } else {
-              await context.setPage(context.page - context.page--);
+               pagationContext.setPage(()=>{pagationContext.getPage() - pagationContext.getPage()-1});
               await obtenerDatos();
             }
           }}
@@ -61,11 +67,11 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
         <button
           className={style.buttonPagination}
           onClick={async () => {
-            if (context.page == 1) {
+            if (pagationContext.getPage() == 1) {
                 setMessage("No hay página anterior");
                 setIsMessage(true);
             } else {
-              context.setPage(context.page--);
+              pagationContext.setPage(pagationContext.getPage()-1);
               await obtenerDatos();
             }
           }}
@@ -75,14 +81,14 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
         <button
           className={style.buttonPagination}
           onClick={async () => {
-            if (context.nextPage == null)
+            if (pagationContext.getNextPage() == null)
               {
                 setMessage("No hay página siguiente");
                 setIsMessage(true);
 
               } 
               else{
-              context.setPage(context.page++);
+                pagationContext.setPage(pagationContext.getPage()+1);
               await obtenerDatos();
             }
           }}
@@ -90,14 +96,15 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
           Página siguiente
         </button>
         <button className={style.buttonPagination} onClick={async ()=>{
-          if(context.nextPage == null)
+          if(pagationContext.getNextPage() == null)
           {
             setMessage("Ya te encontras en la última página");
             setIsMessage(true);
           }
           else
           {
-            context.setPage(context.page = context.lastPage);
+            let pageO = pagationContext.getLastPage();
+            pagationContext.setPage( pageO);
             await obtenerDatos();
           }
         }}>Última página</button>
