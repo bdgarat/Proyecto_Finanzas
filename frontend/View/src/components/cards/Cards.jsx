@@ -34,7 +34,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
         </div>
       ) : null}
       <ul className={style.card}>
-        {data != null && data.length != 0?data.reverse().map((element) => (
+        {data != null && data.length != 0?data.map((element) => (
           <Card
             key={element.id}
             element={element}
