@@ -3,7 +3,6 @@ import style from "./cards.module.css";
 import Card from "../card/Card";
 import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
-import { renderMatches } from "react-router-dom";
 function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
   const context = useContext(CardsContext);
   const [isMessage, setIsMessage] = useState(false);
@@ -35,7 +34,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
         </div>
       ) : null}
       <ul className={style.card}>
-        {data != null && data.length != 0?data.map((element) => (
+        {data != null && data.length != 0?data.reverse().map((element) => (
           <Card
             key={element.id}
             element={element}

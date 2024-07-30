@@ -14,7 +14,7 @@ export function AuthProvider({children}) {
   async function updateToken()
   {
     let refresh = localStorage.getItem("refresh");
-    setAccess(async()=> await refreshToken(refresh));
+    setAccess(await refreshToken(refresh));
   }
   return  <AuthContext.Provider value={{getAuth,setIsAuth,getAccess,setAccess,updateToken}}>{children} </AuthContext.Provider>
 }

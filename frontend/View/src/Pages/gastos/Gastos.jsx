@@ -12,6 +12,7 @@ import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
+import { invertirOrden } from "../../utils/functions/manipularArray";
 function Gastos() {
   const context = useContext(CardsContext);
   const auth = useAuth();
@@ -61,7 +62,7 @@ function Gastos() {
       <DefaultPage>
         <FilterMenu />
         <Cards
-          data={context.data}
+          data={invertirOrden(context.data)}
           handleRemove={handleRemove}
           requestEdit={editGasto}
           requestAdd={setGasto}
