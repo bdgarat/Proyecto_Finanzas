@@ -5,16 +5,10 @@ import DefaultPage from '../../components/defaultPage/DefaultPage';
 function Dashboard() {
   const auth = useAuth();
   const navigate = useNavigate();
-  function borrarCredenciales()
-  {
-    localStorage.removeItem("refresh");
-    auth.setIsAuth(false);
-    navigate("/");
-  }
+ 
   return (
     <div>
       <DefaultPage>
-        <button onClick={borrarCredenciales}>Desloguearse</button>
       </DefaultPage>
     </div>
   )

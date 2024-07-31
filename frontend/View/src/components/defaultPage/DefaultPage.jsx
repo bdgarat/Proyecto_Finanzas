@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./defaultPage.module.css";
-import iconUser from "./../../assets/avatar_png.png"
+import iconUser from "./../../assets/avatar_png.png";
+import { useAuth } from "../../Auth/AuthProvider";
 function DefaultPage({ children }) {
+  const[isMenu,setIsMenu] = useState(false);
+  const auth = useAuth();
+  function borrarCredenciales()
+  {
+    localStorage.removeItem("refresh");
+    auth.setIsAuth(false);
+    navigate("/");
+  }
   return (
     <div className={style.container}>
       <header className={style.header_container}>
@@ -22,7 +31,21 @@ function DefaultPage({ children }) {
         </nav>
         <div className={style.dataUser}>
           <span className={style.userName}>{localStorage.getItem("user")}</span>
-          <img src={iconUser} alt="Foto o imagen del usuario" className={style.user_image} />
+          <div className={style.container_userMenu}>
+          <img
+              src={iconUser}
+              alt="Foto o imagen del usuario"
+              className={style.user_image}
+              onClick={()=>{isMenu? setIsMenu(false):setIsMenu(true)}}
+            />
+            {isMenu ? <div className={style.userMenu}>
+              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
+              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
+              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
+
+              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
+            </div>:null}
+          </div>
         </div>
       </header>
       <main className={style.principal}>{children}</main>
