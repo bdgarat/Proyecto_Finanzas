@@ -19,16 +19,29 @@
 }
 .monto{
     width:10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.icon_saldo{
+    width:50px;
+    height: 50px;
 }
 .tipo{
     width:25%;
     display: flex;
     justify-content: start;
+    align-items: center;
 }
 .descripcion{
     width:50%;
     display: flex;
     justify-content: start;
+    align-items: center;
+}
+.fecha{
+    display: flex;
+    align-items: center;
 }
 .container_button{
     display: flex;

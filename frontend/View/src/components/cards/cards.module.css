@@ -14,7 +14,11 @@
     font-size: 17px;
     background-color: #95c799;
     box-shadow: 0 5px 0  #00a135;
-    color:white
+    color:white;
+    cursor:pointer;
+}
+.buttonAdd:hover{
+    background-color: #95c755;
 }
 .buttonAdd:active{
     transform: translateY(5px);

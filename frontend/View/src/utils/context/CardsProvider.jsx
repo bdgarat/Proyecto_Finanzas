@@ -12,6 +12,7 @@ export default function CardsProvider({ children }) {
   const [data, setData] = useState([]);
   //Esta constante sirve indicar que se tiene que actuarlizar el contenido de una lista
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isViewSaldo,setIsViewSaldo] = useState(true);
 
   return (
     <CardsContext.Provider
@@ -26,6 +27,8 @@ export default function CardsProvider({ children }) {
         setIsNew,
         isUpdate,
         setIsUpdate,
+        isViewSaldo,
+        setIsViewSaldo
       }}
     >
       {children}

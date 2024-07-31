@@ -28,6 +28,8 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
               context.setIsNew(false);
             } else if (!context.isEdit) {
               context.setIsNew(true);
+            } else{
+              window.alert("Empezaste a editar un elemento. Cerra el elemento que estas editando para poder agregar uno nuevo");
             }
           }}
         >

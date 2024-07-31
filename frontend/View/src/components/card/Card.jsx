@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import style from "./card.module.css";
+import eye from "./../../assets/show.png";
+import not_eye from "./../../assets/not_show.png";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import UpdateComponent from "../inComponent/UpdateComponent";
 function Card({ element, handleRemove, requestEdit }) {
@@ -12,15 +14,42 @@ function Card({ element, handleRemove, requestEdit }) {
     } else if (!isEdit && !context.isEdit && !context.isNew) {
       setIsEdit(true);
       context.setIsEdit(true);
+    }else
+    {
+      window.alert("Empezaste a crear un elemento. Cerra el elemento que estas creando para poder editar un elemento");
     }
 
     context.setDataEditable(element);
+  }
+  function handleViewSaldo() {
+    context.isViewSaldo
+      ? context.setIsViewSaldo(false)
+      : context.setIsViewSaldo(true);
   }
   return (
     <div className={style.container}>
       <li className={style.card}>
         <div className={style.monto_fecha}>
-          <p className={style.monto}>{element.monto}</p>
+          {context.isViewSaldo ? (
+            <p className={style.monto}>
+              {element.monto}
+              <img
+                className={style.icon_saldo}
+                src={eye}
+                onClick={() => {
+                  handleViewSaldo();
+                }}
+              />{" "}
+            </p>
+          ) : (
+            <img
+              className={style.icon_saldo}
+              src={not_eye}
+              onClick={() => {
+                handleViewSaldo();
+              }}
+            />
+          )}
           <p className={style.tipo}>Tipo:{element.tipo}</p>
           <p className={style.descripcion}>
             Descripción: {element.descripcion}
@@ -34,7 +63,6 @@ function Card({ element, handleRemove, requestEdit }) {
           <button
             className={style.button}
             onClick={() => {
-
               handleEdit(element);
             }}
           >
