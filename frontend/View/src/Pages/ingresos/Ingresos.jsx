@@ -21,6 +21,7 @@ function Ingresos() {
   const pageContext = useContext(PaginadoContext);
   useEffect(() => {
     pageContext.setPage(1);
+    context.setType(false);
     obtenerIngresos();
     filter.setIsFilter(false);
     context.setIsUpdate(false);
@@ -28,6 +29,7 @@ function Ingresos() {
   async function obtenerIngresos() {
     let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),pageContext.getPage());
     if (response.status == 401) {
+      console.log('estoy dentro del if');
       let access = auth.updateToken();
       response = await getIngresos(access, filter.getDataFilter(),pageContext.getPage());
     }

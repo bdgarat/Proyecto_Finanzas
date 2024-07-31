@@ -31,7 +31,7 @@ function Card({ element, handleRemove, requestEdit }) {
       <li className={style.card}>
         <div className={style.monto_fecha}>
           {context.isViewSaldo ? (
-            <p className={style.monto}>
+            <p className={context.getType()?style.montoGasto:style.montoIngreso}>
               {element.monto}
               <img
                 className={style.icon_saldo}

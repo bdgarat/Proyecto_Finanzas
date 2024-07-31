@@ -33,6 +33,7 @@ function Gastos() {
   }
   useEffect(() => {
     pagContext.setPage(1);
+    context.setType(true);
     obtenerLosGastos();
     filter.setIsFilter(false);
     context.setIsUpdate(false);
