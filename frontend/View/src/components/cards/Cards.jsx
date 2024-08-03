@@ -41,6 +41,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
                 if(event.isConfirmed)
                 {
                   context.setOtherEdit(true);
+                  context.setIsEdit(false);
                   context.setIsNew(true);
                 }
               })

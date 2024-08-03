@@ -86,11 +86,17 @@
     display:flex;
     justify-content: center;
     width:100%;
+    margin-left:20%;
 }
 .navBar_link{
     margin:0 10%;
-    font-size:20px;
+    font-size:22px;
+    color:#3545A7;
     font-family: "Orbitron";
+    text-decoration: none;
+}
+.navBar_link:hover{
+    color:white;
 }
 .principal{
     display: flex;

@@ -28,6 +28,8 @@ function Card({ element, handleRemove, requestEdit }) {
     context.setOtherEdit(false);
   }, [context.otherEdit]);
   function handleEdit(element) {
+    console.log(isEdit);
+    console.log(context.isEdit);
     if (isEdit && context.isEdit) {
       setIsEdit(false);
       context.setIsEdit(false);
