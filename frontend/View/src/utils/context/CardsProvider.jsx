@@ -14,6 +14,8 @@ export default function CardsProvider({ children }) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [isViewSaldo, setIsViewSaldo] = useState(true);
   const[type,setType] = useState(true);
+  const [lastEdit,setLastEdit] = useState({});
+  const[otherEdit,setOtherEdit] = useState(false);
   function getType() {
     return type;
   }
@@ -33,7 +35,11 @@ export default function CardsProvider({ children }) {
         isViewSaldo,
         setIsViewSaldo,
         setType,
-        getType
+        getType,
+        lastEdit,
+        setLastEdit,
+        otherEdit,
+        setOtherEdit
       }}
     >
       {children}

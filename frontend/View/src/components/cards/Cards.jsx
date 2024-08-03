@@ -4,6 +4,7 @@ import Card from "../card/Card";
 import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import { PaginadoContext } from "../../utils/context/PaginadoProvider";
+import Swal from "sweetalert2";
 function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
   const context = useContext(CardsContext);
   const pagationContext = useContext(PaginadoContext);
@@ -29,7 +30,20 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
             } else if (!context.isEdit) {
               context.setIsNew(true);
             } else{
-              window.alert("Empezaste a editar un elemento. Cerra el elemento que estas editando para poder agregar uno nuevo");
+              Swal.fire({
+                title:"Esta seguro que quiere  dejar de editar?",
+                text:"Perdera todos sus datos",
+                showCancelButton:true,
+                confirmButtonText:"Confirmar",
+                cancelButtonText:"Cancelar",
+                cancelButtonColor:"red"
+              }).then((event)=>{
+                if(event.isConfirmed)
+                {
+                  context.setOtherEdit(true);
+                  context.setIsNew(true);
+                }
+              })
             }
           }}
         >
