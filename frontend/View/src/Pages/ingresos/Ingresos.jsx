@@ -29,11 +29,11 @@ function Ingresos() {
   async function obtenerIngresos() {
     let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),pageContext.getPage());
     if (response.status == 401) {
-      console.log('estoy dentro del if');
-      let access = auth.updateToken();
+      let access = await auth.updateToken();
+      console.log(access);
       response = await getIngresos(access, filter.getDataFilter(),pageContext.getPage());
     }
-    context.setData(response.data.ingresos);
+    context.setData(response.data);
     pageContext.setPage(response.data.page);
     pageContext.setNextPage(response.data.next_page);
     pageContext.setLastPage(response.data.total_page);
@@ -64,7 +64,7 @@ function Ingresos() {
       <DefaultPage>
         <FilterMenu></FilterMenu>
         <Cards
-          data={invertirOrden(context.data)}
+          data={invertirOrden(context.data.ingresos)}
           handleRemove={handleRemove}
           requestEdit={editIngreso}
           requestAdd={setIngreso}

@@ -26,7 +26,7 @@ function Gastos() {
       let access = await auth.updateToken();
       response = await obtenerGastos(access, filter.getDataFilter(),pagContext.getPage());
     }
-    context.setData(response.data.gastos);
+    context.setData(response.data);
     pagContext.setPage(response.data.page);
     pagContext.setNextPage(response.data.next_page);
     pagContext.setLastPage(response.data.total_pages);
@@ -65,7 +65,7 @@ function Gastos() {
       <DefaultPage>
         <FilterMenu />
         <Cards
-          data={invertirOrden(context.data)}
+          data={invertirOrden(context.data.gastos)}
           handleRemove={handleRemove}
           requestEdit={editGasto}
           requestAdd={setGasto}

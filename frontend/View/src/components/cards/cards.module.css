@@ -35,10 +35,17 @@
 }
 .paginationButton{
     margin:20px 0;
-    width:50%;
+    width:55%;
     height: auto;
     display:flex;
+    align-items: center;
     justify-content: space-evenly;
+}
+.message_entradas{
+    display: flex;
+    justify-content: space-between;
+    height: 4vh;
+    width:100%;
 }
 .buttonPagination{
     padding:10px 10px;

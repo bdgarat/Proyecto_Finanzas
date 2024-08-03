@@ -29,7 +29,7 @@ export async function getIngresos(access, data,page) {
      }
      return respuesta;
    } catch (error) {
-     console.log(error);
+     console.log('Este error es de la petición de ingresos',error);
      return error.response;
    }
  }

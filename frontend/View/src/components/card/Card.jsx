@@ -11,7 +11,6 @@ function Card({ element, handleRemove, requestEdit }) {
   const [actual, setActual] = useState(-1);
   useEffect(() => {
     if (context.lastEdit.id == element.id) {
-      console.log("cierro elemento anterior", element.id);
       setIsEdit(false);
       setActual(-1);
       if(context.isNew)
@@ -28,8 +27,6 @@ function Card({ element, handleRemove, requestEdit }) {
     context.setOtherEdit(false);
   }, [context.otherEdit]);
   function handleEdit(element) {
-    console.log(isEdit);
-    console.log(context.isEdit);
     if (isEdit && context.isEdit) {
       setIsEdit(false);
       context.setIsEdit(false);
@@ -117,7 +114,7 @@ function Card({ element, handleRemove, requestEdit }) {
           </p>
         </div>
 
-        <div className={style.container_button}>
+        {!isEdit? <div className={style.container_button}>
           <button
             className={style.button}
             onClick={() => {
@@ -134,13 +131,13 @@ function Card({ element, handleRemove, requestEdit }) {
           >
             Eliminar
           </button>
-        </div>
-      </li>
-      {isEdit ? (
+        </div>:null}
+        {isEdit ? (
         <div className={style.container_edit_card}>
           <UpdateComponent editRequest={requestEdit} editFunction={setIsEdit} />
         </div>
       ) : null}
+      </li>
     </div>
   );
 }
