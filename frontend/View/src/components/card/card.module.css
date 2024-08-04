@@ -91,6 +91,9 @@
     transition: .5;
     cursor: pointer;
 }
+.button_edit:hover{
+    background-color: whitesmokeg;
+}
 .button_deleted:hover{
     background-color: red;
 }

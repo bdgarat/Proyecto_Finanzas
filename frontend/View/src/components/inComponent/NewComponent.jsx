@@ -83,17 +83,17 @@ function NewComponent({ newRequest }) {
         placeholder="describa de donde proviene el ingreso"
       ></textarea>
       <div className={style.container_button}>
-        <button className={style.button} type="submit">
+        <a className={style.button_enviar} type="submit">
           Enviar
-        </button>
-        <button
-          className={style.button}
+        </a>
+        <a
+          className={style.button_volver}
           onClick={() => {
             context.setIsNew(false);
           }}
         >
           Volver
-        </button>
+        </a>
       </div>
     </form>
   );
