@@ -36,6 +36,7 @@
     align-items: center;
     justify-content: space-around;
     color:rgb(0, 128, 53);
+    
 }
 .icon_saldo{
     width:50px;
@@ -57,7 +58,9 @@
 .fecha{
     display: flex;
     align-items: center;
+    font-weight: bold;
 }
+
 .container_button{
     display: flex;
     justify-content: center;
@@ -92,7 +95,7 @@
     cursor: pointer;
 }
 .button_edit:hover{
-    background-color: whitesmokeg;
+    background-color: whitesmoke;
 }
 .button_deleted:hover{
     background-color: red;
