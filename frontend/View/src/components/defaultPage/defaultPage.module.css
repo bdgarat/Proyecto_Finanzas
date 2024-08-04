@@ -50,6 +50,10 @@
 }
 .userMenu{
   width:250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height:auto;
   background-color: #333;
   position:absolute;
@@ -59,20 +63,24 @@
   box-shadow: 5px 5px 5px   black;
   border-radius: 3px 3px 25px 25px;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 10px ;
 }
 .button_deslog{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
+  border-radius: 5px;
   width:100%;
-  height: 5vh;
+  height: 4vh;
   margin-bottom: 5px;
-  border-radius: 20px 20px 20px 20px;
   color:white;
   background-color: #222;
   cursor: pointer;
 }
 .button_deslog:hover{
-  background-color: gainsboro;
+  background-color: skyblue;
+  color:black
 }
 .button_deslog:active{
   background-color: #b10000;

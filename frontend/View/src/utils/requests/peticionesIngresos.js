@@ -9,7 +9,7 @@ export async function getIngresos(access, data,page) {
          url: "http://127.0.0.1:5000/ingresos/get_all",
          params: {
            page: page,
-           page_size: 10,
+           page_size: 5,
            monto: data.monto,
            tipo: data.tipo,
            fecha_inicio: data.fecha_inicio,
@@ -23,7 +23,7 @@ export async function getIngresos(access, data,page) {
          url: "http://127.0.0.1:5000/ingresos/get_all",
          params: {
            page: page,
-           page_size: 10,
+           page_size: 5,
          },
        });
      }

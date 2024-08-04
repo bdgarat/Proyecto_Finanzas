@@ -13,9 +13,8 @@ function Card({ element, handleRemove, requestEdit }) {
     if (context.lastEdit.id == element.id) {
       setIsEdit(false);
       setActual(-1);
-      if(context.isNew)
-      {
-        context.setLastEdit({id:-1});
+      if (context.isNew) {
+        context.setLastEdit({ id: -1 });
       }
     }
     if (actual != -1) {
@@ -114,29 +113,45 @@ function Card({ element, handleRemove, requestEdit }) {
           </p>
         </div>
 
-        {!isEdit? <div className={style.container_button}>
-          <button
-            className={style.button}
-            onClick={() => {
-              handleEdit(element);
-            }}
-          >
-            Editar
-          </button>
-          <button
-            className={style.button}
-            onClick={() => {
-              handleRemove(element.id);
-            }}
-          >
-            Eliminar
-          </button>
-        </div>:null}
+        {!isEdit ? (
+          <div className={style.container_button}>
+            <button
+              className={style.button_edit}
+              onClick={() => {
+                handleEdit(element);
+              }}
+            >
+              Editar
+            </button>
+            <button
+              className={style.button_deleted}
+              onClick={() => {
+                Swal.fire({
+                  title: "Estas seguro que deseas borrar está entrada?",
+                  text: "Una vez confirmada la acción no podras recuperar estos datos",
+                  showCancelButton: true,
+                  cancelButtonText: "Cancelar",
+                  cancelButtonColor: "red",
+                  confirmButtonText: "Confirmar",
+                }).then((event) => {
+                  if (event.isConfirmed) {
+                    handleRemove(element.id);
+                  }
+                });
+              }}
+            >
+              Eliminar
+            </button>
+          </div>
+        ) : null}
         {isEdit ? (
-        <div className={style.container_edit_card}>
-          <UpdateComponent editRequest={requestEdit} editFunction={setIsEdit} />
-        </div>
-      ) : null}
+          <div className={style.container_edit_card}>
+            <UpdateComponent
+              editRequest={requestEdit}
+              editFunction={setIsEdit}
+            />
+          </div>
+        ) : null}
       </li>
     </div>
   );

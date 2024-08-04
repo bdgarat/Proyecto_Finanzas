@@ -39,11 +39,10 @@ function DefaultPage({ children }) {
               onClick={()=>{isMenu? setIsMenu(false):setIsMenu(true)}}
             />
             {isMenu ? <div className={style.userMenu}>
-              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
-              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
-              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
-
-              <button className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</button>
+              <a className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</a>
+              <a className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</a>
+              <a className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</a>
+              <a className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</a>
             </div>:null}
           </div>
         </div>

@@ -9,11 +9,12 @@
     width:100%;
     align-items: center;
     padding:10px;
-    margin:5px;
-    border:2px solid #333;
+    margin:7px;
+    
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    box-shadow: 5px 5px 12px #222;
 }
 .monto_fecha{
     display: flex;
@@ -34,7 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    color:green;
+    color:rgb(0, 128, 53);
 }
 .icon_saldo{
     width:50px;
@@ -65,17 +66,33 @@
     height:4vh;
     width:100%
 }
-.button{
-    height: 3.3vh;
+.button_deleted{
+    height: 3.5vh;
     align-items: center;
     text-align: center;
+    font-size: 15px;
+    border-radius: 5px;
     margin:7px;
     width:10%;
     transition: .5;
+    background-color: #1192ee;
+    border: 3px #800000;
+    cursor: pointer;
 }
-.button:active{
-    width:10%;
+.button_edit{
+    height: 3.5vh;
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
     border-radius: 5px;
+    border: 1px;
+    margin:7px;
+    width:10%;
+    transition: .5;
+    cursor: pointer;
+}
+.button_deleted:hover{
+    background-color: red;
 }
 .container_edit_card{
     width:90%;
