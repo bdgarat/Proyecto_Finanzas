@@ -2,6 +2,9 @@
 *{
   box-sizing: border-box;
 }
+input{
+  height:2.5vh
+}
 .container {
   height: 100vh;
   width: 100%;
@@ -41,6 +44,7 @@
 
 .userName{
   font-size: 20px;
+  text-transform: uppercase;
 }
 .container_userMenu{
   display: flex;
