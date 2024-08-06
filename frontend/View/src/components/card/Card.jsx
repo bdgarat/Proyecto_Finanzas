@@ -115,15 +115,15 @@ function Card({ element, handleRemove, requestEdit }) {
 
         {!isEdit ? (
           <div className={style.container_button}>
-            <button
+            <a
               className={style.button_edit}
               onClick={() => {
                 handleEdit(element);
               }}
             >
               Editar
-            </button>
-            <button
+            </a>
+            <a
               className={style.button_deleted}
               onClick={() => {
                 Swal.fire({
@@ -140,8 +140,8 @@ function Card({ element, handleRemove, requestEdit }) {
                 });
               }}
             >
-              Eliminar
-            </button>
+              Borrar
+            </a>
           </div>
         ) : null}
         {isEdit ? (

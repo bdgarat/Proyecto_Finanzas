@@ -85,7 +85,7 @@ function UpdateComponent({ editRequest, editFunction }) {
         placeholder="describa que fue en lo que gasto"
       ></textarea>
       <div className={style.container_button}>
-        <a type="submit" className={style.button_enviar} >Enviar</a>
+        <button type="submit" className={style.button_enviar} >Enviar</button>
         <a
           className={style.button_volver}
           onClick={() => {

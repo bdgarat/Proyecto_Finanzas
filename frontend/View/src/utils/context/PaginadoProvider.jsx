@@ -1,9 +1,10 @@
 import React, { createContext, useState } from "react";
 export const PaginadoContext = createContext({});
-function PaginadoProvider({ children }) {
+function PaginadoProvider({children}) { 
   var page = 0;
   var nextPage = 0;
   var lastPage = 0;
+ 
   function setNextPage(value) {
     nextPage = value;
   }
