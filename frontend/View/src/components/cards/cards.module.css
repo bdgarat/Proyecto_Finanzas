@@ -12,13 +12,14 @@
     border:1px solid #00a135;
     text-align: center;
     font-size: 17px;
-    background-color: #95c799;
+    background-color: #198754;
     box-shadow: 0 5px 0  #00a135;
     color:white;
     cursor:pointer;
 }
 .buttonAdd:hover{
     background-color: #95c755;
+    color:black;
 }
 .buttonAdd:active{
     transform: translateY(5px);
