@@ -1,6 +1,6 @@
-# Proyecto Finanzas (Backend)
+# Proyecto Finanzas
 
-## Iniciar ambiente
+## Iniciar ambiente (Backend)
 
 ### Requisitos
 
@@ -14,7 +14,7 @@
 # Para crear el entorno virtual
 $ virtualenv -p python3 venv
 # Para iniciar el entorno virtual
-$ . venv/bin/activate
+$ .venv/bin/activate
 # Instalar las dependencias dentro del entorno virtual
 $ pip3 install -r requirements.txt
 # En el directorio raiz
@@ -56,6 +56,17 @@ $ flask db migrate
 $ flask db upgrade
 ```
 
+IMPORTANTE: En caso de que exista algun error en la migracion de modelos a db, borrar el directorio "backend/migrations" y ejecutar las siguientes instrucciones:
+
+```bash
+# Inicializa el servicio de migraciones a db
+$ flask db init
+# Agregar los cambios de modelos a db
+$ flask db migrate
+# Commitear los cambios de modelos a db
+$ flask db upgrade
+```
+
 Hecho esto, ejecutar el backend con el siguiente comando:
 
 ```bash
@@ -68,3 +79,16 @@ Para salir del entorno virtual, ejecutar:
 ```bash
 $ deactivate
 ```
+
+## Front 
+  ### Aplicaciones necesarias
+     - nodejs
+  ## Instala dependencias necesarias
+  ### Para instalar las dependencias y levantar el front hay que estar parado dentro de la carpeta View
+    ``` bash
+    $ npm i 
+    ```
+  ## Levantar el front
+   ``` bash
+    $ npm run dev 
+   ```

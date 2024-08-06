@@ -193,21 +193,12 @@ def get_first_gasto_by_tipo(current_user):
     }
     return jsonify({'gasto': output}), 200
 
-<<<<<<< HEAD
-@bp.route('/add', methods=['PUT'])
-=======
 @bp.route('/add', methods=['POST'])
->>>>>>> develop
 @cross_origin()
 @token_required
 def add(current_user):
 
     # Obtengo los datos necesarios para crear el elemento desde json enviado en el body
-<<<<<<< HEAD
-    descripcion = request.json["descripcion"]
-    monto = request.json["monto"]
-    tipo = request.json["tipo"]
-=======
     try:
         descripcion = request.json["descripcion"]
         monto = request.json["monto"]
@@ -216,7 +207,6 @@ def add(current_user):
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
->>>>>>> develop
     try:
         fecha = request.json["fecha"]
     except KeyError:
@@ -241,13 +231,6 @@ def add(current_user):
     # Creo el elemento
     gasto = Gasto(id_usuario, descripcion, monto, tipo, fecha)
 
-<<<<<<< HEAD
-    if not monto or not tipo:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
-    if len(descripcion) > gasto.get_descripcion_characters_limit() or len(tipo) > gasto.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
-=======
     if len(descripcion) > gasto.descripcion_char_limit or len(tipo) > gasto.tipo_char_limit: # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
@@ -276,7 +259,6 @@ def update(current_user):
         monto = request.json["monto"]
         tipo = request.json["tipo"]
     except KeyError:
->>>>>>> develop
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
@@ -340,23 +322,11 @@ def update(current_user):
             'message': 'No se ha encontrado el elemento'
         }), 404
 
-<<<<<<< HEAD
-    if not monto or not tipo:
-        return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
-    if len(descripcion) > gasto.get_descripcion_characters_limit() or len(tipo) > gasto.get_tipo_characters_limit(): # 'superan los caracteres maximos permitidos'
-        return jsonify({
-            'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
-            'descripcion_max_characters': f"{gasto.get_descripcion_characters_limit()}",
-            'tipo_max_characters': f"{gasto.get_tipo_characters_limit()}"
-=======
     if len(descripcion) > gasto.descripcion_char_limit or len(tipo) > gasto.tipo_char_limit: # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{gasto.descripcion_char_limit}",
             'tipo_max_characters': f"{gasto.tipo_char_limit}"
->>>>>>> develop
         }), 403
 
     # ---------- FIN DE VALIDACIONES ---------------------
@@ -365,12 +335,8 @@ def update(current_user):
     gasto.descripcion = descripcion
     gasto.monto = monto
     gasto.tipo = tipo
-<<<<<<< HEAD
-    gasto.fecha = fecha
-=======
     if fecha:
         gasto.fecha = fecha
->>>>>>> develop
 
     # Actualizo el elemento en la base de datos
     gasto.update()
@@ -384,17 +350,12 @@ def update(current_user):
 @token_required
 def delete(current_user):
     # Obtengo los datos necesarios para eliminar el elemento desde json enviado en el body
-<<<<<<< HEAD
-    id_gasto = request.json["id"]
-
-=======
     try:
         id_gasto = request.json["id"]
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 403
->>>>>>> develop
     # Obtengo el id de usuario del token
     current_user: Usuario
     id_usuario = current_user.get_id()
