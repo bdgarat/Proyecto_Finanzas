@@ -110,3 +110,94 @@
 .container_edit_card{
     width:90%;
 }
+@media(max-width:425px)
+{
+    .card{
+        list-style-type: none;
+        width:100%;
+        align-items: center;
+        padding:10px;
+        margin:7px;   
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 5px 5px 12px #222;
+    }
+    .monto_fecha{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width:100%
+    }
+    .montoGasto{
+        width:35%;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        color:red
+    }
+    .tipo{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:10px 0;
+    }
+    .descripcion{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        margin:10px auto;
+        align-items: center;
+        text-align: center;
+    }
+    .fecha{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+    .container_button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:5px;
+        height:4vh;
+        width:100%
+    }
+    .button_deleted{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 3.5vh;
+        align-items: center;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+        margin:7px;
+        width:50%;
+        transition: .5;
+        background-color: #1192ee;
+        border: 3px #800000;
+        cursor: pointer;
+    }
+    .button_edit{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 3.5vh;
+        align-items: center;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px;
+        margin:7px;
+        width:50%;
+        transition: .5;
+        cursor: pointer;
+        background-color: aliceblue;
+    }
+
+}

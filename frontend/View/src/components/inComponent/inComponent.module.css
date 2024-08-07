@@ -59,3 +59,42 @@ textarea{
 .button_volver:hover{
     background-color: aquamarine;
 }
+@media(max-width:425px)
+{
+    .container{
+        margin:10px 0;
+        width:100%;
+        padding:20px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 5px 5px 12px #222;
+        border-radius:10px;
+    }
+    textarea{
+        height: 7.0vh;
+        width:100%;
+        text-align: center;
+    }
+    .container_button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 4vh;
+        margin:5px;
+    }
+    .button_volver{
+        cursor: pointer;
+        margin:8px;
+        padding:5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:100%;
+        height: 3.4vh;
+        border-radius: 5px;
+        background-color: whitesmoke;
+    }
+    
+}

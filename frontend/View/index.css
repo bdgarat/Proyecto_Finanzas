@@ -7,3 +7,7 @@
 html{
     height: 100%;
 }
+@media(max-width:425px)
+{
+    *{width:100%;}
+}

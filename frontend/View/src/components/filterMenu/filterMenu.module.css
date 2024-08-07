@@ -19,3 +19,24 @@
 label{
     margin:0 10px;
 }
+@media(max-width:425px){
+    .filterMenu{
+        display: flex;
+        align-items: center;
+        width:100%;
+        height:auto;
+    }
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width:100%;
+    }
+    label{
+        margin:6px ;
+    }
+    input{
+        width:100%;
+    }
+}

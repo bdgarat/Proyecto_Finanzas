@@ -40,6 +40,12 @@
   flex-direction: column;
   align-items: center;
 }
+.message_entradas {
+  display: flex;
+  justify-content: space-between;
+  height: 4vh;
+  width: 100%;
+}
 
 .paginationButton {
   width: auto;
@@ -50,12 +56,6 @@
   justify-content: space-evenly;
 }
 
-.message_entradas {
-  display: flex;
-  justify-content: space-between;
-  height: 4vh;
-  width: 100%;
-}
 
 .buttonPagination {
   display: flex;
@@ -127,4 +127,44 @@
 }
 .message {
   margin: 15px;
+}
+@media(max-width:425px)
+{
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .container_button_add {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 5vh;
+  }
+  .buttonAdd {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid #00a135;
+    text-align: center;
+    font-size: 17px;
+    background-color: #198754;
+    box-shadow: 0 5px 0 #00a135;
+    color: white;
+    cursor: pointer;
+  }
+  .message_entradas {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    margin:10px 0;
+  }
+  .message_entradas p {
+    margin:10px
+  }
 }
