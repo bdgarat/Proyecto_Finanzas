@@ -3,7 +3,7 @@ from datetime import datetime
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app.db import db
-from typing import List
+
 
 class Ingreso(db.Model):
     __tablename__ = 'ingresos'

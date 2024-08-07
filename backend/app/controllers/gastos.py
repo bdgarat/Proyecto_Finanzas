@@ -1,51 +1,17 @@
-import datetime
-
 from flask_cors import cross_origin
 
 from app import token_required
 from flask import Blueprint, jsonify, request, g
-from sqlalchemy import and_
+from sqlalchemy import desc
 
 from app.models.gastos import Gasto
 from app.models.usuarios import Usuario
+from app.utils.build_criterion import build_criterion_first
 
 from app.utils.paginated_query import paginated_query
+from app.utils.build_filters import build_filters
 
 bp = Blueprint('gastos', __name__, url_prefix='/gastos')
-
-def build_filters(params, current_user):
-    filters = []
-
-    monto = params.get('monto')
-    tipo = params.get('tipo')
-    fecha_inicio = params.get('fecha_inicio')
-    fecha_fin = params.get('fecha_fin')
-
-    if monto:
-        try:
-            monto = float(monto)
-            filters.append(Gasto.monto == monto)
-        except (ValueError, TypeError):
-            raise ValueError("El monto ingresado es invalido")
-
-    if tipo:
-        filters.append(Gasto.tipo.like(f'%{tipo}%'))
-
-    if fecha_inicio and fecha_fin:
-        try:
-            fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d')
-            fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d')
-            if fecha_fin <= fecha_inicio:
-                raise ValueError('La fecha de inicio debe ser anterior a la fecha de fin')
-            filters.append(and_(Gasto.fecha >= fecha_inicio, Gasto.fecha <= fecha_fin))
-        except ValueError:
-            raise ValueError('Formato de fecha incorrecto')
-
-    if not current_user.is_admin:
-        filters.append(Gasto.id_usuario == current_user.get_id())
-
-    return filters
-
 
 @bp.route('/get_all', methods=['GET'])
 @cross_origin()
@@ -61,11 +27,10 @@ def get_all():
 
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
-        filters = build_filters(request.args, current_user)
+        filters = build_filters(request.args, current_user, Gasto, True)
+        gastos = build_criterion_first(request.args, filters, Gasto)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
-
-    gastos = Gasto.query.filter(*filters).all()
 
     output = []
     for content in gastos:
@@ -88,11 +53,10 @@ def get():
 
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
-        filters = build_filters(request.args, current_user)
+        filters = build_filters(request.args, current_user, Gasto, False)
+        gasto = build_criterion_first(request.args, filters, Gasto)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
-
-    gasto = Gasto.query.filter(*filters).first()
 
     output = {}
     if gasto:

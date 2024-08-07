@@ -30,6 +30,8 @@ with app.app_context():
     db.create_all()
 
 migrate = Migrate(app, db)
+
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -54,11 +56,13 @@ def token_required(f):
 
     return decorated
 
+
 @app.route("/about")
 @cross_origin()
 # @login_required
 def about():
-    return ("QmFja2VuZCBkZSBhcHAgZGUgZmluYW56YXMuIERlc2Fycm9sbGFkbyBwb3IgQnJhaWFuIEdhcmF0LiAyMDI0")
+    return "QmFja2VuZCBkZSBhcHAgZGUgZmluYW56YXMuIERlc2Fycm9sbGFkbyBwb3IgQnJhaWFuIEdhcmF0LiAyMDI0"
+
 
 @app.route("/health")
 @cross_origin()
@@ -67,6 +71,7 @@ def health():
     return jsonify({
         'health': 'ok'
     }), 200
+
 
 from app.controllers import auth, usuarios, ingresos, gastos
 app.register_blueprint(auth.bp)

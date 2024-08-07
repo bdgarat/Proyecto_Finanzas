@@ -1,5 +1,13 @@
+DONE:
 Ver tema refresh token -OK-
 Paginado en queries -OK-
 Agregar ultimo logueo usuario -OK-
+Modificar monto a rango -OK-
+Pasar tipo a tabla -no tiene sentido-
+Ver imagen, carga, limite, si es base64 -descartado, uso str-
+Configurar endpoint get solo para traer min max -OK, se establecieron multiples parametros-
+Agregar en todas las tablas un isVisible del monto -descartado-
+
+TODO:
 OAuth2
 Verificar cuenta

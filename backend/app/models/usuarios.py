@@ -2,11 +2,8 @@ from typing import Optional
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from flask_login import UserMixin
-from sqlalchemy import LargeBinary
-from werkzeug.security import generate_password_hash, check_password_hash
 from app.db import db
-from typing import List
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 class Usuario(UserMixin, db.Model):
@@ -19,23 +16,24 @@ class Usuario(UserMixin, db.Model):
     username: so.Mapped[str] = so.mapped_column(sa.String(_username_char_limit), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(_password_hash_char_limit))
     email: so.Mapped[str] = so.mapped_column(sa.String(_email_char_limit))
-    created_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now()) #default=lambda: datetime.now(timezone.utc))
+    created_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now())
     last_updated_on: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now(), server_onupdate=db.func.now())
     last_login: so.Mapped[datetime] = so.mapped_column(index=True, server_default=db.func.now())
-    imagen: so.Mapped[Optional[LargeBinary]] = so.mapped_column(sa.LargeBinary)
+    imagen: so.Mapped[Optional[str]] = so.mapped_column(sa.String(1024))
     is_admin: so.Mapped[bool] = so.mapped_column(sa.Boolean)
     is_verified: so.Mapped[bool] = so.mapped_column(sa.Boolean)
+    is_money_visible: so.Mapped[bool] = so.mapped_column(sa.Boolean)
 
-    def __init__(self, username, password_hash, email, imagen = None, is_admin = False, is_verified = False):
+    def __init__(self, username, password_hash, email, imagen = None, is_admin = False, is_verified = False, is_money_visible = False):
         self.username = username
         self.password_hash = password_hash
         self.email = email
-        if imagen:
-            self.imagen = imagen
-        self.is_admin = is_admin
+        self.imagen = imagen
         self.created_on = db.func.now()
         self.last_updated_on = db.func.now()
+        self.is_admin = is_admin
         self.is_verified = is_verified
+        self.is_money_visible = is_money_visible
 
     def __repr__(self):
         return '<Usuario {}>'.format(self.username)

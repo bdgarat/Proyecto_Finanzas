@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "477ab3fb-a6dd-479e-b1f8-d33e56db29b9",
+		"_postman_id": "b8ab9836-5e78-4d07-870a-0911687bb515",
 		"name": "Proyecto_Finanzas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9496920"
@@ -20,7 +20,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&monto=2000.0&tipo=super",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -42,12 +42,19 @@
 									"value": "10"
 								},
 								{
-									"key": "monto",
-									"value": "2000.0"
+									"key": "monto_min",
+									"value": "200.0",
+									"disabled": true
+								},
+								{
+									"key": "monto_max",
+									"value": "450.0",
+									"disabled": true
 								},
 								{
 									"key": "tipo",
-									"value": "super"
+									"value": "caso",
+									"disabled": true
 								},
 								{
 									"key": "fecha_inicio",
@@ -57,6 +64,12 @@
 								{
 									"key": "fecha_fin",
 									"value": "2024-07-24",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
 									"disabled": true
 								}
 							]
@@ -97,13 +110,14 @@
 									"value": "super"
 								},
 								{
-									"key": "fecha_inicio",
+									"key": "fecha",
 									"value": "2024-07-23",
 									"disabled": true
 								},
 								{
-									"key": "fecha_fin",
-									"value": "2024-07-24",
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
 									"disabled": true
 								}
 							]
@@ -123,7 +137,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de ingreso\",\r\n    \"monto\": 200.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"Prueba de ingreso\",\r\n    \"monto\": 4500.0,\r\n    \"tipo\": \"Aguinaldo\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -245,7 +259,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&monto=2000&tipo=super",
+							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -267,12 +281,19 @@
 									"value": "10"
 								},
 								{
-									"key": "monto",
-									"value": "2000"
+									"key": "monto_min",
+									"value": "2000.0",
+									"disabled": true
+								},
+								{
+									"key": "monto_max",
+									"value": "2500.0",
+									"disabled": true
 								},
 								{
 									"key": "tipo",
-									"value": "super"
+									"value": "super",
+									"disabled": true
 								},
 								{
 									"key": "fecha_inicio",
@@ -282,6 +303,12 @@
 								{
 									"key": "fecha_fin",
 									"value": "2024-07-24",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
 									"disabled": true
 								}
 							]
@@ -316,6 +343,22 @@
 								{
 									"key": "tipo",
 									"value": "super"
+								},
+								{
+									"key": "monto",
+									"value": "500.0",
+									"disabled": true
+								},
+								{
+									"key": "fecha",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
 								}
 							]
 						}

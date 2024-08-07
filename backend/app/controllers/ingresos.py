@@ -1,50 +1,16 @@
-import datetime
-
 from flask_cors import cross_origin
 
 from app import token_required
 from flask import Blueprint, jsonify, request, g
-from sqlalchemy import and_
 
 from app.models.ingresos import Ingreso
 from app.models.usuarios import Usuario
+from app.utils.build_criterion import build_criterion_all, build_criterion_first
 
 from app.utils.paginated_query import paginated_query
+from app.utils.build_filters import build_filters
 
 bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
-
-def build_filters(params, current_user):
-    filters = []
-
-    monto = params.get('monto')
-    tipo = params.get('tipo')
-    fecha_inicio = params.get('fecha_inicio')
-    fecha_fin = params.get('fecha_fin')
-
-    if monto:
-        try:
-            monto = float(monto)
-            filters.append(Ingreso.monto == monto)
-        except (ValueError, TypeError):
-            raise ValueError("El monto ingresado es invalido")
-
-    if tipo:
-        filters.append(Ingreso.tipo.like(f'%{tipo}%'))
-
-    if fecha_inicio and fecha_fin:
-        try:
-            fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d')
-            fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d')
-            if fecha_fin <= fecha_inicio:
-                raise ValueError('La fecha de inicio debe ser anterior a la fecha de fin')
-            filters.append(and_(Ingreso.fecha >= fecha_inicio, Ingreso.fecha <= fecha_fin))
-        except ValueError:
-            raise ValueError('Formato de fecha incorrecto')
-
-    if not current_user.is_admin:
-        filters.append(Ingreso.id_usuario == current_user.get_id())
-
-    return filters
 
 
 @bp.route('/get_all', methods=['GET'])
@@ -61,11 +27,10 @@ def get_all():
 
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
-        filters = build_filters(request.args, current_user)
+        filters = build_filters(request.args, current_user, Ingreso, True)
+        ingresos = build_criterion_all(request.args, filters, Ingreso)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
-
-    ingresos = Ingreso.query.filter(*filters).all()
 
     output = []
     for content in ingresos:
@@ -80,6 +45,7 @@ def get_all():
 
     return paginated_query(page_number, page_size, output, "ingresos")
 
+
 @bp.route('/get', methods=['GET'])
 @cross_origin()
 @token_required
@@ -88,11 +54,10 @@ def get():
 
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
-        filters = build_filters(request.args, current_user)
+        filters = build_filters(request.args, current_user, Ingreso, False)
+        ingreso = build_criterion_first(request.args, filters, Ingreso)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
-
-    ingreso = Ingreso.query.filter(*filters).first()
 
     output = {}
     if ingreso:
@@ -106,6 +71,7 @@ def get():
             'id_usuario': ingreso.id_usuario
         }
     return jsonify({'ingreso': output}), 200
+
 
 @bp.route('/add', methods=['POST'])
 @cross_origin()
@@ -126,8 +92,7 @@ def add():
     except KeyError:
         fecha = None
 
-
-    # ---------- INICIO DE VALIDACIONES ---------------------
+# ---------- INICIO DE VALIDACIONES ---------------------
 
     try:
         if float(monto) < 0.0:
@@ -142,7 +107,7 @@ def add():
     # Creo el elemento
     ingreso = Ingreso(g.user_id, descripcion, monto, tipo, fecha)
 
-    if len(descripcion) > ingreso.descripcion_char_limit or len(tipo) > ingreso.tipo_char_limit: # 'superan los caracteres maximos permitidos'
+    if len(descripcion) > ingreso.descripcion_char_limit or len(tipo) > ingreso.tipo_char_limit:  # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{ingreso.descripcion_char_limit}",
@@ -157,6 +122,7 @@ def add():
     return jsonify({
         'message': 'Ingreso registrado exitosamente'
     }), 201
+
 
 @bp.route('/update', methods=['PUT'])
 @cross_origin()
@@ -201,7 +167,7 @@ def update():
             'message': 'No se ha encontrado el elemento'
         }), 404
 
-    if len(descripcion) > ingreso.descripcion_char_limit or len(tipo) > ingreso.tipo_char_limit: # 'superan los caracteres maximos permitidos'
+    if len(descripcion) > ingreso.descripcion_char_limit or len(tipo) > ingreso.tipo_char_limit:  # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos.',
             'descripcion_max_characters': f"{ingreso.descripcion_char_limit}",
@@ -223,6 +189,7 @@ def update():
     return jsonify({
         'message': 'Ingreso actualizado exitosamente'
     }), 200
+
 
 @bp.route('/delete', methods=['DELETE'])
 @cross_origin()

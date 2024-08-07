@@ -3,7 +3,6 @@ from datetime import datetime
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app.db import db
-from typing import List
 
 class Gasto(db.Model):
     __tablename__ = 'gastos'
@@ -34,7 +33,6 @@ class Gasto(db.Model):
             self.fecha = db.func.now()
         self.created_on = db.func.now()
         self.last_updated_on = db.func.now()
-        # self._is_deleted = is_deleted
 
     @property
     def tipo_char_limit(self):

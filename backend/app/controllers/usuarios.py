@@ -15,6 +15,7 @@ from app.utils.paginated_query import paginated_query
 
 bp = Blueprint('usuarios', __name__, url_prefix='/usuarios')
 
+
 @bp.route('/saldo', methods=['GET'])
 @cross_origin()
 @token_required
@@ -23,18 +24,18 @@ def saldo():
     # Obtengo el id de usuario del token
     id_usuario = g.user_id
 
-    saldo = 0.0
+    current_saldo = 0.0
 
     ingresos = Ingreso.query.filter_by(id_usuario=id_usuario).all()
     for ingreso in ingresos:
-        saldo += ingreso.monto
+        current_saldo += ingreso.monto
 
     gastos = Gasto.query.filter_by(id_usuario=id_usuario).all()
     for gasto in gastos:
-        saldo -= gasto.monto
+        current_saldo -= gasto.monto
 
     return jsonify({
-        'saldo': saldo
+        'saldo': current_saldo
     }), 200
 
 
@@ -44,9 +45,9 @@ def saldo():
 def get_all_users():
     """Devuelve un JSON con info de todos los usuarios"""
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()
-    if current_user.is_admin: # Si es admin, traigo el listado de todos los usuarios
+    if current_user.is_admin:  # Si es admin, traigo el listado de todos los usuarios
         usuarios = Usuario.query.all()
-    else: # Si NO es admin, rechazo el listado
+    else:  # Si NO es admin, rechazo el listado
         return jsonify({
             'message': 'No tiene permisos para esta operación'
         }), 401
@@ -68,11 +69,11 @@ def get_all_users():
             'last_updated_on': usuario.last_updated_on,
             'last_login': usuario.last_login,
             'is_admin': usuario.is_admin,
-            'is_verified': usuario.is_verified
+            'is_verified': usuario.is_verified,
+            'is_money_visible': usuario.is_money_visible
         })
 
     return paginated_query(page_number, page_size, output, "Usuarios")
-
 
 
 @bp.route('/whoami', methods=['GET'])
@@ -88,9 +89,11 @@ def who_am_i():
         'created_on': current_user.created_on,
         'last_updated_on': current_user.last_updated_on,
         'is_admin': current_user.is_admin,
-        'is_verified': current_user.is_verified
+        'is_verified': current_user.is_verified,
+        'is_money_visible': current_user.is_money_visible
     }
     return jsonify(output), 200
+
 
 @bp.route('/update', methods=['PUT'])
 @cross_origin()
@@ -100,6 +103,7 @@ def update():
         username = request.json["username"]
         password = request.json["password"]
         email = request.json["email"]
+        is_money_visible = request.json["is_money_visible"]
     except KeyError:
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
@@ -108,7 +112,7 @@ def update():
     usuario: Usuario = Usuario.query.filter_by(id=g.user_id).first()
 
     # ---------- INICIO DE VALIDACIONES ---------------------
-    if len(username) > usuario.username_char_limit or len(email) > usuario.email_char_limit: # 'superan los caracteres maximos permitidos'
+    if len(username) > usuario.username_char_limit or len(email) > usuario.email_char_limit:  # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
             'username_max_characters': f"{usuario.username_char_limit}",
@@ -126,17 +130,16 @@ def update():
 
     # ---------- FIN DE VALIDACIONES ---------------------
 
-    username = request.json["username"]
-    password = request.json["password"]
-    email = request.json["email"]
-
     usuario.username = username
     usuario.password = generate_password_hash(password)
+
     if cfg.EMAIL_VERIFICATION and usuario.email != email:
         usuario.email = email
-        usuario.is_verified = False # Debe validar de nuevo el email para usar uno nuevo
+        usuario.is_verified = False  # Debe validar de nuevo el email para usar uno nuevo
     elif not cfg.EMAIL_VERIFICATION:
         usuario.email = email
+
+    usuario.is_money_visible = is_money_visible
     # Agrego el usuario en la base de datos
     usuario.update()
     if usuario.is_verified:
@@ -169,5 +172,3 @@ def delete():
     return jsonify({
         'message': 'Usuario eliminado exitosamente'
     }), 200
-
-

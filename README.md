@@ -1,6 +1,6 @@
 # Proyecto Finanzas
 
-## Iniciar ambiente (Backend)
+## Iniciar ambiente (Back-end)
 
 ### Requisitos
 
@@ -80,15 +80,22 @@ Para salir del entorno virtual, ejecutar:
 $ deactivate
 ```
 
-## Front 
+## Iniciar ambiente (Front-end)
+
   ### Aplicaciones necesarias
+
      - nodejs
+  
   ## Instala dependencias necesarias
+
   ### Para instalar las dependencias y levantar el front hay que estar parado dentro de la carpeta View
-    ``` bash
+
+   ``` bash
     $ npm i 
-    ```
-  ## Levantar el front
+   ```
+
+  ## Levantar el frontend
+
    ``` bash
     $ npm run dev 
    ```
