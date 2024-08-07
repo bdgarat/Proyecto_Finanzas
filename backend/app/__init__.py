@@ -1,6 +1,6 @@
 from functools import wraps
 
-import jwt, datetime
+import jwt
 from flask import Flask, request, jsonify, g
 from flask_cors import CORS, cross_origin
 

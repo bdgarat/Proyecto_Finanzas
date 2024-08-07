@@ -1,14 +1,15 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './Pages/loginPage/LoginPage';
-import Register from './Pages/register/Register'
-import Dashboard from './Pages/dashboard/Dashboard.';
-import Gastos from './Pages/gastos/Gastos';
-import Ingresos from './Pages/ingresos/Ingresos';
-import './App.css'
-import Protected from './Pages/Protected';
-import { AuthProvider } from './Auth/AuthProvider';
-import IngresarGasto from './Pages/gastos/IngresarGasto';
-import GastosContextP from './utils/context/GastosContextP';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginPage from "./Pages/loginPage/LoginPage";
+import Register from "./Pages/register/Register";
+import Dashboard from "./Pages/dashboard/Dashboard.";
+import Gastos from "./Pages/gastos/Gastos";
+import Ingresos from "./Pages/ingresos/Ingresos";
+import "./App.css";
+import Protected from "./Pages/Protected";
+import { AuthProvider } from "./Auth/AuthProvider";
+import CardsProvider from "./utils/context/CardsProvider";
+import FilterProvider from "./utils/context/FilterProvider";
+import PaginadoProvider from "./utils/context/PaginadoProvider";
 
 const router = createBrowserRouter([
   {
@@ -45,16 +46,6 @@ const router = createBrowserRouter([
     element: <Protected />,
     children: [
       {
-        path: "ingresarGasto",
-        element: <IngresarGasto />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <Protected />,
-    children: [
-      {
         path: "ingresos",
         element: <Ingresos />,
       },
@@ -64,12 +55,14 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <div>
-      <GastosContextP>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
-      </GastosContextP>
-    </div>
+    <PaginadoProvider>
+      <FilterProvider>
+        <CardsProvider>
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
+        </CardsProvider>
+      </FilterProvider>
+    </PaginadoProvider>
   );
 }

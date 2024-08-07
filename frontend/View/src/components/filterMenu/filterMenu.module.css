@@ -1,0 +1,42 @@
+
+.filterMenu{
+    visibility: visible;
+    display: flex;
+    justify-content: center;
+    width:60%;
+    padding:10px;
+    border-radius: 0 0 10px 10px;
+
+    box-shadow: 3px 3px 15px #222;
+    margin:10px
+}
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:90%;
+}
+label{
+    margin:0 10px;
+}
+@media(max-width:425px){
+    .filterMenu{
+        display: flex;
+        align-items: center;
+        width:100%;
+        height:auto;
+    }
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width:100%;
+    }
+    label{
+        margin:6px ;
+    }
+    input{
+        width:100%;
+    }
+}

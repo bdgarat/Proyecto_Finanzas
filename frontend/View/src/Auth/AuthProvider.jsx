@@ -1,14 +1,23 @@
 import React,{useContext,createContext,useState,useEffect} from 'react'
-const AuthContext = createContext({
-    isAuth: false,
-    cambiarEstado:(estado)=>{}
-})
+import { refreshToken } from '../utils/requests/peticionAuth';
+const AuthContext = createContext({})
 export function AuthProvider({children}) {
     const [isAuth, setIsAuth] = useState(false);
-  function cambiarEstado(estado)
+    const [access,setAccess] = useState("")
+  function getAuth()
   {
-    setIsAuth(estado);
+    return isAuth;
   }
-  return  <AuthContext.Provider value={{isAuth,cambiarEstado}}>{children} </AuthContext.Provider>
+  function getAccess(){
+    return access;
+  }
+  async function updateToken()
+  {
+    let refresh = localStorage.getItem("refresh");
+    let accessA = await refreshToken(refresh)
+    setAccess(accessA);
+    return accessA;
+  }
+  return  <AuthContext.Provider value={{getAuth,setIsAuth,getAccess,setAccess,updateToken}}>{children} </AuthContext.Provider>
 }
 export const  useAuth = ()=> {return useContext(AuthContext)};

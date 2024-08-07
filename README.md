@@ -79,3 +79,16 @@ Para salir del entorno virtual, ejecutar:
 ```bash
 $ deactivate
 ```
+
+## Front 
+  ### Aplicaciones necesarias
+     - nodejs
+  ## Instala dependencias necesarias
+  ### Para instalar las dependencias y levantar el front hay que estar parado dentro de la carpeta View
+    ``` bash
+    $ npm i 
+    ```
+  ## Levantar el front
+   ``` bash
+    $ npm run dev 
+   ```

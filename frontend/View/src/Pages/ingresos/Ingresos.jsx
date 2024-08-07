@@ -1,40 +1,57 @@
-import React, { useEffect,useContext } from 'react'
-import DefaultPage from '../../components/defaultPage/DefaultPage';
-import { GastosContext } from '../../utils/context/GastosContextP';
-import { getIngresos, removeIngreso } from '../../utils/requests/peticionesIngresos';
-import NuevoIngreso from './NuevoIngreso';
-import EditarIngresos from './EditarIngresos';
-import Swal from 'sweetalert2';
+import React, { useEffect, useContext } from "react";
+import DefaultPage from "../../components/defaultPage/DefaultPage";
+import { CardsContext } from "../../utils/context/CardsProvider";
+import {
+  getIngresos,
+  removeIngreso,
+  setIngreso,
+  editIngreso,} 
+  from "../../utils/requests/peticionesIngresos";
+import Swal from "sweetalert2";
+import { useAuth } from "./../../Auth/AuthProvider";
+import FilterMenu from "../../components/filterMenu/FilterMenu";
+import { FilterContext } from "../../utils/context/FilterProvider";
+import Cards from "../../components/cards/Cards";
+import { invertirOrden } from "../../utils/functions/manipularArray";
+import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 function Ingresos() {
-  const context = useContext(GastosContext);
-  useEffect(()=>{
-     obtenerIngresos();
-  },[])
-  async function obtenerIngresos()
-  {
-    const response = await getIngresos();
-    context.setData(response);
+  const context = useContext(CardsContext);
+  const auth = useAuth();
+  const filter = useContext(FilterContext);
+  const pageContext = useContext(PaginadoContext);
+  useEffect(() => {
+    pageContext.setPage(1);
+    context.setType(false);
+    obtenerIngresos();
+    filter.setIsFilter(false);
+    context.setIsUpdate(false);
+  }, [context.isUpdate, filter.getIsFilter()]);
+  async function obtenerIngresos() {
+    let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),pageContext.getPage());
+    if (response.status == 401) {
+      let access = await auth.updateToken();
+      console.log(access);
+      response = await getIngresos(access, filter.getDataFilter(),pageContext.getPage());
+    }
+    context.setData(response.data);
+    pageContext.setPage(response.data.page);
+    pageContext.setNextPage(response.data.next_page);
+    pageContext.setLastPage(response.data.total_page);
   }
-  function handleEdit(element)
-  {
-    context.isEdit ? context.setIsEdit(false):context.setIsEdit(true);
-    context.setDataEditable(element);
-  }
-  async function handleRemove(id)
-  {
-    const response = await removeIngreso(id);
+  async function handleRemove(id) {
+    let response = await removeIngreso(id, auth.getAccess());
+    if (response == 401) {
+      let access = auth.updateToken();
+      response = await removeIngreso(id, access);
+    }
     if (response == 200) {
       Swal.fire({
         title: "Se elimino correctamente",
         text: "Se elimino su gasto correctamente",
         icon: "success",
-        cancelButtonText:"Cancelar"
-      }).then(async(event)=>{
-        if(event.isConfirmed)
-        {
-          context.setData( await obtenerIngresos());
-        }
-      })
+        cancelButtonText: "Cancelar",
+      });
+      context.setIsUpdate(true);
     } else {
       Swal.fire({
         title: "No se pudo eliminar",
@@ -44,24 +61,17 @@ function Ingresos() {
     }
   }
   return (
-    <div>
       <DefaultPage>
-        <button onClick={()=>{context.isNew? context.setIsNew(false):context.setIsNew(true)}}>Agregar un nuevo ingreso</button>
-        {context.isNew? <NuevoIngreso/>:null}
-        <ul>
-          {context.data.map((element)=>(
-            
-            <div key={element.id}>
-              <li>{element.monto}{element.tipo}{element.fecha}{element.descripcion}</li>
-              <button onClick={()=>{handleEdit(element)}}>Eidtar</button>
-              <button onClick={()=>{handleRemove(element.id)}}>Eliminar</button>
-            </div>
-          ))}
-        </ul>
-        {context.isEdit?<EditarIngresos/>:null}
+        <FilterMenu></FilterMenu>
+        <Cards
+          data={invertirOrden(context.data.ingresos)}
+          handleRemove={handleRemove}
+          requestEdit={editIngreso}
+          requestAdd={setIngreso}
+          obtenerDatos={obtenerIngresos}
+        />
       </DefaultPage>
-    </div>
   );
 }
 
-export default Ingresos
+export default Ingresos;

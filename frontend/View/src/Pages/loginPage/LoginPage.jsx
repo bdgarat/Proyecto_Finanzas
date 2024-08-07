@@ -1,4 +1,4 @@
-import './loginPage.css';
+import style from'./loginPage.module.css';
 import {useState,useEffect} from 'react';
 import {Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,12 +11,14 @@ function LoginPage(){
     const auth = useAuth();
 
     useEffect(()=>{
-      if(localStorage.getItem('access') && localStorage.getItem('user'))
+      let data =localStorage.getItem('refresh');
+      if( data !=null)
       {
-        auth.isAuth = true;
+        auth.setIsAuth(true);
+        auth.updateToken();
         navigate('/dashboard');
       }
-    },[])
+    },[]);
     function obtenerPermiso (){
           axios({
             method:"post",
@@ -36,12 +38,12 @@ function LoginPage(){
     };
      
       function login(response){
-        console.log(response);
         if( response.status ==200)
             {
                 setError(false);
-                auth.isAuth = true;
-                localStorage.setItem("access",response.data.token);
+                auth.setIsAuth(true);
+                auth.setAccess(response.data.access_token);
+                localStorage.setItem("refresh",response.data.refresh_token);
                 localStorage.setItem("user",name);
                 navigate('/dashboard');
             }
@@ -74,38 +76,38 @@ function LoginPage(){
     else
     {
         return (
-          <div className="content-loginPage">
-            <div className="loginPage">
-              <div className="content-form">
-                <div className="content-title">
-                  <h1 className="loginPage-title">User Login</h1>
+          <div className={style.content_loginPage}>
+            <div className={style.loginPage}>
+              <div className={style.content_form}>
+                <div className={style.content_title}>
+                  <h1 className={style.loginPage_title}>User Login</h1>
                 </div>
-                <form className="form" onSubmit={handleSubmit}>
+                <form className={style.form} onSubmit={handleSubmit}>
                   <input
-                    className="input-login"
+                    className={style.input_login}
                     type="text"
                     name="username"
                     onChange={(e) => handleName(e)}
                     placeholder="username"
                   ></input>
                   <input
-                    className="input-login"
+                    className={style.input_login}
                     type="password"
                     name="password"
                     onChange={(e) => handlePass(e)}
                     placeholder="password"
                   ></input>
-                  <div className="contenedor-botones">
+                  <div className={style.contenedor_botones}>
                     <button
-                      className="boton-login"
+                      className={style.boton_login}
                       type="submit"
                       variant="primary"
                       onClick={obtenerPermiso}
                     >
                       Login
                     </button>
-                    <button onClick={llevarARegistros} className="boton-login">
-                      Sing Up
+                    <button onClick={llevarARegistros} className={style.boton_login}>
+                      Sign Up
                     </button>
                   </div>
                 </form>

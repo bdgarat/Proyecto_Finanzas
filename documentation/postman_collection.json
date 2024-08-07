@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ed6fe5d8-83ae-48ae-aca0-b65c6c3c8b2d",
+		"_postman_id": "477ab3fb-a6dd-479e-b1f8-d33e56db29b9",
 		"name": "Proyecto_Finanzas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9496920"
@@ -11,9 +11,6 @@
 			"item": [
 				{
 					"name": "Obtener todos los ingresos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -22,17 +19,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/list?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&monto=2000.0&tipo=super",
 							"host": [
 								"127",
 								"0",
@@ -42,7 +30,7 @@
 							"port": "5000",
 							"path": [
 								"ingresos",
-								"list"
+								"get_all"
 							],
 							"query": [
 								{
@@ -52,6 +40,24 @@
 								{
 									"key": "page_size",
 									"value": "10"
+								},
+								{
+									"key": "monto",
+									"value": "2000.0"
+								},
+								{
+									"key": "tipo",
+									"value": "super"
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-07-24",
+									"disabled": true
 								}
 							]
 						}
@@ -59,10 +65,7 @@
 					"response": []
 				},
 				{
-					"name": "Obtener todos los ingresos por monto",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "Obtener un ingreso",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -71,17 +74,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": 5700.0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_by_monto?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/ingresos/get?monto=500.0&tipo=super",
 							"host": [
 								"127",
 								"0",
@@ -91,193 +85,27 @@
 							"port": "5000",
 							"path": [
 								"ingresos",
-								"get_all_by_monto"
+								"get"
 							],
 							"query": [
 								{
-									"key": "page",
-									"value": "1"
+									"key": "monto",
+									"value": "500.0"
 								},
 								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los ingresos entre fechas",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"fecha_inicio\": \"2024-03-18 20:15:00\",\r\n    \"fecha_fin\": \"2024-03-18 20:16:00\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_between_fechas?page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_all_between_fechas"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
+									"key": "tipo",
+									"value": "super"
 								},
 								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los ingresos por tipo",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": \"Supermercado\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all_by_tipo?page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_all_by_tipo"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
+									"key": "fecha_inicio",
+									"value": "2024-07-23",
+									"disabled": true
 								},
 								{
-									"key": "page_size",
-									"value": "10"
+									"key": "fecha_fin",
+									"value": "2024-07-24",
+									"disabled": true
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener el primer ingreso por tipo",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": \"2024-03-18 20:17:31\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_first_by_tipo",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_first_by_tipo"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener el primer ingreso por monto",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": 5700.0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_first_by_monto",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"ingresos",
-								"get_first_by_monto"
 							]
 						}
 					},
@@ -340,7 +168,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/update?x-access-token={{JWT_Token}}",
+							"raw": "127.0.0.1:5000/gastos/update",
 							"host": [
 								"127",
 								"0",
@@ -351,12 +179,6 @@
 							"path": [
 								"gastos",
 								"update"
-							],
-							"query": [
-								{
-									"key": "x-access-token",
-									"value": "{{JWT_Token}}"
-								}
 							]
 						}
 					},
@@ -372,17 +194,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/delete",
+							"raw": "127.0.0.1:5000/gastos/delete?id=1",
 							"host": [
 								"127",
 								"0",
@@ -393,6 +206,12 @@
 							"path": [
 								"gastos",
 								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -426,7 +245,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/list?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&monto=2000&tipo=super",
 							"host": [
 								"127",
 								"0",
@@ -436,7 +255,7 @@
 							"port": "5000",
 							"path": [
 								"gastos",
-								"list"
+								"get_all"
 							],
 							"query": [
 								{
@@ -446,153 +265,24 @@
 								{
 									"key": "page_size",
 									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los gastos por monto",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": 5700.0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_by_monto?page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_all_by_monto"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
 								},
 								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los gastos entre fechas",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"fecha_inicio\": \"2024-03-18 20:15:00\",\r\n    \"fecha_fin\": \"2024-03-18 20:16:00\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_between_fechas?page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_all_between_fechas"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
+									"key": "monto",
+									"value": "2000"
 								},
 								{
-									"key": "page_size",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener todos los gastos por tipo",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": \"Supermercado\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all_by_tipo?page=1&page_size=10",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_all_by_tipo"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
+									"key": "tipo",
+									"value": "super"
 								},
 								{
-									"key": "page_size",
-									"value": "10"
+									"key": "fecha_inicio",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-07-24",
+									"disabled": true
 								}
 							]
 						}
@@ -600,10 +290,7 @@
 					"response": []
 				},
 				{
-					"name": "Obtener el primer gasto por tipo",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "Obtener un gasto",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -612,17 +299,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": \"2024-03-18 20:17:31\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_first_by_tipo",
+							"raw": "127.0.0.1:5000/gastos/get_first_by_tipo?tipo=super",
 							"host": [
 								"127",
 								"0",
@@ -633,45 +311,12 @@
 							"path": [
 								"gastos",
 								"get_first_by_tipo"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener el primer gasto por monto",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{access_token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"value\": 5700.0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_first_by_monto",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
 							],
-							"port": "5000",
-							"path": [
-								"gastos",
-								"get_first_by_monto"
+							"query": [
+								{
+									"key": "tipo",
+									"value": "super"
+								}
 							]
 						}
 					},
@@ -760,17 +405,8 @@
 								"value": "{{access_token}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/delete",
+							"raw": "127.0.0.1:5000/gastos/delete?id=1",
 							"host": [
 								"127",
 								"0",
@@ -781,6 +417,12 @@
 							"path": [
 								"gastos",
 								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1108,7 +750,10 @@
 			"name": "Chequeo de salud",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": ""
+				}
 			},
 			"response": []
 		}

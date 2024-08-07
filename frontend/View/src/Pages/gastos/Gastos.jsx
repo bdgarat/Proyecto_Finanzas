@@ -1,38 +1,56 @@
-import React, { useContext, useEffect, useState } from 'react'
-import DefaultPage from '../../components/defaultPage/DefaultPage';
-import { obtenerGastos, removeGasto } from '../../utils/requests/peticionGastos';
-import EditarGastos from './EditarGastos';
-import { GastosContext } from '../../utils/context/GastosContextP';
-import IngresarGasto from './IngresarGasto';
-import Swal from 'sweetalert2';
-import FilterMenu from '../../components/FilterMenu';
+import React, { useContext, useEffect } from "react";
+import DefaultPage from "../../components/defaultPage/DefaultPage";
+import {
+  obtenerGastos,
+  editGasto,
+  removeGasto,
+  setGasto,
+} from "../../utils/requests/peticionGastos";
+import { CardsContext } from "../../utils/context/CardsProvider";
+import Swal from "sweetalert2";
+import FilterMenu from "../../components/filterMenu/FilterMenu";
+import { useAuth } from "../../Auth/AuthProvider";
+import { FilterContext } from "../../utils/context/FilterProvider";
+import Cards from "../../components/cards/Cards";
+import { invertirOrden } from "../../utils/functions/manipularArray";
+import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 function Gastos() {
-  const editContext = useContext(GastosContext);
-   async function obtenerLosGastos(){
-    const gastos = await obtenerGastos();
-    editContext.setData(gastos);
+  const context = useContext(CardsContext);
+  const auth = useAuth();
+  const filter = useContext(FilterContext);
+  var pagContext = useContext(PaginadoContext);
+  async function obtenerLosGastos() {
+    let response = null;
+    response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(), pagContext.getPage());
+    if (response.status == 401) {
+      let access = await auth.updateToken();
+      response = await obtenerGastos(access, filter.getDataFilter(),pagContext.getPage());
+    }
+    context.setData(response.data);
+    pagContext.setPage(response.data.page);
+    pagContext.setNextPage(response.data.next_page);
+    pagContext.setLastPage(response.data.total_pages);
   }
-  useEffect(()=>{
+  useEffect(() => {
+    pagContext.setPage(1);
+    context.setType(true);
     obtenerLosGastos();
-  },[])
-  function handleEdit(element)
-  {
-    editContext.isEdit ? editContext.setIsEdit(false):editContext.setIsEdit(true);
-    editContext.setDataEditable(element);
-  }
-  async function handleRemove(id)
-  {
-    const response = await removeGasto(id);
+    filter.setIsFilter(false);
+    context.setIsUpdate(false);
+  }, [context.isUpdate, filter.getIsFilter()]);
+  async function handleRemove(id) {
+    let response = await removeGasto(id, auth.getAccess());
+    if (response == 401) {
+      auth.updateToken();
+      response = await removeGasto(id, auth.getAccess());
+    }
     if (response == 200) {
       Swal.fire({
         title: "Se elimino correctamente",
         text: "Se elimino su gasto correctamente",
         icon: "success",
-      }).then(async(event) => {
-        if (event.isConfirmed) {
-          editContext.setData(await obtenerGastos());
-        }
       });
+      context.setIsUpdate(true);
     } else {
       Swal.fire({
         title: "No se pudo eliminar",
@@ -41,38 +59,21 @@ function Gastos() {
       });
     }
   }
-  
+
   return (
     <div>
       <DefaultPage>
-        <FilterMenu/>
-        <button onClick={() => editContext.isNew? editContext.setIsNew(false):editContext.setIsNew(true)}>
-          Agregar un nuevo gasto
-        </button>
-        {editContext.isNew? <IngresarGasto/>:null}
-        <div className="container-gasto">
-          <ul>
-            {editContext.data.map((element) => (
-              <div key={element.id}>
-                <li>
-                  {element.fecha}
-                  {element.monto}
-                  {element.tipo}
-                  {element.descripcion}
-                </li>
-                <button onClick={()=>handleEdit(element)}>Editar</button>
-                <button onClick={()=>{handleRemove(element.id)}}>Eliminar</button>
-              </div>
-            ))}
-          </ul>
-        </div>
-        {editContext.isEdit ? (
-            <div>
-                <EditarGastos />
-            </div>
-          ) : null}
+        <FilterMenu />
+        <Cards
+          data={invertirOrden(context.data.gastos)}
+          handleRemove={handleRemove}
+          requestEdit={editGasto}
+          requestAdd={setGasto}
+          obtenerDatos={obtenerLosGastos}
+        />
+        
       </DefaultPage>
     </div>
   );
 }
-export default Gastos
+export default Gastos;
