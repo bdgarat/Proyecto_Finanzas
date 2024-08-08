@@ -1,13 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./defaultPage.module.css";
 import iconUser from "./../../assets/avatar_png.png";
 import { useAuth } from "../../Auth/AuthProvider";
+import { useNavigate } from "react-router-dom";
 function DefaultPage({ children }) {
   const[isMenu,setIsMenu] = useState(false);
   const auth = useAuth();
+  const navigate = useNavigate();
   function borrarCredenciales()
   {
+    localStorage.removeItem("user");
     localStorage.removeItem("refresh");
     auth.setIsAuth(false);
     navigate("/");

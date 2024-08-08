@@ -18,7 +18,7 @@ function Register() {
   useEffect(()=>{
     if(localStorage.getItem('access') && localStorage.getItem('user'))
     {
-      auth.cambiarEstado(true);
+      auth.setIsAuth(true);
       navigate('/dashboard')
     }
   },[])

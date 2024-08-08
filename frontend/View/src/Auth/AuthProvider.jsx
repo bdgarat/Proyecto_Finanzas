@@ -14,7 +14,7 @@ export function AuthProvider({children}) {
   async function updateToken()
   {
     let refresh = localStorage.getItem("refresh");
-    let accessA = await refreshToken(refresh)
+    let accessA = await refreshToken(refresh);
     setAccess(accessA);
     return accessA;
   }
