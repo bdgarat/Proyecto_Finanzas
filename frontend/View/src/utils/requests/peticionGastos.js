@@ -2,15 +2,17 @@ import axios from "axios";
 export async function obtenerGastos(access, data,page) {
   let respuesta = null;
   try {
-    if (data.monto != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
+    if (data.monto_final != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
+      console.log(data.monto_final);
+      console.log(data.monto_inicial);
+      console.log(page);
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
         url: "http://127.0.0.1:5000/gastos/get_all",
         params: {
-          page: page,
-          page_size: 5,
-          monto: data.monto,
+          monto_min: data.monto_inicial,
+          monto_max: data.monto_final,
           tipo: data.tipo,
           fecha_inicio: data.fecha_inicio,
           fecha_fin: data.fecha_fin,
@@ -27,6 +29,7 @@ export async function obtenerGastos(access, data,page) {
         },
       });
     }
+    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.log(error);

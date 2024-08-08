@@ -15,8 +15,10 @@ function FilterMenu() {
     return (
     <div className={style.filterMenu}>
         <form className={style.form}>
-            <label>Monto</label>
-            <input type="number" name="monto" placeholder='' value={filter.getDataFilter().monto} onChange={(event)=>{handleInputs(event)}} />
+            <label>Monto inicial</label>
+            <input type="number" name="monto_inicial" placeholder='' value={filter.getDataFilter().monto_inicial} onChange={(event)=>{handleInputs(event)}} />
+            <label>Monto final</label>
+            <input type="number" name="monto_final" placeholder='' value={filter.getDataFilter().monto_final} onChange={(event)=>{handleInputs(event)}} />
             <label>Tipo</label>
             <input type="text" name="tipo" value={filter.getDataFilter().tipo} onChange={(event)=>{handleInputs(event)}}/>
             <label>Fecha inicial</label>

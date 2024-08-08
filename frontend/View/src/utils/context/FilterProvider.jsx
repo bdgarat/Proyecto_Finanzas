@@ -3,7 +3,8 @@ export const FilterContext = React.createContext({});
 
 export default function FilterProvider({ children }) {
   const [dataFilter, setDataFilter] = useState({
-    monto: "",
+    monto_inicial: "",
+    monto_final: "",
     tipo: "",
     fecha_inicio: "",
     fecha_fin: "",

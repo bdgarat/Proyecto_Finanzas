@@ -30,7 +30,6 @@ function Ingresos() {
     let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),pageContext.getPage());
     if (response.status == 401) {
       let access = await auth.updateToken();
-      console.log(access);
       response = await getIngresos(access, filter.getDataFilter(),pageContext.getPage());
     }
     context.setData(response.data);

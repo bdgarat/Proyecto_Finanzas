@@ -1,5 +1,6 @@
 import axios from "axios";
-export async function getIngresos(access, data,page) {
+export async function getIngresos(access,data,page) {
+   console.log(data);
    let respuesta = null;
    try {
      if (data.monto != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
@@ -10,7 +11,8 @@ export async function getIngresos(access, data,page) {
          params: {
            page: page,
            page_size: 5,
-           monto: data.monto,
+           monto_min: data.monto_inicial,
+           monto_max: data.monto_final,
            tipo: data.tipo,
            fecha_inicio: data.fecha_inicio,
            fecha_fin: data.fecha_fin,
@@ -29,7 +31,6 @@ export async function getIngresos(access, data,page) {
      }
      return respuesta;
    } catch (error) {
-     console.log('Este error es de la petición de ingresos',error);
      return error.response;
    }
  }
