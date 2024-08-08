@@ -20,7 +20,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&criterion=monto_max",
 							"host": [
 								"127",
 								"0",
@@ -69,8 +69,7 @@
 								{
 									"key": "criterion",
 									"value": "monto_max",
-									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
-									"disabled": true
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max"
 								}
 							]
 						}
@@ -88,7 +87,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get?monto=500.0&tipo=super",
+							"raw": "127.0.0.1:5000/ingresos/get?criterion=monto_max",
 							"host": [
 								"127",
 								"0",
@@ -103,11 +102,13 @@
 							"query": [
 								{
 									"key": "monto",
-									"value": "500.0"
+									"value": "500.0",
+									"disabled": true
 								},
 								{
 									"key": "tipo",
-									"value": "super"
+									"value": "super",
+									"disabled": true
 								},
 								{
 									"key": "fecha",
@@ -117,8 +118,7 @@
 								{
 									"key": "criterion",
 									"value": "monto_max",
-									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
-									"disabled": true
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max"
 								}
 							]
 						}
@@ -736,7 +736,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"12345\",\r\n    \"email\": \"prueba@algo.com\"\r\n}",
+							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"12345\",\r\n    \"email\": \"prueba@algo.com\",\r\n    \"is_money_visible\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

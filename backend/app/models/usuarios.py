@@ -24,7 +24,7 @@ class Usuario(UserMixin, db.Model):
     is_verified: so.Mapped[bool] = so.mapped_column(sa.Boolean)
     is_money_visible: so.Mapped[bool] = so.mapped_column(sa.Boolean)
 
-    def __init__(self, username, password_hash, email, imagen = None, is_admin = False, is_verified = False, is_money_visible = False):
+    def __init__(self, username, password_hash, email, imagen = None, is_admin = False, is_verified = False, is_money_visible = True):
         self.username = username
         self.password_hash = password_hash
         self.email = email
