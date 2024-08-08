@@ -7,6 +7,9 @@ Pasar tipo a tabla -no tiene sentido-
 Ver imagen, carga, limite, si es base64 -descartado, uso str-
 Configurar endpoint get solo para traer min max -OK, se establecieron multiples parametros-
 Agregar en todas las tablas un isVisible del monto -descartado-
+Agregado obtener list distinct de tipos ingreso/gasto -OK-
+Ajustar monto que tenga 2 decimales -OK-
+arreglar pagina 1 de 0 -OK-
 
 TODO:
 OAuth2

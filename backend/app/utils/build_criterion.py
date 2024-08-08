@@ -1,57 +1,31 @@
 from sqlalchemy import desc
 
 
-def build_criterion_all(params, filters, model_object):
+def build_criterion(params, filters, model_object, fetch_all=False):
     criterion = params.get('criterion')
+    order_fields = {
+        "fecha_min": (model_object.fecha, False),
+        "fecha_max": (model_object.fecha, True),
+        "monto_min": (model_object.monto, False),
+        "monto_max": (model_object.monto, True),
+        "created_on_min": (model_object.created_on, False),
+        "created_on_max": (model_object.created_on, True),
+        "last_updated_on_min": (model_object.last_updated_on, False),
+        "last_updated_on_max": (model_object.last_updated_on, True),
+    }
+
     if not criterion:
-        result = (model_object.query.filter(*filters).all())
+        query = model_object.query.filter(*filters)
     else:
-        match criterion:  # Caracteristicas ordenamiento
-            case "fecha_min":
-                result = model_object.query.filter(*filters).order_by(model_object.fecha).all()
-            case "fecha_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.fecha)).all()
-            case "monto_min":
-                result = model_object.query.filter(*filters).order_by(model_object.monto).all()
-            case "monto_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.monto)).all()
-            case "created_on_min":
-                result = model_object.query.filter(*filters).order_by(model_object.created_on).all()
-            case "created_on_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.created_on)).all()
-            case "last_updated_on_min":
-                result = model_object.query.filter(*filters).order_by(model_object.last_updated_on).all()
-            case "last_updated_on_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.last_updated_on)).all()
-            case _:
-                raise ValueError("Parametro invalido en 'criterion'")
+        if criterion in order_fields:
+            field, desc_order = order_fields[criterion]
+            query = model_object.query.filter(*filters)
+            if desc_order:
+                query = query.order_by(desc(field))
+            else:
+                query = query.order_by(field)
+        else:
+            raise ValueError("Parametro invalido en 'criterion'")
 
-    return result
-
-
-def build_criterion_first(params, filters, model_object):
-    criterion = params.get('criterion')
-    if not criterion:
-        result = (model_object.query.filter(*filters).first())
-    else:
-        match criterion:  # Caracteristicas ordenamiento
-            case "fecha_min":
-                result = model_object.query.filter(*filters).order_by(model_object.fecha).first()
-            case "fecha_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.fecha)).first()
-            case "monto_min":
-                result = model_object.query.filter(*filters).order_by(model_object.monto).first()
-            case "monto_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.monto)).first()
-            case "created_on_min":
-                result = model_object.query.filter(*filters).order_by(model_object.created_on).first()
-            case "created_on_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.created_on)).first()
-            case "last_updated_on_min":
-                result = model_object.query.filter(*filters).order_by(model_object.last_updated_on).first()
-            case "last_updated_on_max":
-                result = model_object.query.filter(*filters).order_by(desc(model_object.last_updated_on)).first()
-            case _:
-                raise ValueError("Parametro invalido en 'criterion'")
-
+    result = query.all() if fetch_all else query.first()
     return result

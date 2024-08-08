@@ -20,7 +20,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&criterion=monto_max",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10",
 							"host": [
 								"127",
 								"0",
@@ -68,8 +68,9 @@
 								},
 								{
 									"key": "criterion",
-									"value": "monto_max",
-									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max"
+									"value": "monto_min",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
 								}
 							]
 						}
@@ -226,6 +227,34 @@
 									"key": "id",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos ingreso",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"tipos"
 							]
 						}
 					},
@@ -466,6 +495,34 @@
 									"key": "id",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos gasto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"tipos"
 							]
 						}
 					},

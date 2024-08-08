@@ -13,9 +13,10 @@ def paginated_query(page_number: int, page_size: int, contents: list, contents_n
     page_start = ((page_number - 1) * page_size)
     page_end = page_start + (page_size - 1)
     next_page = page_number + 1 if (len(contents) - 1) > page_end else None
+    total_pages = math.ceil(len(contents) / page_size)
 
     return jsonify({'total_entries': len(contents),
-                    'total_pages': math.ceil(len(contents) / page_size),
+                    'total_pages': total_pages if total_pages > 0 else 1,
                     'page': page_number,
                     'page_size': page_size,
                     'next_page': next_page,

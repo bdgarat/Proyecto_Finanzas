@@ -2,16 +2,24 @@ from flask_cors import cross_origin
 
 from app import token_required
 from flask import Blueprint, jsonify, request, g
-from sqlalchemy import desc
 
 from app.models.gastos import Gasto
 from app.models.usuarios import Usuario
-from app.utils.build_criterion import build_criterion_first
+from app.utils.build_criterion import build_criterion
 
 from app.utils.paginated_query import paginated_query
 from app.utils.build_filters import build_filters
 
 bp = Blueprint('gastos', __name__, url_prefix='/gastos')
+
+
+@bp.route('/tipos', methods=['GET'])
+@cross_origin()
+@token_required
+def get_tipos_distinct():
+    tipos = Gasto.query.with_entities(Gasto.tipo).filter_by(id_usuario=g.user_id).distinct().all()
+    tipos_list = [tipo.tipo for tipo in tipos]
+    return tipos_list
 
 @bp.route('/get_all', methods=['GET'])
 @cross_origin()
@@ -28,7 +36,7 @@ def get_all():
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
         filters = build_filters(request.args, current_user, Gasto, True)
-        gastos = build_criterion_first(request.args, filters, Gasto)
+        gastos = build_criterion(request.args, filters, Gasto, True)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
 
@@ -36,7 +44,7 @@ def get_all():
     for content in gastos:
         output.append({
             'id': content.id,
-            'monto': content.monto,
+            'monto': format(content.monto, ".2f"),
             'descripcion': content.descripcion,
             'fecha': content.fecha,
             'tipo': content.tipo,
@@ -54,7 +62,7 @@ def get():
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
         filters = build_filters(request.args, current_user, Gasto, False)
-        gasto = build_criterion_first(request.args, filters, Gasto)
+        gasto = build_criterion(request.args, filters, Gasto, False)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
 
@@ -63,7 +71,7 @@ def get():
         # Convierto el gasto traido a json
         output = {
             'id': gasto.id,
-            'monto': gasto.monto,
+            'monto': format(gasto.monto, ".2f"),
             'descripcion': gasto.descripcion,
             'fecha': gasto.fecha,
             'tipo': gasto.tipo,

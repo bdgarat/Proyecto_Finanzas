@@ -5,12 +5,21 @@ from flask import Blueprint, jsonify, request, g
 
 from app.models.ingresos import Ingreso
 from app.models.usuarios import Usuario
-from app.utils.build_criterion import build_criterion_all, build_criterion_first
+from app.utils.build_criterion import build_criterion
 
 from app.utils.paginated_query import paginated_query
 from app.utils.build_filters import build_filters
 
 bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
+
+
+@bp.route('/tipos', methods=['GET'])
+@cross_origin()
+@token_required
+def get_tipos_distinct():
+    tipos = Ingreso.query.with_entities(Ingreso.tipo).filter_by(id_usuario=g.user_id).distinct().all()
+    tipos_list = [tipo.tipo for tipo in tipos]
+    return tipos_list
 
 
 @bp.route('/get_all', methods=['GET'])
@@ -28,7 +37,7 @@ def get_all():
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
         filters = build_filters(request.args, current_user, Ingreso, True)
-        ingresos = build_criterion_all(request.args, filters, Ingreso)
+        ingresos = build_criterion(request.args, filters, Ingreso, True)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
 
@@ -36,7 +45,7 @@ def get_all():
     for content in ingresos:
         output.append({
             'id': content.id,
-            'monto': content.monto,
+            'monto': format(content.monto, ".2f"),
             'descripcion': content.descripcion,
             'fecha': content.fecha,
             'tipo': content.tipo,
@@ -55,7 +64,7 @@ def get():
     try:
         current_user = Usuario.query.filter_by(id=g.user_id).first()
         filters = build_filters(request.args, current_user, Ingreso, False)
-        ingreso = build_criterion_first(request.args, filters, Ingreso)
+        ingreso = build_criterion(request.args, filters, Ingreso, False)
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
 
@@ -64,7 +73,7 @@ def get():
         # Convierto el ingreso traido a json
         output = {
             'id': ingreso.id,
-            'monto': ingreso.monto,
+            'monto': format(ingreso.monto, ".2f"),
             'descripcion': ingreso.descripcion,
             'fecha': ingreso.fecha,
             'tipo': ingreso.tipo,

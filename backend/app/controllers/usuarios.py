@@ -35,7 +35,7 @@ def saldo():
         current_saldo -= gasto.monto
 
     return jsonify({
-        'saldo': current_saldo
+        'saldo': format(current_saldo, ".2f"),
     }), 200
 
 
