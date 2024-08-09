@@ -38,11 +38,7 @@
     color:rgb(0, 128, 53);
     
 }
-.icon_saldo{
-    width:50px;
-    height: 50px;
-    cursor: pointer;
-}
+
 .tipo{
     width:25%;
     display: flex;
@@ -69,6 +65,11 @@
     height:4vh;
     width:100%
 }
+.icon_saldo{
+    width:25px;
+    height: 25px;
+    cursor: pointer;
+  }
 .button_deleted{
     display: flex;
     align-items: center;
@@ -82,7 +83,8 @@
     width:10%;
     transition: .5;
     background-color: #c42013;
-    border: 3px #800000;
+    border: 3px #800030;
+    color:white;
     cursor: pointer;
 }
 .button_edit{

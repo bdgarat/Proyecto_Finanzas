@@ -2,10 +2,7 @@ import axios from "axios";
 export async function obtenerGastos(access, data,page) {
   let respuesta = null;
   try {
-    if (data.monto_final != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
-      console.log(data.monto_final);
-      console.log(data.monto_inicial);
-      console.log(page);
+    if (data.monto_final != ""|| data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
@@ -29,7 +26,6 @@ export async function obtenerGastos(access, data,page) {
         },
       });
     }
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.log(error);

@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Link } from "react-router-dom";
 import style from "./defaultPage.module.css";
 import iconUser from "./../../assets/avatar_png.png";
 import { useAuth } from "../../Auth/AuthProvider";
+import eye from "./../../assets/show.png";
+import not_eye from "./../../assets/not_show.png";
 import { useNavigate } from "react-router-dom";
+import { CardsContext } from "../../utils/context/CardsProvider";
 function DefaultPage({ children }) {
   const[isMenu,setIsMenu] = useState(false);
+  const context = useContext(CardsContext);
   const auth = useAuth();
   const navigate = useNavigate();
   function borrarCredenciales()
@@ -14,6 +18,11 @@ function DefaultPage({ children }) {
     localStorage.removeItem("refresh");
     auth.setIsAuth(false);
     navigate("/");
+  }
+  function handleViewSaldo() {
+    context.isViewSaldo
+      ? context.setIsViewSaldo(false)
+      : context.setIsViewSaldo(true);
   }
   return (
     <div className={style.container}>
@@ -33,6 +42,19 @@ function DefaultPage({ children }) {
           </ul>
         </nav>
         <div className={style.dataUser}>
+        { context.isViewSaldo ? (<img
+                className={style.icon_saldo}
+                src={eye}
+                onClick={() => {
+                  handleViewSaldo();
+                }}
+              />):(<img
+              className={style.icon_saldo}
+              src={not_eye}
+              onClick={() => {
+                handleViewSaldo();
+              }}
+            />)}
           <span className={style.userName}>{localStorage.getItem("user")}</span>
           <div className={style.container_userMenu}>
           <img

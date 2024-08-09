@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "./card.module.css";
-import eye from "./../../assets/show.png";
-import not_eye from "./../../assets/not_show.png";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import UpdateComponent from "../inComponent/UpdateComponent";
+import asterisco from './../../assets/asterisco.png'
 import Swal from "sweetalert2";
 function Card({ element, handleRemove, requestEdit }) {
   const context = useContext(CardsContext);
@@ -71,39 +70,20 @@ function Card({ element, handleRemove, requestEdit }) {
 
     context.setDataEditable(element);
   }
-  function handleViewSaldo() {
-    context.isViewSaldo
-      ? context.setIsViewSaldo(false)
-      : context.setIsViewSaldo(true);
-  }
+
   return (
     <div className={style.container}>
       <li className={style.card}>
         <div className={style.monto_fecha}>
-          {context.isViewSaldo ? (
-            <p
-              className={
-                context.getType() ? style.montoGasto : style.montoIngreso
-              }
-            >
-              {element.monto}
-              <img
-                className={style.icon_saldo}
-                src={eye}
-                onClick={() => {
-                  handleViewSaldo();
-                }}
-              />{" "}
-            </p>
-          ) : (
-            <img
-              className={style.icon_saldo}
-              src={not_eye}
-              onClick={() => {
-                handleViewSaldo();
-              }}
-            />
-          )}
+          {context.isViewSaldo ? (<p
+            className={
+              context.getType() ? style.montoGasto : style.montoIngreso
+            }
+          >
+            {element.monto}
+          </p>):<div><img className={style.icon_saldo} src ={asterisco}/>
+          <img className={style.icon_saldo} src ={asterisco}/>
+          <img className={style.icon_saldo} src ={asterisco}/></div>}
           <p className={style.tipo}>Tipo:{element.tipo}</p>
           <p className={style.descripcion}>
             Descripción: {element.descripcion}
