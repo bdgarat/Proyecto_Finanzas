@@ -5,6 +5,7 @@ import {
   editGasto,
   removeGasto,
   setGasto,
+  obtenerTypesGastos
 } from "../../utils/requests/peticionGastos";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import Swal from "sweetalert2";
@@ -31,13 +32,30 @@ function Gastos() {
     pagContext.setNextPage(response.data.next_page);
     pagContext.setLastPage(response.data.total_pages);
   }
-  useEffect(() => {
+  async function obtenerTipos()
+  {
+    let access = auth.getAccess();
+    let response = await obtenerTypesGastos(access);
+    if(response.status == 401)
+    {
+      access = auth.updateToken();
+      response = await obtenerTypesGastos(access);
+    }
+    context.setListTypes(response.data);
+  }
+  useEffect(()=>{
     pagContext.setPage(1);
+    obtenerTipos();
+    context.setUpdateTypes(false);
+  },[context.updateTypes])
+  useEffect(() => {
     context.setType(true);
-    obtenerLosGastos();
     filter.setIsFilter(false);
     context.setIsUpdate(false);
+    obtenerLosGastos();
   }, [context.isUpdate, filter.getIsFilter()]);
+
+
   async function handleRemove(id) {
     let response = await removeGasto(id, auth.getAccess());
     if (response == 401) {

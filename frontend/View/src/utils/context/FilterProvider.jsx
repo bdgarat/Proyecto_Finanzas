@@ -18,7 +18,7 @@ export default function FilterProvider({ children }) {
   }
   return (
     <FilterContext.Provider
-      value={{ getDataFilter, getIsFilter, setIsFilter, setDataFilter }}
+      value={{ getDataFilter, getIsFilter, setIsFilter, setDataFilter}}
     >
       {children}
     </FilterContext.Provider>

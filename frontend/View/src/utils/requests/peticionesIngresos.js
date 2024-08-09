@@ -90,3 +90,17 @@ export async function setIngreso(data,access){
        return error.response.status;
     }
  }
+ export async function obtenerTypesIngresos(access)
+ {
+   try{
+      const response = await axios({
+          method:"get",
+          url:"http://127.0.0.1:5000/ingresos/tipos",
+          headers: { "x-access-token": access }
+      })
+      return response;
+  }catch(error)
+  {
+    return error.response;
+  }
+ }

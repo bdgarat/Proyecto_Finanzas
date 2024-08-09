@@ -5,7 +5,7 @@ import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 import Swal from "sweetalert2";
-function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
+function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obtenerTypes }) {
   const context = useContext(CardsContext);
   const paginationContext = useContext(PaginadoContext);
   const [isMessage, setIsMessage] = useState(false);
@@ -72,7 +72,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
       </div>
       {context.isNew ? (
         <div className={style.new_component}>
-          <NewComponent newRequest={requestAdd} />
+          <NewComponent newRequest={requestAdd} getTypesParam={obtenerTypes} />
         </div>
       ) : null}
       <ul className={style.card}>
@@ -83,6 +83,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
               element={element}
               handleRemove={handleRemove}
               requestEdit={requestEdit}
+              obtenerTypes={obtenerTypes}
             />
           ))
         ) : (

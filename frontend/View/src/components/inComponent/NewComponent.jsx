@@ -12,11 +12,18 @@ function NewComponent({ newRequest }) {
     descripcion: "",
   });
   function handleInputs(evento) {
-    const { name, value } = evento.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
+    
+    if(evento.target.value == "Agregar un tipo nuevo" && !context.isSelect)
+      {
+        context.setIsSelect(true);
+      }
+      else{
+        const { name, value } = evento.target;
+        setData({
+          ...data,
+          [name]: value,
+        });
+      }
   }
   async function handleSubmit(event) {
     event.preventDefault();
@@ -32,6 +39,8 @@ function NewComponent({ newRequest }) {
         icon: "success",
       }).then((event) => {
         if (event.isConfirmed) {
+          context.setUpdateTypes(true);
+          context.setIsSelect(false);
           context.setIsNew(false);
           context.setIsUpdate(true);
         }
@@ -44,6 +53,7 @@ function NewComponent({ newRequest }) {
       });
     }
   }
+
   return (
     <form
       onSubmit={(event) => {
@@ -65,6 +75,13 @@ function NewComponent({ newRequest }) {
       valores precargados y que el usuario pueda seleccionar entre esos valores
       y darde un valor-->*/}
       <label>Tipo</label>
+      {!context.isSelect ? (<select onChange={(e)=>{handleInputs(e)}}>
+        <option>Selecciona un tipo </option>
+        {context.listTypes ? context.listTypes.map(element =>(
+          <option key={element}>{element}</option>
+        )):null}
+        <option>Agregar un tipo nuevo</option>
+      </select>):(<div className={style.container_type}>
       <input
         type="text"
         name="tipo"
@@ -73,6 +90,8 @@ function NewComponent({ newRequest }) {
           handleInputs(e);
         }}
       />
+      <a className={style.button_type} onClick={()=>context.setIsSelect(false)}>Volver</a>
+      </div>)}
       <label>Descripción</label>
       <textarea
         value={data.descripcion}
@@ -89,6 +108,7 @@ function NewComponent({ newRequest }) {
           className={style.button_volver}
           onClick={() => {
             context.setIsNew(false);
+            context.setIsSelect(false);
           }}
         >
           Volver

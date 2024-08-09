@@ -17,11 +17,17 @@ function UpdateComponent({ editRequest, editFunction }) {
   //Se utiliza la etiqueta "name" de cada input para que se pueda referenciar al campo correcto de data,
   //y se toma el campo value que es el que tiene el valor del contenido actual del campo
   function handleInputs(evento) {
-    const { name, value } = evento.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
+    if(evento.target.value == "Agregar un tipo nuevo" && !context.isSelect)
+      {
+        context.setIsSelect(true);
+      }
+      else{
+        const { name, value } = evento.target;
+        setData({
+          ...data,
+          [name]: value,
+        });
+      }
   }
   //Esta función se ejecuta cuando el usuario da un click en el boton enviar
   async function handleSubmit(event) {
@@ -38,9 +44,11 @@ function UpdateComponent({ editRequest, editFunction }) {
         icon: "success",
       }).then((event) => {
         if (event.isConfirmed) {
+          context.setIsSelect(false)
           editFunction(false);
           context.setIsUpdate(true);
           context.setIsEdit(false);
+          context.setUpdateTypes(true);
         }
       });
     } else {
@@ -66,7 +74,14 @@ function UpdateComponent({ editRequest, editFunction }) {
       {/*<!--Una alternativa seria definir el tipo como un select. Tener algunos
     valores precargados y que el usuario pueda seleccionar entre esos valores
     y darde un valor-->*/}
-      <label>Tipo</label>
+    <label>Tipo</label>
+      {!context.isSelect ? (<select defaultValue={data.tipo}  name="tipo" onChange={(e)=>{handleInputs(e)}}>
+        <option value="">Selecciona un tipo </option>
+        {context.listTypes ? context.listTypes.map(element =>(
+          <option key={element}>{element}</option>
+        )):null}
+        <option>Agregar un tipo nuevo</option>
+      </select>):(<div className={style.container_type}>
       <input
         type="text"
         name="tipo"
@@ -75,6 +90,8 @@ function UpdateComponent({ editRequest, editFunction }) {
           handleInputs(e);
         }}
       />
+      <a className={style.button_type} onClick={()=>context.setIsSelect(false)}>Volver</a>
+      </div>)}
       <label>Descripción</label>
       <textarea
         value={data.descripcion}

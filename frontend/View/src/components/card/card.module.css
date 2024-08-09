@@ -4,6 +4,10 @@
     flex-direction: column;
     align-items: center;
 }
+.container_edit_card{
+    width:100%;
+}
+
 .card{
     list-style-type: none;
     width:100%;
@@ -108,9 +112,6 @@
 }
 .button_deleted:hover{
     background-color: red;
-}
-.container_edit_card{
-    width:90%;
 }
 @media(max-width:425px)
 {

@@ -7,6 +7,9 @@ textarea{
     width:40%;
     text-align: center;
 }
+select{
+    height: 3.0vh;
+}
 .container{
     margin:10px 0;
     width:100%;
@@ -15,6 +18,24 @@ textarea{
     display: flex;
     box-shadow: 5px 5px 12px #222;
     border-radius:10px;
+}
+.container_type{
+    display: flex;
+    align-items: center;
+}
+.button_type{
+    display: flex;
+    width:60px;
+    cursor: pointer;
+    height: 3.0vh;
+    margin:5px;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+.button_type:hover{
+    background-color: aquamarine;
 }
 
 .container_button{

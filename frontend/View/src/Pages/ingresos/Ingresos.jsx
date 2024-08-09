@@ -5,7 +5,8 @@ import {
   getIngresos,
   removeIngreso,
   setIngreso,
-  editIngreso,} 
+  editIngreso,
+  obtenerTypesIngresos,} 
   from "../../utils/requests/peticionesIngresos";
 import Swal from "sweetalert2";
 import { useAuth } from "./../../Auth/AuthProvider";
@@ -20,12 +21,27 @@ function Ingresos() {
   const filter = useContext(FilterContext);
   const pageContext = useContext(PaginadoContext);
   useEffect(() => {
-    pageContext.setPage(1);
     context.setType(false);
-    obtenerIngresos();
     filter.setIsFilter(false);
     context.setIsUpdate(false);
+    pageContext.setPage(1);
+    obtenerIngresos();
   }, [context.isUpdate, filter.getIsFilter()]);
+  useEffect(()=>{
+    obtenerTiposIngresos();
+    context.setUpdateTypes(false);
+  },[context.updateTypes])
+  async function obtenerTiposIngresos()
+  {
+    let access = auth.getAccess();
+    let response = await obtenerTypesIngresos(access);
+    if(response.status == 401)
+    {
+      access = auth.updateToken();
+      response = await obtenerTypesIngresos(access);
+    }
+    context.setListTypes(response.data);
+  }
   async function obtenerIngresos() {
     let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),pageContext.getPage());
     if (response.status == 401) {

@@ -87,3 +87,17 @@ export async function removeGasto(id, access) {
     return error.response.status;
   }
 }
+export async function obtenerTypesGastos(access)
+{
+    try{
+        const response = await axios({
+            method:"get",
+            url:"http://127.0.0.1:5000/gastos/tipos",
+            headers: { "x-access-token": access }
+        })
+        return response;
+    }catch(error)
+    {
+        return error.response;
+    }
+}
