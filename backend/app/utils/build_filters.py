@@ -7,27 +7,33 @@ def build_filters(params, current_user, model_object, ranges: bool = False):
     filters = []
 
     if ranges:  # El filtro es para una lista de elementos
+
         monto_min = params.get('monto_min')
         monto_max = params.get('monto_max')
-        if monto_min and monto_max:
-            try:
-                if monto_max < monto_min:
+
+        try:
+            if monto_min and monto_max:
+                monto_min = float(monto_min)
+                monto_max = float(monto_max)
+                if monto_max <= monto_min:
                     raise ValueError('El monto minimo debe ser menor al monto maximo')
                 filters.append(and_(model_object.monto >= monto_min, model_object.monto <= monto_max))
-            except ValueError:
-                raise ValueError('El monto ingresado es invalido')
+        except TypeError:
+            raise ValueError('El monto ingresado es invalido')
 
         fecha_inicio = params.get('fecha_inicio')
         fecha_fin = params.get('fecha_fin')
+
         if fecha_inicio and fecha_fin:
             try:
                 fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d')
                 fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d')
-                if fecha_fin <= fecha_inicio:
-                    raise ValueError('La fecha de inicio debe ser anterior a la fecha de fin')
-                filters.append(and_(model_object.fecha >= fecha_inicio, model_object.fecha <= fecha_fin))
             except ValueError:
                 raise ValueError('Formato de fecha incorrecto')
+            if fecha_fin <= fecha_inicio:
+                raise ValueError('La fecha de inicio debe ser anterior a la fecha de fin')
+            filters.append(and_(model_object.fecha >= fecha_inicio, model_object.fecha <= fecha_fin))
+
 
     else:  # El filtro es para un unico elemento
         monto = params.get('monto')
