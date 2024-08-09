@@ -1,6 +1,5 @@
 import axios from "axios";
 export async function getIngresos(access,data,page) {
-   console.log(data);
    let respuesta = null;
    try {
      if (data.monto != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {

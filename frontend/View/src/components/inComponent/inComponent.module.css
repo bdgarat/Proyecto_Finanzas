@@ -30,6 +30,7 @@ textarea{
     margin:8px;
     padding:5px;
     border: .5px solid white;
+    color:white;
     display: flex;
     justify-content: center;
     align-items: center;

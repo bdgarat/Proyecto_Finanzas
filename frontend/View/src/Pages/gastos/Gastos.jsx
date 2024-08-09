@@ -70,8 +70,7 @@ function Gastos() {
           requestEdit={editGasto}
           requestAdd={setGasto}
           obtenerDatos={obtenerLosGastos}
-        />
-        
+        /> 
       </DefaultPage>
     </div>
   );
