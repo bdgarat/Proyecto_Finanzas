@@ -75,7 +75,7 @@ function NewComponent({ newRequest }) {
       valores precargados y que el usuario pueda seleccionar entre esos valores
       y darde un valor-->*/}
       <label>Tipo</label>
-      {!context.isSelect ? (<select onChange={(e)=>{handleInputs(e)}}>
+      {!context.isSelect ? (<select name="tipo" onChange={(e)=>{handleInputs(e)}}>
         <option>Selecciona un tipo </option>
         {context.listTypes ? context.listTypes.map(element =>(
           <option key={element}>{element}</option>

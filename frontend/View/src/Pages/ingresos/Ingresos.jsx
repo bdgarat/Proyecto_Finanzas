@@ -13,7 +13,6 @@ import { useAuth } from "./../../Auth/AuthProvider";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
-import { invertirOrden } from "../../utils/functions/manipularArray";
 import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 function Ingresos() {
   const context = useContext(CardsContext);
@@ -79,7 +78,7 @@ function Ingresos() {
       <DefaultPage>
         <FilterMenu></FilterMenu>
         <Cards
-          data={invertirOrden(context.data.ingresos)}
+          data={context.data.ingresos}
           handleRemove={handleRemove}
           requestEdit={editIngreso}
           requestAdd={setIngreso}

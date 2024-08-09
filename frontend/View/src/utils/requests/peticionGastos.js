@@ -23,6 +23,7 @@ export async function obtenerGastos(access, data,page) {
         params: {
           page: page,
           page_size: 5,
+          criterion:"last_updated_on_max"
         },
       });
     }

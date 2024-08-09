@@ -75,7 +75,7 @@ function UpdateComponent({ editRequest, editFunction }) {
     valores precargados y que el usuario pueda seleccionar entre esos valores
     y darde un valor-->*/}
     <label>Tipo</label>
-      {!context.isSelect ? (<select defaultValue={data.tipo}  name="tipo" onChange={(e)=>{handleInputs(e)}}>
+      {!context.isSelect ? (<select name="tipo" defaultValue={data.tipo}  onChange={(e)=>{handleInputs(e)}}>
         <option value="">Selecciona un tipo </option>
         {context.listTypes ? context.listTypes.map(element =>(
           <option key={element}>{element}</option>

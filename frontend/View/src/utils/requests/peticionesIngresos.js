@@ -2,7 +2,8 @@ import axios from "axios";
 export async function getIngresos(access,data,page) {
    let respuesta = null;
    try {
-     if (data.monto != -1 || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
+     if (data.monto_final != "" || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
+      console.log('holaaa');
        respuesta = await axios({
          method: "get",
          headers: { "x-access-token": access },
@@ -25,6 +26,7 @@ export async function getIngresos(access,data,page) {
          params: {
            page: page,
            page_size: 5,
+           criterion:"last_updated_on_max"
          },
        });
      }
