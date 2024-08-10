@@ -1,6 +1,6 @@
 # Proyecto Finanzas
 
-## Iniciar ambiente (Back-end)
+## Iniciar ambiente (Backend)
 
 ### Requisitos
 
@@ -11,12 +11,14 @@
 ### Preparacion de ambiente (sobre Linux)
 
 ```bash
+# Posicionarse sobre el directorio 'backend'
+$ cd backend
 # Para crear el entorno virtual
 $ virtualenv -p python3 venv
 # Para iniciar el entorno virtual
 $ .venv/bin/activate
 # Instalar las dependencias dentro del entorno virtual
-$ pip3 install -r requirements.txt
+$ pip3 install -r req.txt
 # En el directorio raiz
 $ FLASK_ENV=dev python run.py
 ```
@@ -24,12 +26,14 @@ $ FLASK_ENV=dev python run.py
 ### Preparacion de ambiente (sobre Windows)
 
 ```bash
+# Posicionarse sobre el directorio 'backend'
+$ cd backend
 # Para crear el entorno virtual
 $ python3 -m venv venv
 # Para iniciar el entorno virtual
 $ venv\\Scripts\\activate.bat
 # Instalar las dependencias dentro del entorno virtual
-$ pip3 install -r requirements.txt
+$ pip3 install -r req.txt
 # En el directorio raiz
 $ set FLASK_ENV=development
 ```
@@ -80,22 +84,24 @@ Para salir del entorno virtual, ejecutar:
 $ deactivate
 ```
 
-## Iniciar ambiente (Front-end)
+## Iniciar ambiente (Frontend)
 
-  ### Aplicaciones necesarias
+### Aplicaciones necesarias
 
-     - nodejs
-  
-  ## Instala dependencias necesarias
+ - nodejs
 
-  ### Para instalar las dependencias y levantar el front hay que estar parado dentro de la carpeta View
+## Instala dependencias necesarias
 
-   ``` bash
-    $ npm i 
-   ```
 
-  ## Levantar el frontend
+``` bash
+# Posicionarse sobre el directorio frontend/View
+$ cd frontend/View
+# Instalar las dependencias necesarias
+$ npm i 
+```
 
-   ``` bash
-    $ npm run dev 
-   ```
+## Levantar el frontend
+
+``` bash
+$ npm run dev 
+```

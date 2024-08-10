@@ -12,9 +12,10 @@ Ajustar monto que tenga 2 decimales -OK-
 arreglar pagina 1 de 0 -OK-
 arreglar peticiones vacias en agregar -OK-
 conversion a dolar/euro en el get de ingresos/gastos (microservicio) -OK-
+promedio semanal/mensual de ingresos/gastos -OK-
 
 TODO:
 OAuth2
 Verificar cuenta
-promedio semanal/mensual de ingresos/gastos
+Mejorar implementacion conversion a dolar/euro (muchas requests en lista)
 investigar microservicio de imagenes

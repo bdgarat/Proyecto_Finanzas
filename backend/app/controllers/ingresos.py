@@ -1,4 +1,8 @@
+import datetime
+
+from dateutil.relativedelta import relativedelta
 from flask_cors import cross_origin
+from sqlalchemy import and_, func
 
 from app import token_required
 from flask import Blueprint, jsonify, request, g
@@ -106,6 +110,52 @@ def get():
             'id_usuario': ingreso.id_usuario
         }
     return jsonify({'ingreso': output, 'additional_info': info_cotizaciones}), 200
+
+
+@bp.route('/average', methods=['GET'])
+@cross_origin()
+@token_required
+def average():
+    """Devuelve un JSON con el promedio entre fechas de los gastos de un usuario"""
+
+    fecha_inicio = request.args.get('fecha_inicio')
+    fecha_fin = request.args.get('fecha_fin')
+
+    if fecha_inicio and fecha_fin:
+        try:
+            fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d')
+            fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({
+                'message': 'Formato de fecha incorrecto'
+            }), 400
+        if fecha_fin <= fecha_inicio:
+            return jsonify({
+                'message': 'La fecha de inicio debe ser anterior a la fecha de fin'
+            }), 400
+    else:
+        fecha_inicio = datetime.datetime.utcnow() - relativedelta(months=1)
+        fecha_fin = datetime.datetime.utcnow()
+
+    average = Ingreso.query.with_entities(func.avg(Ingreso.monto)).filter(
+        Ingreso.fecha >= fecha_inicio,
+        Ingreso.fecha <= fecha_fin
+    ).scalar()
+    average = average if average else 0.0 # Devuelve None si no trae datos de query
+
+    currency = request.args.get('currency', default="ars", type=str)
+    currency_type = "oficial"
+    if currency != "ars":
+        if currency == "dol":
+            currency_type = request.args.get('currency_type', default="oficial", type=str)
+        try:
+            monto_convertido = convert_to_foreign_currency(average, currency, currency_type)
+        except Exception as e:
+            return jsonify({"message": str(e)}), 400
+        average = monto_convertido
+    info_cotizaciones = {"cotizacion": currency, "tipo_de_cotizacion": currency_type}
+
+    return jsonify({'average': format(average, ".2f"), 'additional_info': info_cotizaciones}), 200
 
 
 @bp.route('/add', methods=['POST'])

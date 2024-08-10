@@ -279,6 +279,56 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener promedio ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/average?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"average"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -563,6 +613,56 @@
 							"path": [
 								"gastos",
 								"tipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener promedio gastos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/average?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"average"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
 							]
 						}
 					},
