@@ -106,18 +106,24 @@ def update():
         is_money_visible = request.json["is_money_visible"]
     except KeyError:
         return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios están faltantes'
+        }), 400
+
+    if not username or not password or not email or not is_money_visible:
+        return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
-        }), 403
+        }), 400
 
     usuario: Usuario = Usuario.query.filter_by(id=g.user_id).first()
 
     # ---------- INICIO DE VALIDACIONES ---------------------
+
     if len(username) > usuario.username_char_limit or len(email) > usuario.email_char_limit:  # 'superan los caracteres maximos permitidos'
         return jsonify({
             'message': 'Uno o más campos de entrada superan la cantidad maxima de caracteres permitidos',
             'username_max_characters': f"{usuario.username_char_limit}",
             'email_max_characters': f"{usuario.email_char_limit}"
-        }), 403
+        }), 400
     if not validar_email(email):
         return jsonify({
             'message': 'Email invalido'

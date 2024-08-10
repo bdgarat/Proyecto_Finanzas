@@ -6,6 +6,7 @@ from flask import Blueprint, jsonify, request, g
 from app.models.gastos import Gasto
 from app.models.usuarios import Usuario
 from app.utils.build_criterion import build_criterion
+from app.utils.convert_to_foreign_currency import convert_to_foreign_currency
 
 from app.utils.paginated_query import paginated_query
 from app.utils.build_filters import build_filters
@@ -40,6 +41,19 @@ def get_all():
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
 
+    currency = request.args.get('currency', default="ars", type=str)
+    currency_type = "oficial"
+    if currency != "ars":
+        if currency == "dol":
+            currency_type = request.args.get('currency_type', default="oficial", type=str)
+        for gasto in gastos:
+            try:
+                monto_convertido = convert_to_foreign_currency(gasto.monto, currency, currency_type)
+            except Exception as e:
+                return jsonify({"message": str(e)}), 400
+            gasto.monto = monto_convertido
+    info_cotizaciones = {"cotizacion": currency, "tipo_de_cotizacion": currency_type}
+
     output = []
     for content in gastos:
         output.append({
@@ -51,7 +65,8 @@ def get_all():
             'id_usuario': content.id_usuario
         })
 
-    return paginated_query(page_number, page_size, output, "gastos")
+    query = paginated_query(page_number, page_size, output, "gastos", info_cotizaciones)
+    return query
 
 @bp.route('/get', methods=['GET'])
 @cross_origin()
@@ -66,6 +81,18 @@ def get():
     except ValueError as e:
         return jsonify({"message": str(e)}), 400
 
+    currency = request.args.get('currency', default="ars", type=str)
+    currency_type = "oficial"
+    if currency != "ars":
+        if currency == "dol":
+            currency_type = request.args.get('currency_type', default="oficial", type=str)
+        try:
+            monto_convertido = convert_to_foreign_currency(gasto.monto, currency, currency_type)
+        except Exception as e:
+            return jsonify({"message": str(e)}), 400
+        gasto.monto = monto_convertido
+    info_cotizaciones = {"cotizacion": currency, "tipo_de_cotizacion": currency_type}
+
     output = {}
     if gasto:
         # Convierto el gasto traido a json
@@ -77,7 +104,7 @@ def get():
             'tipo': gasto.tipo,
             'id_usuario': gasto.id_usuario
         }
-    return jsonify({'gasto': output}), 200
+    return jsonify({'gasto': output, 'additional_info': info_cotizaciones}), 200
 
 @bp.route('/add', methods=['POST'])
 @cross_origin()
@@ -91,12 +118,17 @@ def add():
         tipo = request.json["tipo"]
     except KeyError:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+            'message': 'Uno o más campos de entrada obligatorios estan faltantes'
         }), 400
     try:
         fecha = request.json["fecha"]
     except KeyError:
         fecha = None
+
+    if not monto or not tipo:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 400
 
     # ---------- INICIO DE VALIDACIONES ---------------------
 
@@ -142,12 +174,17 @@ def update():
         tipo = request.json["tipo"]
     except KeyError:
         return jsonify({
-            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+            'message': 'Uno o más campos de entrada obligatorios estan faltantes'
         }), 400
     try:
         fecha = request.json["fecha"]
     except KeyError:
         fecha = None
+
+    if not id_gasto or not monto or not tipo:
+        return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
+        }), 400
 
     # Obtengo el id de usuario del token
     current_user: Usuario = Usuario.query.filter_by(id=g.user_id).first()

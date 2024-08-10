@@ -3,7 +3,7 @@ import math
 from flask import jsonify
 
 
-def paginated_query(page_number: int, page_size: int, contents: list, contents_name: str = "Contents"):
+def paginated_query(page_number: int, page_size: int, contents: list, contents_name: str = "Contents", additional_info: dict = {}):
     """Genera una respuesta paginada a partir del numero de pagina, tamaño de pagina y una lista de contenidos"""
     # Realizo los seteos necesarios para el paginado
     if page_size <= 0 or page_number <= 0:
@@ -20,4 +20,5 @@ def paginated_query(page_number: int, page_size: int, contents: list, contents_n
                     'page': page_number,
                     'page_size': page_size,
                     'next_page': next_page,
+                    'additional_info': additional_info,
                     contents_name: contents[page_start:page_end + 1]}), 200

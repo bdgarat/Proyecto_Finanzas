@@ -88,6 +88,11 @@ def user_signup():
         email = request.json["email"]
     except KeyError:
         return jsonify({
+            'message': 'Uno o más campos de entrada obligatorios estan faltantes'
+        }), 400
+
+    if not username or not password or not email:
+        return jsonify({
             'message': 'Uno o más campos de entrada obligatorios se encuentran vacios'
         }), 400
 

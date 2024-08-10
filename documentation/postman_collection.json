@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b8ab9836-5e78-4d07-870a-0911687bb515",
+		"_postman_id": "e7a4a205-b972-418f-9cc5-3f1b1c726b7f",
 		"name": "Proyecto_Finanzas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9496920"
+		"_exporter_id": "29172403"
 	},
 	"item": [
 		{
@@ -20,7 +20,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&currency=dol&currency_type=blue",
 							"host": [
 								"127",
 								"0",
@@ -69,8 +69,18 @@
 								{
 									"key": "criterion",
 									"value": "monto_min",
-									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"description": "Criterio de ordenamiento. Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
 									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
@@ -88,7 +98,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get?criterion=monto_max",
+							"raw": "127.0.0.1:5000/ingresos/get?criterion=monto_max&currency=dol&currency_type=blue",
 							"host": [
 								"127",
 								"0",
@@ -120,6 +130,16 @@
 									"key": "criterion",
 									"value": "monto_max",
 									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max"
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
@@ -138,7 +158,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de ingreso\",\r\n    \"monto\": 4500.0,\r\n    \"tipo\": \"Aguinaldo\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"\",\r\n    \"monto\": 0.0,\r\n    \"tipo\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -288,7 +308,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10",
+							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&currency=dol&currency_type=bolsa",
 							"host": [
 								"127",
 								"0",
@@ -339,6 +359,16 @@
 									"value": "monto_max",
 									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
 									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "bolsa",
+									"description": "Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
@@ -356,7 +386,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_first_by_tipo?tipo=super",
+							"raw": "127.0.0.1:5000/gastos/get?tipo=super&currency=dol&currency_type=bolawq",
 							"host": [
 								"127",
 								"0",
@@ -366,7 +396,7 @@
 							"port": "5000",
 							"path": [
 								"gastos",
-								"get_first_by_tipo"
+								"get"
 							],
 							"query": [
 								{
@@ -386,8 +416,18 @@
 								{
 									"key": "criterion",
 									"value": "monto_max",
-									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"description": "Criterio de ordenamiento. Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
 									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "bolawq",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
