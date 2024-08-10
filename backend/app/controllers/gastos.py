@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 from app.models.gastos import Gasto
 from app.models.usuarios import Usuario
 from app.utils.build_criterion import build_criterion
-from app.utils.convert_to_foreign_currency import convert_to_foreign_currency
+from app.utils.convert_to_foreign_currency import convert_to_foreign_currency, convert_list_to_foreign_currency
 
 from app.utils.paginated_query import paginated_query
 from app.utils.build_filters import build_filters
@@ -51,12 +51,10 @@ def get_all():
     if currency != "ars":
         if currency == "dol":
             currency_type = request.args.get('currency_type', default="oficial", type=str)
-        for gasto in gastos:
-            try:
-                monto_convertido = convert_to_foreign_currency(gasto.monto, currency, currency_type)
-            except Exception as e:
-                return jsonify({"message": str(e)}), 400
-            gasto.monto = monto_convertido
+        try:
+            monto_convertido = convert_list_to_foreign_currency(gastos, currency, currency_type)
+        except Exception as e:
+            return jsonify({"message": str(e)}), 400
     info_cotizaciones = {"cotizacion": currency, "tipo_de_cotizacion": currency_type}
 
     output = []
