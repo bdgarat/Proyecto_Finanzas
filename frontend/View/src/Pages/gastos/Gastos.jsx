@@ -20,19 +20,34 @@ function Gastos() {
   const filter = useContext(FilterContext);
   var pagContext = useContext(PaginadoContext);
   async function obtenerLosGastos() {
-    let response = null;
-    response = await obtenerGastos(auth.getAccess(), filter.getDataFilter(), pagContext.getPage());
+    try{
+      let response = null;
+    response = await obtenerGastos(
+      auth.getAccess(),
+      filter.getDataFilter(),
+      pagContext.getPage()
+    );
     if (response.status == 401) {
       let access = await auth.updateToken();
-      response = await obtenerGastos(access, filter.getDataFilter(),pagContext.getPage());
+      response = await obtenerGastos(
+        access,
+        filter.getDataFilter(),
+        pagContext.getPage()
+      );
     }
     context.setData(response.data);
     pagContext.setPage(response.data.page);
     pagContext.setNextPage(response.data.next_page);
     pagContext.setLastPage(response.data.total_pages);
+    }
+    catch(mistake)
+    {
+      console.log("Este error ocure en la pagina gastos, en la función obtener los gastos",mistake)
+    }
   }
   async function obtenerTipos()
   {
+   try{
     let access = auth.getAccess();
     let response = await obtenerTypesGastos(access);
     if(response.status == 401)
@@ -41,6 +56,10 @@ function Gastos() {
       response = await obtenerTypesGastos(access);
     }
     context.setListTypes(response.data);
+   }catch(error)
+   {
+    console.log('Este error esta ocurriendo en el archvio gastos, en la función obtener tipos',error);
+   }
   }
   useEffect(()=>{
     pagContext.setPage(1);
@@ -56,7 +75,8 @@ function Gastos() {
 
 
   async function handleRemove(id) {
-    let response = await removeGasto(id, auth.getAccess());
+    try{
+      let response = await removeGasto(id, auth.getAccess());
     if (response == 401) {
       auth.updateToken();
       response = await removeGasto(id, auth.getAccess());
@@ -74,6 +94,10 @@ function Gastos() {
         text: "No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
         icon: "error",
       });
+    }
+    }catch(mistake)
+    {
+      console.log("error que ocurre en la página gastos en la función que maneja el eliminar", mistake);
     }
   }
 

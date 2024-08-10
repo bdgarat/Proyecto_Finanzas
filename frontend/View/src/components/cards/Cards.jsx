@@ -51,6 +51,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obten
                   context.setOtherEdit(true);
                   context.setIsEdit(false);
                   context.setIsNew(true);
+                  context.setIsSelect(false);
                 }
               });
             }

@@ -43,6 +43,7 @@ function Card({ element, handleRemove, requestEdit }) {
             context.setLastEdit({ id: element.id });
             setIsEdit(true);
             context.setIsEdit(true);
+            
           }
         });
       } else {
@@ -64,6 +65,7 @@ function Card({ element, handleRemove, requestEdit }) {
           setActual(() => element.id);
           context.setOtherEdit(true);
           context.setIsNew(false);
+          context.setIsSelect(false);
         }
       });
     }

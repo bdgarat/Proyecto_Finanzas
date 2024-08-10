@@ -74,24 +74,41 @@ function UpdateComponent({ editRequest, editFunction }) {
       {/*<!--Una alternativa seria definir el tipo como un select. Tener algunos
     valores precargados y que el usuario pueda seleccionar entre esos valores
     y darde un valor-->*/}
-    <label>Tipo</label>
-      {!context.isSelect ? (<select name="tipo" defaultValue={data.tipo}  onChange={(e)=>{handleInputs(e)}}>
-        <option value="">Selecciona un tipo </option>
-        {context.listTypes ? context.listTypes.map(element =>(
-          <option key={element}>{element}</option>
-        )):null}
-        <option>Agregar un tipo nuevo</option>
-      </select>):(<div className={style.container_type}>
-      <input
-        type="text"
-        name="tipo"
-        value={data.tipo}
-        onChange={(e) => {
-          handleInputs(e);
-        }}
-      />
-      <a className={style.button_type} onClick={()=>context.setIsSelect(false)}>Volver</a>
-      </div>)}
+      <label>Tipo</label>
+      {!context.isSelect ? (
+        <select
+          name="tipo"
+          defaultValue={data.tipo}
+          onChange={(e) => {
+            handleInputs(e);
+          }}
+        >
+          <option value="">Selecciona un tipo </option>
+          {context.listTypes.length != 0
+            ? context.listTypes.map((element) => (
+                <option key={element}>{element}</option>
+              ))
+            : null}
+          <option>Agregar un tipo nuevo</option>
+        </select>
+      ) : (
+        <div className={style.container_type}>
+          <input
+            type="text"
+            name="tipo"
+            value={data.tipo}
+            onChange={(e) => {
+              handleInputs(e);
+            }}
+          />
+          <a
+            className={style.button_type}
+            onClick={() => context.setIsSelect(false)}
+          >
+            Volver
+          </a>
+        </div>
+      )}
       <label>Descripción</label>
       <textarea
         value={data.descripcion}
@@ -102,12 +119,15 @@ function UpdateComponent({ editRequest, editFunction }) {
         placeholder="describa que fue en lo que gasto"
       ></textarea>
       <div className={style.container_button}>
-        <button type="submit" className={style.button_enviar} >Enviar</button>
+        <button type="submit" className={style.button_enviar}>
+          Enviar
+        </button>
         <a
           className={style.button_volver}
           onClick={() => {
             editFunction(false);
             context.setIsEdit(false);
+            context.setIsSelect(false);
           }}
         >
           Volver
