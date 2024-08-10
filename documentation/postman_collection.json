@@ -496,7 +496,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto6\",\r\n    \"monto\": 1,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -979,6 +979,114 @@
 							"path": [
 								"usuarios",
 								"saldo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Feedback",
+			"item": [
+				{
+					"name": "Obtener entradas de feedback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/get_all",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"get_all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page_size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion\": \"Esta app es lo mejor que hay :)\",\r\n    \"tipo\": \"FEATURE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/add",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos feedback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"tipos"
 							]
 						}
 					},

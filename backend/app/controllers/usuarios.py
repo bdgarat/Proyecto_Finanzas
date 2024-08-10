@@ -62,7 +62,7 @@ def get_all_users():
         # appending the user data json
         # to the response list
         output.append({
-            'id': usuario.get_id(),
+            'id': usuario.id,
             'username': usuario.username,
             'email': usuario.email,
             'created_on': usuario.created_on,

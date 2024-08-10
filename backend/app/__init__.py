@@ -73,11 +73,12 @@ def health():
     }), 200
 
 
-from app.controllers import auth, usuarios, ingresos, gastos
+from app.controllers import auth, usuarios, ingresos, gastos, feedback
 app.register_blueprint(auth.bp)
 app.register_blueprint(usuarios.bp)
 app.register_blueprint(ingresos.bp)
 app.register_blueprint(gastos.bp)
+app.register_blueprint(feedback.bp)
 
 
 if __name__ == '__main__':
