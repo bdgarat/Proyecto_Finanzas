@@ -7,6 +7,7 @@ from app.models.ingresos import Ingreso
 from app.models.usuarios import Usuario
 from app.models.feedback import Feedback
 
+
 @app.shell_context_processor
 def make_shell_context():
     return {'sa': sa, 'so': so, 'db': db, 'Usuario': Usuario, 'Gasto': Gasto, 'Ingreso': Ingreso, 'Feedback': Feedback}

@@ -34,7 +34,6 @@ def build_filters(params, current_user, model_object, ranges: bool = False):
                 raise ValueError('La fecha de inicio debe ser anterior a la fecha de fin')
             filters.append(and_(model_object.fecha >= fecha_inicio, model_object.fecha <= fecha_fin))
 
-
     else:  # El filtro es para un unico elemento
         monto = params.get('monto')
         if monto:

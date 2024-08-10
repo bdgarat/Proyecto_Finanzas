@@ -64,10 +64,6 @@ def add():
         return jsonify({
             'message': 'Uno o más campos de entrada obligatorios estan faltantes'
         }), 400
-    try:
-        fecha = request.json["fecha"]
-    except KeyError:
-        fecha = None
 
 # ---------- INICIO DE VALIDACIONES ---------------------
 

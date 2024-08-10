@@ -1,4 +1,6 @@
 import re
+
+
 def validar_email(email):
     """Valida el formato de un correo electrónico"""
     # Expresión regular para validar el formato de un correo electrónico

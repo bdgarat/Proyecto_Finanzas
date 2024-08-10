@@ -18,7 +18,7 @@ def generate_access_token(user_id):
     return jwt.encode({
         'id': user_id,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=15)  # utcnow() DEPRECATED, solucion abajo funciona en windows, no en linux
-        #'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=15)
+        # 'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=15)
     }, app.config['SECRET_KEY'], algorithm="HS256")
 
 
@@ -26,7 +26,7 @@ def generate_refresh_token(user_id):
     return jwt.encode({
         'id': user_id,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(days=7)  # utcnow() DEPRECATED, solucion abajo funciona en windows, no en linux
-        #'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=7)
+        # 'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=7)
     }, app.config['REFRESH_SECRET_KEY'], algorithm="HS256")
 
 
