@@ -4,8 +4,15 @@ import Card from "../card/Card";
 import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import { PaginadoContext } from "../../utils/context/PaginadoProvider";
-import Swal from "sweetalert2";
-function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obtenerTypes }) {
+import { message as alert }   from "../Message" 
+function Cards({
+  data,
+  handleRemove,
+  requestEdit,
+  requestAdd,
+  obtenerDatos,
+  obtenerTypes,
+}) {
   const context = useContext(CardsContext);
   const paginationContext = useContext(PaginadoContext);
   const [isMessage, setIsMessage] = useState(false);
@@ -39,14 +46,10 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obten
             } else if (!context.isEdit) {
               context.setIsNew(true);
             } else {
-              Swal.fire({
-                title: "Esta seguro que quiere  dejar de editar?",
-                text: "Perdera todos sus datos",
-                showCancelButton: true,
-                confirmButtonText: "Confirmar",
-                cancelButtonText: "Cancelar",
-                cancelButtonColor: "red",
-              }).then((event) => {
+              alert(
+                "Esta seguro que quiere  dejar de editar?",
+                "Perdera todos sus datos"
+              ).then((event) => {
                 if (event.isConfirmed) {
                   context.setOtherEdit(true);
                   context.setIsEdit(false);
@@ -97,15 +100,11 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obten
             className={style.buttonPagination_border_start}
             onClick={async () => {
               if (paginationContext.getPage() == 1) {
-                setMessage("ya me encuentro en la primera pagina");
-                setIsMessage(true);
-              } else {
                 paginationContext.setPage(() => {
                   paginationContext.getPage() -
                     (paginationContext.getPage() - 1);
                 });
                 let value = isSelected.onePage ? false : true;
-                console.log(value);
                 setIsSelected({
                   ...isSelected,
                   onePage: value,
@@ -126,9 +125,6 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obten
             className={style.buttonPagination}
             onClick={async () => {
               if (paginationContext.getPage() == 1) {
-                setMessage("No hay página anterior");
-                setIsMessage(true);
-              } else {
                 paginationContext.setPage(paginationContext.getPage() - 1);
                 let value = isSelected.previusPage ? false : true;
                 setIsSelected({
@@ -145,7 +141,16 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obten
             {paginationContext.getPage() - 1}
           </a>
         ) : null}
-        <a className={paginationContext.getPage()==1?style.buttonPagination_activate_start:paginationContext.getPage()==paginationContext.getLastPage()?style.buttonPagination_activate_end:style.buttonPagination_activate}>
+        <a
+          className={
+            paginationContext.getPage() == 1
+              ? style.buttonPagination_activate_start
+              : paginationContext.getPage() == paginationContext.getLastPage()
+              ? style.buttonPagination_activate_end
+              : style.buttonPagination_activate
+          }
+          onClick={()=>{setMessage("ya me encuentro en la pagina", paginationContext.getPage());setIsMessage(true)}}
+        >
           {paginationContext.getPage()}
         </a>
         {paginationContext.getLastPage() > paginationContext.getPage() + 1 ? (
@@ -153,9 +158,7 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obten
             className={style.buttonPagination}
             onClick={async () => {
               if (paginationContext.getNextPage() == null) {
-                setMessage("No hay página siguiente");
-                setIsMessage(true);
-              } else {
+                
                 paginationContext.setPage(paginationContext.getPage() + 1);
                 let value = isSelected.nextPage ? false : true;
                 setIsSelected({
@@ -172,17 +175,14 @@ function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos,obten
             {paginationContext.getPage() + 1}
           </a>
         ) : null}
-        {paginationContext.getLastPage()>paginationContext.getPage()+2 ? (<a className={style.buttonPagination}>
-          ...
-        </a>):null}
+        {paginationContext.getLastPage() > paginationContext.getPage() + 2 ? (
+          <a className={style.buttonPagination}>...</a>
+        ) : null}
         {paginationContext.getLastPage() > paginationContext.getPage() ? (
           <a
             className={style.buttonPagination_border_end}
             onClick={async () => {
               if (paginationContext.getNextPage() == null) {
-                setMessage("Ya te encontras en la última página");
-                setIsMessage(true);
-              } else {
                 let pageO = paginationContext.getLastPage();
                 paginationContext.setPage(pageO);
                 let value = isSelected.lastPage ? false : true;

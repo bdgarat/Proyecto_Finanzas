@@ -8,7 +8,7 @@ import {
   editIngreso,
   obtenerTypesIngresos,} 
   from "../../utils/requests/peticionesIngresos";
-import Swal from "sweetalert2";
+import { messageInfo } from "../../components/Message";
 import { useAuth } from "./../../Auth/AuthProvider";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { FilterContext } from "../../utils/context/FilterProvider";
@@ -59,19 +59,11 @@ function Ingresos() {
       response = await removeIngreso(id, access);
     }
     if (response == 200) {
-      Swal.fire({
-        title: "Se elimino correctamente",
-        text: "Se elimino su gasto correctamente",
-        icon: "success",
-        cancelButtonText: "Cancelar",
-      });
+      messageInfo("Se elimino correctamente","Se elimino su gasto correctamente","success")
       context.setIsUpdate(true);
+      context.setUpdateTypes(true);
     } else {
-      Swal.fire({
-        title: "No se pudo eliminar",
-        text: "No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
-        icon: "error",
-      });
+      messageInfo("No se pudo eliminar","No se pudo conectar al servidor. Espere mientras trabajamos en una solución","error")
     }
   }
   return (

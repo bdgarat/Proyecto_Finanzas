@@ -7,11 +7,14 @@ import eye from "./../../assets/show.png";
 import not_eye from "./../../assets/not_show.png";
 import { useNavigate } from "react-router-dom";
 import { CardsContext } from "../../utils/context/CardsProvider";
+import { PaginadoContext } from "../../utils/context/PaginadoProvider";
 function DefaultPage({ children }) {
   const[isMenu,setIsMenu] = useState(false);
   const context = useContext(CardsContext);
   const auth = useAuth();
+  const pag = useContext(PaginadoContext);
   const navigate = useNavigate();
+  
   function borrarCredenciales()
   {
     localStorage.removeItem("user");
@@ -24,19 +27,40 @@ function DefaultPage({ children }) {
       ? context.setIsViewSaldo(false)
       : context.setIsViewSaldo(true);
   }
+  function handleSelectLink(e)
+  {
+    console.log(e);
+    switch (e){
+      case 'Dashboard' :
+        pag.setDashboard((previus) => !previus);
+        pag.setGastos(false);
+        pag.setIngresos(false);
+        break;
+      case 'Gastos':
+        pag.setGastos(true);
+        pag.setDashboard(false);
+        pag.setIngresos(false);
+        break;
+      case 'Ingresos':
+        pag.setIngresos(true);
+        pag.setDashboard(false);
+        pag.setGastos(false); 
+        break;
+    }   
+  }
   return (
     <div className={style.container}>
       <header className={style.header_container}>
         <h1 className={style.titulo_principal}>Aplicación Finanzas</h1>
         <nav className={style.nav_container}>
           <ul className={style.barra_navegacion_links}>
-            <Link className={style.navBar_link} to="/dashboard">
+            <Link className={pag.dashboard ?style.navBar_link_select:style.navBar_link} onClick={(e)=>{handleSelectLink(e.target.text)}} to="/dashboard">
               Dashboard
             </Link>
-            <Link className={style.navBar_link} to="/gastos">
+            <Link className={pag.gastos ?style.navBar_link_select:style.navBar_link} onClick={(e)=>{handleSelectLink(e.target.text)}} to="/gastos">
               Gastos
             </Link>
-            <Link className={style.navBar_link} to="/ingresos">
+            <Link className={pag.ingresos ?style.navBar_link_select:style.navBar_link} onClick={(e)=>{handleSelectLink(e.target.text)}} to="/ingresos">
               Ingresos
             </Link>
           </ul>
