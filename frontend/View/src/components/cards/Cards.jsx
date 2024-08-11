@@ -4,7 +4,7 @@ import Card from "../card/Card";
 import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import { PaginadoContext } from "../../utils/context/PaginadoProvider";
-import { message as alert }   from "../Message" 
+import { message as alert }   from "./../../utils/functions/Message" 
 function Cards({
   data,
   handleRemove,

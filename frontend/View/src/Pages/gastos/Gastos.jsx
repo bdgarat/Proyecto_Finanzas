@@ -13,7 +13,7 @@ import { useAuth } from "../../Auth/AuthProvider";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import Cards from "../../components/cards/Cards";
 import { PaginadoContext } from "../../utils/context/PaginadoProvider";
-import { messageInfo } from "../../components/Message";
+import { messageInfo } from "./../../utils/functions/Message";
 function Gastos() {
   const context = useContext(CardsContext);
   const auth = useAuth();

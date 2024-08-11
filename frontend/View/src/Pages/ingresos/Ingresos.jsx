@@ -8,7 +8,7 @@ import {
   editIngreso,
   obtenerTypesIngresos,} 
   from "../../utils/requests/peticionesIngresos";
-import { messageInfo } from "../../components/Message";
+import { messageInfo } from "./../../utils/functions/Message";
 import { useAuth } from "./../../Auth/AuthProvider";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
 import { FilterContext } from "../../utils/context/FilterProvider";

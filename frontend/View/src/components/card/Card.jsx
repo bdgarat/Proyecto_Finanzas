@@ -3,7 +3,7 @@ import style from "./card.module.css";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import UpdateComponent from "../inComponent/UpdateComponent";
 import asterisco from './../../assets/asterisco.png'
-import { message } from "../Message";
+import { message } from "./../../utils/functions/Message";
 function Card({ element, handleRemove, requestEdit }) {
   const context = useContext(CardsContext);
   const [isEdit, setIsEdit] = useState(false);
