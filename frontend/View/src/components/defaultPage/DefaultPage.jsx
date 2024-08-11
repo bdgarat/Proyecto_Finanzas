@@ -29,7 +29,6 @@ function DefaultPage({ children }) {
   }
   function handleSelectLink(e)
   {
-    console.log(e);
     switch (e){
       case 'Dashboard' :
         pag.setDashboard((previus) => !previus);

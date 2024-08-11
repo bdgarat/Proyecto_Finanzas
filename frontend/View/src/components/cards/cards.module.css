@@ -14,18 +14,20 @@
 .buttonAdd {
   width: 35%;
   height: 4vh;
-  border-radius: 20px;
-  border: 1px solid #00a135;
+  border-radius: 10px;
+  border: 2px solid white;
   text-align: center;
   font-size: 17px;
-  background-color: #198754;
-  box-shadow: 0 5px 0 #00a135;
+  background-color: #0d6efd;
+  box-shadow: 0 5px 0 dodgerblue;
   color: white;
   cursor: pointer;
 }
 .buttonAdd:hover {
-  background-color: #95c755;
+  background-color: #0d6efd;
   color: black;
+  width: 40%;
+  height: 4.5vh;
 }
 .buttonAdd:active {
   transform: translateY(5px);

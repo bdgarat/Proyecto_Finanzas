@@ -118,12 +118,12 @@ input {
 .navBar_link_select {
   margin: 0 10%;
   font-size: 22px;
-  color: blue;
+  color: white;
   font-family: "Orbitron";
   text-decoration: none;
 }
 .navBar_link:hover {
-  color: white;
+  color: #ffff94;
 }
 .principal {
   display: flex;

@@ -51,15 +51,17 @@ function Gastos() {
     try {
       let access = auth.getAccess();
       response = await obtenerTypesGastos(access);
+      if (response.status == 401) {
+        access = auth.updateToken();
+        response = await obtenerTypesGastos(access);
+      }
+      context.setListTypes(response.data);
     } catch (error) {
       console.log(
         "Este error esta ocurriendo en el archvio gastos, en la función obtener tipos",
         error
       );
-      access = auth.updateToken();
-      response = await obtenerTypesGastos(access);
     }
-    context.setListTypes(response.data);
   }
   useEffect(() => {
     pagContext.setPage(1);
@@ -81,11 +83,19 @@ function Gastos() {
         response = await removeGasto(id, auth.getAccess());
       }
       if (response == 200) {
-        messageInfo("Se elimino correctamente","Se elimino su gasto correctamente","success")
+        messageInfo(
+          "Se elimino correctamente",
+          "Se elimino su gasto correctamente",
+          "success"
+        );
         context.setIsUpdate(true);
         context.setUpdateTypes(true);
       } else {
-        messageInfo("No se pudo eliminar","No se pudo conectar al servidor. Espere mientras trabajamos en una solución","error")
+        messageInfo(
+          "No se pudo eliminar",
+          "No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
+          "error"
+        );
       }
     } catch (mistake) {
       console.log(

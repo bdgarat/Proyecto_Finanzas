@@ -84,7 +84,7 @@ function UpdateComponent({ editRequest, editFunction }) {
           }}
         >
           <option value="">Selecciona un tipo </option>
-          {context.listTypes.length != 0
+          {context.listTypes !=null && context.listTypes.length !=0
             ? context.listTypes.map((element) => (
                 <option key={element}>{element}</option>
               ))
