@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 function Cards({ data, handleRemove, requestEdit, requestAdd, obtenerDatos }) {
   const context = useContext(CardsContext);
   const paginationContext = useContext(PaginadoContext);
-  console.log(paginationContext.getPage());
   const [isMessage, setIsMessage] = useState(false);
   const [isTextInfo, setIsTextInfo] = useState(true);
   const [isSelected, setIsSelected] = useState({
