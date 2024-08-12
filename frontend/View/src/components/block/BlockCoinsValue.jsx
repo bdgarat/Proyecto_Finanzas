@@ -32,12 +32,9 @@ function BlockCoinsValue({ request }) {
       <div className={style.coin_info}>
         {indexSelec != -1 && Array.isArray(coins) && coins.length != 0 ? (
           <div className={style.coin_container}>
-            <span>Moneda : {coins[indexSelec - 1].moneda}</span>
-            {coins[indexSelec - 1].moneda == "USD" ? (
-              <p>Tipo USD : {coins[indexSelec - 1].nombre}</p>
-            ) : null}
             <p>Valor para la compra : {coins[indexSelec - 1].compra}</p>
             <p>Valor para la venta : {coins[indexSelec - 1].venta}</p>
+            <p>Fecha que se obtuvo el valor : {new Date(coins[indexSelec-1].fechaActualizacion).toLocaleDateString()}</p>
           </div>
         ) : null}
         {Array.isArray(coins) ? (
