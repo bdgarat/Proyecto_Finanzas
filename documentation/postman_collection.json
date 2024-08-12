@@ -1,251 +1,1303 @@
 {
 	"info": {
-		"_postman_id": "ce029dd7-ad5c-4d6f-a87b-11df694a4b72",
-		"name": "Connect Integration API with Sample Connector",
-		"description": "Check documentation for more details :- https://dev.leanix.net/docs/connect-to-integration-api",
+		"_postman_id": "fdc3e0c8-ca65-453b-b73f-4bd45a8f56e6",
+		"name": "Proyecto_Finanzas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29172403"
 	},
 	"item": [
 		{
-			"name": "Post LDIF to LeanIX",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"name": "Content-Type",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"connectorType\": \"Aris Inbound Connector\", \"connectorId\": \"aris_inbound_connector\", \"connectorVersion\": \"0.1.0\", \"lxWorkspace\": null, \"lxVersion\": \"1.0.0\", \"description\": \"ARIS Inbound Connector\", \"processingDirection\": \"inbound\", \"processingMode\": \"partial\", \"content\": [{\"type\": \"Process\", \"id\": \"9d29c790-9f4c-11e5-4f76-005056801406\", \"data\": {\"name\": \"prueba_postman\", \"description\": \"Elemento creado por Postman\"}}], \"chunkInformation\": null}"
-				},
-				"url": {
-					"raw": "https://{{base_url}}/services/integration-api/v1/synchronizationRuns",
-					"protocol": "https",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"services",
-						"integration-api",
-						"v1",
-						"synchronizationRuns"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Start the Sync",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "https://{{base_url}}/services/integration-api/v1/synchronizationRuns/:id/start",
-					"protocol": "https",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"services",
-						"integration-api",
-						"v1",
-						"synchronizationRuns",
-						":id",
-						"start"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "e546e34b-cbe5-43f2-9f43-2cbcda4c5405"
+			"name": "Ingresos",
+			"item": [
+				{
+					"name": "Obtener todos los ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&currency=dol&currency_type=blue",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"get_all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "monto_min",
+									"value": "200.0",
+									"disabled": true
+								},
+								{
+									"key": "monto_max",
+									"value": "450.0",
+									"disabled": true
+								},
+								{
+									"key": "tipo",
+									"value": "caso",
+									"disabled": true
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-07-24",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_min",
+									"description": "Criterio de ordenamiento. Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
+								}
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener un ingreso",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/get?criterion=monto_max&currency=dol&currency_type=blue",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"get"
+							],
+							"query": [
+								{
+									"key": "monto",
+									"value": "500.0",
+									"disabled": true
+								},
+								{
+									"key": "tipo",
+									"value": "super",
+									"disabled": true
+								},
+								{
+									"key": "fecha",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max"
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar ingreso",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion\": \"\",\r\n    \"monto\": 0.0,\r\n    \"tipo\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/add",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar ingreso",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/update",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar ingreso",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/delete?id=1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos ingreso",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"tipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener promedio ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/average?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"average"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener total ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/total?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"total"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener cantidad ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/count?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"count"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Status of Sync",
-			"request": {
-				"auth": {
-					"type": "oauth2",
-					"oauth2": [
+			"name": "Gastos",
+			"item": [
+				{
+					"name": "Obtener todos los gastos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&currency=dol&currency_type=bolsa",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"get_all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "monto_min",
+									"value": "2000.0",
+									"disabled": true
+								},
+								{
+									"key": "monto_max",
+									"value": "2500.0",
+									"disabled": true
+								},
+								{
+									"key": "tipo",
+									"value": "super",
+									"disabled": true
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-07-24",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "bolsa",
+									"description": "Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener un gasto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/get?tipo=super&currency=dol&currency_type=bolawq",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"get"
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "super"
+								},
+								{
+									"key": "monto",
+									"value": "500.0",
+									"disabled": true
+								},
+								{
+									"key": "fecha",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Criterio de ordenamiento. Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "dol",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "bolawq",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar gasto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/add",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar gasto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/update",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar gasto",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/delete?id=1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos gasto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"tipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener promedio gastos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/average?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"average"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener total gastos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/total?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"total"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener cantidad gastos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/count?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"count"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Autenticacion",
+			"item": [
+				{
+					"name": "Registrar usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"saldo_actual\": 12000.0,\r\n    \"email\": \"prueba@algo.com\",\r\n    \"password\": \"4321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/auth/signup",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar sesion",
+					"event": [
 						{
-							"key": "accessToken",
-							"value": "",
-							"type": "string"
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						},
 						{
-							"key": "tokenType",
-							"value": "bearer",
-							"type": "string"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save login tokens\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);\r",
+									"    pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"4321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "addTokenTo",
-							"value": "header",
-							"type": "string"
+						"url": {
+							"raw": "127.0.0.1:5000/auth/login",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"login"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://{{base_url}}/services/integration-api/v1/synchronizationRuns/:id/status",
-					"protocol": "https",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"services",
-						"integration-api",
-						"v1",
-						"synchronizationRuns",
-						":id",
-						"status"
-					],
-					"variable": [
+				{
+					"name": "Actualizar access token",
+					"event": [
 						{
-							"key": "id",
-							"value": "e546e34b-cbe5-43f2-9f43-2cbcda4c5405"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save new access token\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"access_token\", jsonData.access_token);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					]
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\": \"{{refresh_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/auth/refresh",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Results of Sync",
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Consultar todos los usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/list?page=1&page_size=10",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar usuario logueado",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/whoami",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"whoami"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar usuario logueado Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/delete",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario logueado",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"12345\",\r\n    \"email\": \"prueba@algo.com\",\r\n    \"is_money_visible\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/update",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar saldo usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/usuarios/saldo",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								"saldo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Feedback",
+			"item": [
+				{
+					"name": "Obtener entradas de feedback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/get_all",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"get_all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page_size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion\": \"Esta app es lo mejor que hay :)\",\r\n    \"tipo\": \"FEATURE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/add",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos feedback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"tipos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chequeo de salud",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://{{base_url}}/services/integration-api/v1/synchronizationRuns/:id/results",
-					"protocol": "https",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"services",
-						"integration-api",
-						"v1",
-						"synchronizationRuns",
-						":id",
-						"results"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "e546e34b-cbe5-43f2-9f43-2cbcda4c5405"
-						}
-					]
+					"raw": ""
 				}
 			},
 			"response": []
-		},
-		{
-			"name": "Warnings of Sync",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://{{base_url}}/services/integration-api/v1/synchronizationRuns/:id/warnings",
-					"protocol": "https",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"services",
-						"integration-api",
-						"v1",
-						"synchronizationRuns",
-						":id",
-						"warnings"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "e546e34b-cbe5-43f2-9f43-2cbcda4c5405"
-						}
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"auth": {
-		"type": "oauth2",
-		"oauth2": [
-			{
-				"key": "clientSecret",
-				"value": "9H9BhR6vbGP4asS2zb9pmbAVUhfXHD5wbMueQHQe",
-				"type": "string"
-			},
-			{
-				"key": "clientId",
-				"value": "apitoken",
-				"type": "string"
-			},
-			{
-				"key": "accessTokenUrl",
-				"value": "https://us-7.leanix.net/services/mtm/v1/oauth2/token",
-				"type": "string"
-			},
-			{
-				"key": "grant_type",
-				"value": "client_credentials",
-				"type": "string"
-			},
-			{
-				"key": "tokenName",
-				"value": "LeanIX Access Token",
-				"type": "string"
-			},
-			{
-				"key": "accessToken",
-				"value": "",
-				"type": "string"
-			},
-			{
-				"key": "tokenType",
-				"value": "bearer",
-				"type": "string"
-			},
-			{
-				"key": "addTokenTo",
-				"value": "header",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		}
 	],
 	"variable": [
 		{
-			"key": "base_url",
-			"value": "us-7.leanix.net",
-			"type": "string"
+			"key": "JWT_Token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZXhwIjoxNzEwODA0MTc0fQ.ah5T28QyzEiiJzCqZoiUk0D_1OE_8n67fhdt37Z_kOg"
+		},
+		{
+			"key": "JWT_Token",
+			"value": ""
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
 		}
 	]
 }
