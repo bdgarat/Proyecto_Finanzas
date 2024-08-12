@@ -77,7 +77,7 @@ function NewComponent({ newRequest }) {
       <label>Tipo</label>
       {!context.isSelect ? (<select name="tipo" onChange={(e)=>{handleInputs(e)}}>
         <option>Selecciona un tipo </option>
-        {context.listTypes !=null && context.listTypes.length !=0 ? context.listTypes.map(element =>(
+        {context.listTypes !=null && context.listTypes.length !=0 && Array.isArray(context.listTypes) ? context.listTypes.map(element =>(
           <option key={element}>{element}</option>
         )):null}
         <option>Agregar un tipo nuevo</option>

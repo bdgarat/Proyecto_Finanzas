@@ -1,14 +1,13 @@
 import React from 'react'
-import { useAuth } from '../../Auth/AuthProvider'
-import { useNavigate } from 'react-router-dom';
 import DefaultPage from '../../components/defaultPage/DefaultPage';
+import BlockCoinsValue from '../../components/block/BlockCoinsValue';
+import { getValueCoins } from '../../utils/requests/getFuncionalidades';
 function Dashboard() {
-  const auth = useAuth();
-  const navigate = useNavigate();
  
   return (
     <div>
       <DefaultPage>
+        <BlockCoinsValue request={getValueCoins}/>
       </DefaultPage>
     </div>
   )

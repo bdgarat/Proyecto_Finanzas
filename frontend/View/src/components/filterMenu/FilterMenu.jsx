@@ -50,7 +50,7 @@ function FilterMenu() {
         <label>Tipo</label>
         <select onChange={(event)=>{handleInputs(event)}} name="tipo" >
           <option value="">Buscar por tipo</option>
-          {context.listTypes !=null && context.listTypes.length !=0
+          {(context.listTypes !=null && context.listTypes.length !=0 && Array.isArray(context.listTypes))
             ? context.listTypes.map((element) => <option key={element}>
               {element}
             </option>)
