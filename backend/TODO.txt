@@ -12,7 +12,7 @@ Ajustar monto que tenga 2 decimales -OK-
 arreglar pagina 1 de 0 -OK-
 arreglar peticiones vacias en agregar -OK-
 conversion a dolar/euro en el get de ingresos/gastos (microservicio) -OK-
-promedio semanal/mensual de ingresos/gastos -OK-
+promedio, total, cantidad semanal/mensual de ingresos/gastos -OK-
 Mejorar implementacion conversion a dolar/euro (muchas requests en lista) -OK-
 Implementacion feedback -OK-
 

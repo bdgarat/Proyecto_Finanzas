@@ -1,7 +1,7 @@
 import datetime
 
 from dateutil.relativedelta import relativedelta
-from sqlalchemy import func
+from sqlalchemy import func, and_
 
 from flask import jsonify, g
 
@@ -99,7 +99,7 @@ def get(request, model_object, content_name: str = "elemento"):
 
 
 def average(request, model_object):
-    """Devuelve un JSON con el promedio entre fechas de los elementos de un usuario"""
+    """Devuelve un JSON con el monto promedio entre fechas de los elementos de un usuario"""
 
     fecha_inicio = request.args.get('fecha_inicio')
     fecha_fin = request.args.get('fecha_fin')
@@ -138,6 +138,73 @@ def average(request, model_object):
     info_cotizaciones = {"cotizacion": currency, "tipo_de_cotizacion": currency_type}
 
     return jsonify({'average': format(average_value, ".2f"), 'additional_info': info_cotizaciones}), 200
+
+
+def total(request, model_object):
+    """Devuelve un JSON con el monto total entre fechas de los elementos de un usuario"""
+
+    fecha_inicio = request.args.get('fecha_inicio')
+    fecha_fin = request.args.get('fecha_fin')
+
+    filters = []
+    if fecha_inicio and fecha_fin:
+        try:
+            fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d')
+            fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({
+                'message': 'Formato de fecha incorrecto'
+            }), 400
+        if fecha_fin <= fecha_inicio:
+            return jsonify({
+                'message': 'La fecha de inicio debe ser anterior a la fecha de fin'
+            }), 400
+        filters.append(and_(model_object.fecha >= fecha_inicio, model_object.fecha <= fecha_fin))
+
+    # Si existe fecha_inicio, fecha_fin filtro por eso. Sino, devuelvo la suma total
+    total_value = model_object.query.with_entities(func.sum(model_object.monto)).filter(*filters).scalar()
+    total_value = total_value if total_value else 0.0  # Devuelve None si no trae datos de query
+
+    currency = request.args.get('currency', default="ars", type=str)
+    currency_type = "oficial"
+    if currency != "ars":
+        if currency == "dol":
+            currency_type = request.args.get('currency_type', default="oficial", type=str)
+        try:
+            total_value = convert_to_foreign_currency(total_value, currency, currency_type)
+        except Exception as e:
+            return jsonify({"message": str(e)}), 400
+    info_cotizaciones = {"cotizacion": currency, "tipo_de_cotizacion": currency_type}
+
+    return jsonify({'total': format(total_value, ".2f"), 'additional_info': info_cotizaciones}), 200
+
+
+def count(request, model_object):
+    """Devuelve un JSON con la cantidad de entradas entre fechas de los elementos de un usuario"""
+
+    fecha_inicio = request.args.get('fecha_inicio')
+    fecha_fin = request.args.get('fecha_fin')
+
+    filters = []
+    if fecha_inicio and fecha_fin:
+        try:
+            fecha_inicio = datetime.datetime.strptime(fecha_inicio, '%Y-%m-%d')
+            fecha_fin = datetime.datetime.strptime(fecha_fin, '%Y-%m-%d')
+        except ValueError:
+            return jsonify({
+                'message': 'Formato de fecha incorrecto'
+            }), 400
+        if fecha_fin <= fecha_inicio:
+            return jsonify({
+                'message': 'La fecha de inicio debe ser anterior a la fecha de fin'
+            }), 400
+        filters.append(and_(model_object.fecha >= fecha_inicio, model_object.fecha <= fecha_fin))
+
+    # Si existe fecha_inicio, fecha_fin filtro por eso. Sino, devuelvo la cantidad total
+    count_value = model_object.query.with_entities(func.count(model_object.monto)).filter(*filters).scalar()
+    count_value = count_value if count_value else 0  # Devuelve None si no trae datos de query
+
+    return jsonify({'count': count_value}), 200
 
 
 def add(request, model_object):

@@ -46,6 +46,24 @@ def average():
     return ef.average(request, Ingreso)
 
 
+@bp.route('/total', methods=['GET'])
+@cross_origin()
+@token_required
+def total():
+    """Devuelve un JSON con el total entre fechas de los gastos de un usuario"""
+
+    return ef.total(request, Ingreso)
+
+
+@bp.route('/count', methods=['GET'])
+@cross_origin()
+@token_required
+def count():
+    """Devuelve un JSON con la cantidad de ingresos entre fechas de los gastos de un usuario"""
+
+    return ef.count(request, Ingreso)
+
+
 @bp.route('/add', methods=['POST'])
 @cross_origin()
 @token_required
