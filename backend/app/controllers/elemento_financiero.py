@@ -39,8 +39,8 @@ def get_all(request, model_object, contents_name: str = "elementos"):
 
     currency = request.args.get('currency', default="ars", type=str)
     currency_type = "oficial"
-    if currency != "ars":
-        if currency == "dol":
+    if currency != "ars".casefold():
+        if currency == "usd".casefold():
             currency_type = request.args.get('currency_type', default="oficial", type=str)
         try:
             contents = convert_list_to_foreign_currency(contents, currency, currency_type)
@@ -74,8 +74,8 @@ def get(request, model_object, content_name: str = "elemento"):
 
     currency = request.args.get('currency', default="ars", type=str)
     currency_type = "oficial"
-    if currency != "ars":
-        if currency == "dol":
+    if currency != "ars".casefold():
+        if currency == "usd".casefold():
             currency_type = request.args.get('currency_type', default="oficial", type=str)
         try:
             monto_convertido = convert_to_foreign_currency(content.monto, currency, currency_type)
@@ -128,8 +128,8 @@ def average(request, model_object):
 
     currency = request.args.get('currency', default="ars", type=str)
     currency_type = "oficial"
-    if currency != "ars":
-        if currency == "dol":
+    if currency != "ars".casefold():
+        if currency == "usd".casefold():
             currency_type = request.args.get('currency_type', default="oficial", type=str)
         try:
             average_value = convert_to_foreign_currency(average_value, currency, currency_type)
@@ -167,8 +167,8 @@ def total(request, model_object):
 
     currency = request.args.get('currency', default="ars", type=str)
     currency_type = "oficial"
-    if currency != "ars":
-        if currency == "dol":
+    if currency != "ars".casefold():
+        if currency == "usd".casefold():
             currency_type = request.args.get('currency_type', default="oficial", type=str)
         try:
             total_value = convert_to_foreign_currency(total_value, currency, currency_type)

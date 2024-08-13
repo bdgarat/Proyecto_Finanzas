@@ -20,7 +20,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&currency=dol&currency_type=blue",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&currency=usd&currency_type=blue",
 							"host": [
 								"127",
 								"0",
@@ -74,8 +74,8 @@
 								},
 								{
 									"key": "currency",
-									"value": "dol",
-									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
 								},
 								{
 									"key": "currency_type",
@@ -98,7 +98,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get?criterion=monto_max&currency=dol&currency_type=blue",
+							"raw": "127.0.0.1:5000/ingresos/get?criterion=monto_max&currency=usd&currency_type=blue",
 							"host": [
 								"127",
 								"0",
@@ -133,8 +133,8 @@
 								},
 								{
 									"key": "currency",
-									"value": "dol",
-									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
 								},
 								{
 									"key": "currency_type",
@@ -316,7 +316,7 @@
 								{
 									"key": "currency",
 									"value": "eur",
-									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
 									"disabled": true
 								},
 								{
@@ -366,7 +366,7 @@
 								{
 									"key": "currency",
 									"value": "eur",
-									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
 									"disabled": true
 								},
 								{
@@ -446,7 +446,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&currency=dol&currency_type=bolsa",
+							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&currency=usd&currency_type=bolsa",
 							"host": [
 								"127",
 								"0",
@@ -500,8 +500,8 @@
 								},
 								{
 									"key": "currency",
-									"value": "dol",
-									"description": "Valores permitidos: ars, dol, eur, brl, clp, uyu"
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
 								},
 								{
 									"key": "currency_type",
@@ -524,7 +524,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get?tipo=super&currency=dol&currency_type=bolawq",
+							"raw": "127.0.0.1:5000/gastos/get?tipo=super&currency=usd&currency_type=bolawq",
 							"host": [
 								"127",
 								"0",
@@ -559,8 +559,8 @@
 								},
 								{
 									"key": "currency",
-									"value": "dol",
-									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu"
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
 								},
 								{
 									"key": "currency_type",
@@ -742,7 +742,7 @@
 								{
 									"key": "currency",
 									"value": "eur",
-									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
 									"disabled": true
 								},
 								{
@@ -792,7 +792,7 @@
 								{
 									"key": "currency",
 									"value": "eur",
-									"description": "Cotizacion. Valores permitidos: ars, dol, eur, brl, clp, uyu",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
 									"disabled": true
 								},
 								{
