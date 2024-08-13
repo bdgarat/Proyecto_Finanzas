@@ -55,7 +55,7 @@ export default function CardsProvider({ children }) {
         isSelect,
         setIsSelect,
         updateTypes,
-        setUpdateTypes
+        setUpdateTypes,
       }}
     >
       {children}

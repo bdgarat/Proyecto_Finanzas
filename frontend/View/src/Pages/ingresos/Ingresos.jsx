@@ -6,8 +6,8 @@ import {
   removeIngreso,
   setIngreso,
   editIngreso,
-  obtenerTypesIngresos,} 
-  from "../../utils/requests/peticionesIngresos";
+  obtenerTypesIngresos,
+} from "../../utils/requests/peticionesIngresos";
 import { messageInfo } from "./../../utils/functions/Message";
 import { useAuth } from "./../../Auth/AuthProvider";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
@@ -26,26 +26,53 @@ function Ingresos() {
     pageContext.setPage(1);
     obtenerIngresos();
   }, [context.isUpdate, filter.getIsFilter()]);
-  useEffect(()=>{
+  useEffect(() => {
     obtenerTiposIngresos();
     context.setUpdateTypes(false);
-  },[context.updateTypes])
-  async function obtenerTiposIngresos()
-  {
+  }, [context.updateTypes]);
+  async function obtenerTiposIngresos() {
     let access = auth.getAccess();
     let response = await obtenerTypesIngresos(access);
-    if(response.status == 401)
-    {
+    if (response.status == 401) {
       access = auth.updateToken();
       response = await obtenerTypesIngresos(access);
     }
     context.setListTypes(response.data);
   }
   async function obtenerIngresos() {
-    let response = await getIngresos(auth.getAccess(), filter.getDataFilter(),pageContext.getPage());
-    if (response.status == 401) {
-      let access = await auth.updateToken();
-      response = await getIngresos(access, filter.getDataFilter(),pageContext.getPage());
+    let response = null;
+    if (!filter.otherCoins) {
+       response = await getIngresos(
+        auth.getAccess(),
+        filter.getDataFilter(),
+        pageContext.getPage()
+      );
+      if (response.status == 401) {
+        let access = await auth.updateToken();
+        response = await getIngresos(
+          access,
+          filter.getDataFilter(),
+          pageContext.getPage()
+        );
+      }
+    } else {
+       response = await getIngresos(
+        auth.getAccess(),
+        filter.getDataFilter(),
+        pageContext.getPage(),
+        filter.coinSelected.currency,
+          filter.coinSelected.currency_type
+      );
+      if (response.status == 401) {
+        let access = await auth.updateToken();
+        response = await getIngresos(
+          access,
+          filter.getDataFilter(),
+          pageContext.getPage(),
+          filter.coinSelected.currency,
+          filter.coinSelected.currency_type
+        );
+      }
     }
     context.setData(response.data);
     pageContext.setPage(response.data.page);
@@ -59,24 +86,32 @@ function Ingresos() {
       response = await removeIngreso(id, access);
     }
     if (response == 200) {
-      messageInfo("Se elimino correctamente","Se elimino su gasto correctamente","success")
+      messageInfo(
+        "Se elimino correctamente",
+        "Se elimino su gasto correctamente",
+        "success"
+      );
       context.setIsUpdate(true);
       context.setUpdateTypes(true);
     } else {
-      messageInfo("No se pudo eliminar","No se pudo conectar al servidor. Espere mientras trabajamos en una solución","error")
+      messageInfo(
+        "No se pudo eliminar",
+        "No se pudo conectar al servidor. Espere mientras trabajamos en una solución",
+        "error"
+      );
     }
   }
   return (
-      <DefaultPage>
-        <FilterMenu></FilterMenu>
-        <Cards
-          data={context.data.ingresos}
-          handleRemove={handleRemove}
-          requestEdit={editIngreso}
-          requestAdd={setIngreso}
-          obtenerDatos={obtenerIngresos}
-        />
-      </DefaultPage>
+    <DefaultPage>
+      <FilterMenu></FilterMenu>
+      <Cards
+        data={context.data.ingresos}
+        handleRemove={handleRemove}
+        requestEdit={editIngreso}
+        requestAdd={setIngreso}
+        obtenerDatos={obtenerIngresos}
+      />
+    </DefaultPage>
   );
 }
 

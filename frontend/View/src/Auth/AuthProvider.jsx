@@ -8,7 +8,7 @@ export function AuthProvider({children}) {
   {
     return isAuth;
   }
-  function getAccess(){
+   function getAccess(){
     return access;
   }
   async function updateToken()

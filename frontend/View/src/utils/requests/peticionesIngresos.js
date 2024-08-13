@@ -1,8 +1,8 @@
 import axios from "axios";
-export async function getIngresos(access,data,page) {
+export async function getIngresos(access,data,page,currency,currency_type) {
    let respuesta = null;
    try {
-     if (data.monto_final != "" || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
+     if (data.monto_final != "" || data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='' || currency !="" || currency_type !="" ) {
       console.log('holaaa');
        respuesta = await axios({
          method: "get",
@@ -16,6 +16,8 @@ export async function getIngresos(access,data,page) {
            tipo: data.tipo,
            fecha_inicio: data.fecha_inicio,
            fecha_fin: data.fecha_fin,
+           currency,
+           currency_type
          },
        });
      } else {

@@ -1,6 +1,7 @@
 import axios from "axios";
 export async function obtenerGastos(access, data,page) {
   let respuesta = null;
+
   try {
     if (data.monto_final != ""|| data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
       respuesta = await axios({
@@ -23,7 +24,7 @@ export async function obtenerGastos(access, data,page) {
         params: {
           page: page,
           page_size: 5,
-          criterion:"last_updated_on_max"
+          criterion:"last_updated_on_max",
         },
       });
     }
@@ -32,6 +33,47 @@ export async function obtenerGastos(access, data,page) {
     console.log(error);
     return error.response;
   }
+}
+export async  function obtenerGastosMoneda(access, data,page,currency,currency_type)
+{
+  let respuesta = null;
+  try {
+    if (data.monto_final != ""|| data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !=''|| currency!="" || currency_type!="") {
+      respuesta = await axios({
+        method: "get",
+        headers: { "x-access-token": access },
+        url: "http://127.0.0.1:5000/gastos/get_all",
+        params: {
+          page: page,
+          page_size: 5,
+          criterion:"last_updated_on_max",
+          monto_min: data.monto_inicial,
+          monto_max: data.monto_final,
+          tipo: data.tipo,
+          fecha_inicio: data.fecha_inicio,
+          fecha_fin: data.fecha_fin,
+          currency,
+          currency_type
+        },
+      });
+    }else {
+      respuesta = await axios({
+        method: "get",
+        headers: { "x-access-token": access },
+        url: "http://127.0.0.1:5000/gastos/get_all",
+        params: {
+          page: page,
+          page_size: 5,
+          criterion:"last_updated_on_max",
+        },
+      });
+  }
+  return respuesta;
+}catch (error) {
+    console.log(error);
+    return error.response;
+  }
+ 
 }
 export async function setGasto(data, access) {
   try {
