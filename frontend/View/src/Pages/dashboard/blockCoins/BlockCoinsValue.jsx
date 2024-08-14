@@ -22,18 +22,19 @@ function BlockCoinsValue({ request }) {
     if (event.target.value != "") {
       filter.setIndexSelec(index);
       filter.setDataFilter({
-        ...filter.dataFilter,
+        ...filter.getDataFilter(),
         currency: coins[index - 1].moneda.toLowerCase(),
         currency_type: coins[index - 1].casa,
       });
       context.setIsUpdate(true);
     } else {
-      filter.setIndexSelec(-1);
-      filter.setCoinSelected({
-        ...filter.dataFilter,
+      filter.setIndexSelec(0);
+      filter.setDataFilter({
+        ...filter.getDataFilter(),
         currency: "",
         currency_type:"",
       });
+      context.setIsUpdate(true);
     }
   }
   useEffect(() => {

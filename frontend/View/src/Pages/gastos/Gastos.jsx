@@ -22,10 +22,12 @@ function Gastos() {
   async function obtenerLosGastos() {
     try {
       let response = null;
+      console.log(filter.getDataFilter());
       response = await obtenerGastos(
         auth.getAccess(),
         filter.getDataFilter(),
         pagContext.getPage(),
+        filter.otherCoins
       );
       if (response.status == 401) {
         let access = await auth.updateToken();
@@ -33,6 +35,7 @@ function Gastos() {
           access,
           filter.getDataFilter(),
           pagContext.getPage(),
+          filter.otherCoins
         );
       }
       context.setData(response.data);

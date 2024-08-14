@@ -1,14 +1,15 @@
 import axios from "axios";
-export async function obtenerGastos(access, data, page) {
+export async function obtenerGastos(access, data, page,otherCoins) {
   let respuesta = null;
+  console.log(data.currency,data.currency_type)
   try {
     if (
-      data.monto_final != "" ||
+      (data.monto_final != "" ||
       data.tipo != "" ||
       data.fecha_inicio != "" ||
       data.fecha_fin != "" ||
       data.currency != "" ||
-      data.currency_type != ""
+      data.currency_type != "") && otherCoins
     ) {
       respuesta = await axios({
         method: "get",

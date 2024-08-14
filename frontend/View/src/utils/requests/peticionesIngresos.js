@@ -1,14 +1,14 @@
 import axios from "axios";
-export async function getIngresos(access, data, page) {
+export async function getIngresos(access, data, page,otherCoins) {
   let respuesta = null;
   try {
     if (
-      data.monto_final != "" ||
+      (data.monto_final != "" ||
       data.tipo != "" ||
       data.fecha_inicio != "" ||
       data.fecha_fin != "" ||
       data.currency != "" ||
-      data.currency_type != ""
+      data.currency_type != "" ) && otherCoins
     ) {
       respuesta = await axios({
         method: "get",
