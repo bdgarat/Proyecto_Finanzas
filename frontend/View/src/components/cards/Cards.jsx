@@ -4,7 +4,7 @@ import Card from "../card/Card";
 import NewComponent from "../inComponent/NewComponent";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import { PaginadoContext } from "../../utils/context/PaginadoProvider";
-import { message as alert }   from "./../../utils/functions/Message" 
+import { message as alert } from "./../../utils/functions/Message";
 function Cards({
   data,
   handleRemove,
@@ -141,15 +141,29 @@ function Cards({
             {paginationContext.getPage() - 1}
           </a>
         ) : null}
+        {paginationContext.getPage() - 2 > 1 ? (
+          <a className={style.buttonPagination}>...</a>
+        ) : null}
         <a
           className={
-            paginationContext.getPage() == 1
+            paginationContext.getPage() == 1 &&
+            paginationContext.getLastPage() != 1
               ? style.buttonPagination_activate_start
-              : paginationContext.getPage() == paginationContext.getLastPage()
+              : paginationContext.getPage() ==
+                  paginationContext.getLastPage() &&
+                paginationContext.getLastPage() != 1
               ? style.buttonPagination_activate_end
+              : paginationContext.getLastPage()== 1
+              ? style.buttonPagination_activate_one
               : style.buttonPagination_activate
           }
-          onClick={()=>{setMessage("ya me encuentro en la pagina", paginationContext.getPage());setIsMessage(true)}}
+          onClick={() => {
+            setMessage(
+              "ya me encuentro en la pagina",
+              paginationContext.getPage()
+            );
+            setIsMessage(true);
+          }}
         >
           {paginationContext.getPage()}
         </a>
@@ -158,7 +172,6 @@ function Cards({
             className={style.buttonPagination}
             onClick={async () => {
               if (paginationContext.getNextPage() == null) {
-                
                 paginationContext.setPage(paginationContext.getPage() + 1);
                 let value = isSelected.nextPage ? false : true;
                 setIsSelected({

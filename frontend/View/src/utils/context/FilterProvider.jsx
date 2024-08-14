@@ -8,14 +8,12 @@ export default function FilterProvider({ children }) {
     tipo: "",
     fecha_inicio: "",
     fecha_fin: "",
-  });
-  const [isFilter, setIsFilter] = useState(false);
-  const [otherCoins, setOtherCoins] = useState(false);
-  //Me permite guarda el tipo de moneda al cual se va a converitr los valores de las entradas
-  const [coinSelected, setCoinSelected] = useState({
     currency: "",
     currency_type: "",
   });
+  //Esta la utilizo para buscar cuando se esta filtrando 
+  const [isFilter, setIsFilter] = useState(false);
+  const [otherCoins, setOtherCoins] = useState(false);
   //Sirve para mostrar la moneada seleccionada del select en pantalla, por defecto se va a mostrar el valor del dólar blue
   const [indexSelec, setIndexSelec] = useState(0);
   function getDataFilter() {
@@ -33,8 +31,6 @@ export default function FilterProvider({ children }) {
         setDataFilter,
         otherCoins,
         setOtherCoins,
-        coinSelected,
-        setCoinSelected,
         indexSelec,
         setIndexSelec,
       }}

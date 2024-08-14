@@ -1,9 +1,15 @@
 import axios from "axios";
-export async function obtenerGastos(access, data,page) {
+export async function obtenerGastos(access, data, page) {
   let respuesta = null;
-
   try {
-    if (data.monto_final != ""|| data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !='') {
+    if (
+      data.monto_final != "" ||
+      data.tipo != "" ||
+      data.fecha_inicio != "" ||
+      data.fecha_fin != "" ||
+      data.currency != "" ||
+      data.currency_type != ""
+    ) {
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
@@ -14,6 +20,9 @@ export async function obtenerGastos(access, data,page) {
           tipo: data.tipo,
           fecha_inicio: data.fecha_inicio,
           fecha_fin: data.fecha_fin,
+          currency: data.currency,
+          currency_type: data.currency_type,
+          criterion: "last_updated_on_max",
         },
       });
     } else {
@@ -24,7 +33,7 @@ export async function obtenerGastos(access, data,page) {
         params: {
           page: page,
           page_size: 5,
-          criterion:"last_updated_on_max",
+          criterion: "last_updated_on_max",
         },
       });
     }
@@ -33,47 +42,6 @@ export async function obtenerGastos(access, data,page) {
     console.log(error);
     return error.response;
   }
-}
-export async  function obtenerGastosMoneda(access, data,page,currency,currency_type)
-{
-  let respuesta = null;
-  try {
-    if (data.monto_final != ""|| data.tipo != '' || data.fecha_inicio !='' || data.fecha_fin !=''|| currency!="" || currency_type!="") {
-      respuesta = await axios({
-        method: "get",
-        headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/get_all",
-        params: {
-          page: page,
-          page_size: 5,
-          criterion:"last_updated_on_max",
-          monto_min: data.monto_inicial,
-          monto_max: data.monto_final,
-          tipo: data.tipo,
-          fecha_inicio: data.fecha_inicio,
-          fecha_fin: data.fecha_fin,
-          currency,
-          currency_type
-        },
-      });
-    }else {
-      respuesta = await axios({
-        method: "get",
-        headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/get_all",
-        params: {
-          page: page,
-          page_size: 5,
-          criterion:"last_updated_on_max",
-        },
-      });
-  }
-  return respuesta;
-}catch (error) {
-    console.log(error);
-    return error.response;
-  }
- 
 }
 export async function setGasto(data, access) {
   try {
@@ -91,7 +59,7 @@ export async function setGasto(data, access) {
     return respuesta.status;
   } catch (error) {
     console.log(error);
-   return error.response.status;
+    return error.response.status;
   }
 }
 export async function editGasto(data, access) {
@@ -130,17 +98,44 @@ export async function removeGasto(id, access) {
     return error.response.status;
   }
 }
-export async function obtenerTypesGastos(access)
-{
-    try{
-        const response = await axios({
-            method:"get",
-            url:"http://127.0.0.1:5000/gastos/tipos",
-            headers: { "x-access-token": access }
-        })
-        return response;
-    }catch(error)
-    {
-        return error.response;
-    }
+export async function obtenerTypesGastos(access) {
+  try {
+    const response = await axios({
+      method: "get",
+      url: "http://127.0.0.1:5000/gastos/tipos",
+      headers: { "x-access-token": access },
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+export async function getTotalsGasto(access, filter,otherCoins){
+  let responseGastos= null;
+  try{
+     if(filter.currency !="" && filter.currency_type !="" && otherCoins )
+     {
+      responseGastos = await axios({
+        method:"get",
+        headers:{"x-access-token":access}, 
+        url:"http://127.0.0.1:5000/gastos/total",
+        params:{
+          currency:filter.currency,
+          currency_type:filter.currency_type
+        }
+      })
+     }else
+     {
+      responseGastos = await axios({
+        method:"get",
+        headers:{"x-access-token":access}, 
+        url:"http://127.0.0.1:5000/gastos/total",
+      })
+     }
+    return responseGastos;
+  }catch(error)
+  {
+    console.log('Este error ocurre dentro de la petición getTotalGasto',error);
+    return error.response;
+  }
 }

@@ -6,7 +6,6 @@ import {
   removeGasto,
   setGasto,
   obtenerTypesGastos,
-  obtenerGastosMoneda,
 } from "../../utils/requests/peticionGastos";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import FilterMenu from "../../components/filterMenu/FilterMenu";
@@ -23,38 +22,18 @@ function Gastos() {
   async function obtenerLosGastos() {
     try {
       let response = null;
-      if (!filter.otherCoins) {
+      response = await obtenerGastos(
+        auth.getAccess(),
+        filter.getDataFilter(),
+        pagContext.getPage(),
+      );
+      if (response.status == 401) {
+        let access = await auth.updateToken();
         response = await obtenerGastos(
-          auth.getAccess(),
+          access,
           filter.getDataFilter(),
           pagContext.getPage(),
         );
-        if (response.status == 401) {
-          let access = await auth.updateToken();
-          response = await obtenerGastos(
-            access,
-            filter.getDataFilter(),
-            pagContext.getPage()
-          );
-        }
-      } else {
-        response = await obtenerGastosMoneda(
-          auth.getAccess(),
-          filter.getDataFilter(),
-          pagContext.getPage(),
-          filter.coinSelected.currency,
-          filter.coinSelected.currency_type
-        );
-        if (response.status == 401) {
-          let access = await auth.updateToken();
-          response = await obtenerGastosMoneda(
-            access,
-            filter.getDataFilter(),
-            pagContext.getPage(),
-            filter.coinSelected.currency,
-            filter.coinSelected.currency_type
-          );
-        }
       }
       context.setData(response.data);
       pagContext.setPage(response.data.page);

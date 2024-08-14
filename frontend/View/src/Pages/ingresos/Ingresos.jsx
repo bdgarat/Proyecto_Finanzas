@@ -41,39 +41,20 @@ function Ingresos() {
   }
   async function obtenerIngresos() {
     let response = null;
-    if (!filter.otherCoins) {
-       response = await getIngresos(
-        auth.getAccess(),
-        filter.getDataFilter(),
-        pageContext.getPage()
-      );
-      if (response.status == 401) {
-        let access = await auth.updateToken();
-        response = await getIngresos(
-          access,
-          filter.getDataFilter(),
-          pageContext.getPage()
-        );
-      }
-    } else {
-       response = await getIngresos(
-        auth.getAccess(),
+    response = await getIngresos(
+      auth.getAccess(),
+      filter.getDataFilter(),
+      pageContext.getPage(),
+    );
+    if (response.status == 401) {
+      let access = await auth.updateToken();
+      response = await getIngresos(
+        access,
         filter.getDataFilter(),
         pageContext.getPage(),
-        filter.coinSelected.currency,
-          filter.coinSelected.currency_type
       );
-      if (response.status == 401) {
-        let access = await auth.updateToken();
-        response = await getIngresos(
-          access,
-          filter.getDataFilter(),
-          pageContext.getPage(),
-          filter.coinSelected.currency,
-          filter.coinSelected.currency_type
-        );
-      }
     }
+
     context.setData(response.data);
     pageContext.setPage(response.data.page);
     pageContext.setNextPage(response.data.next_page);

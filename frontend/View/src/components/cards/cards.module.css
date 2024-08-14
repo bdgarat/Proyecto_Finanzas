@@ -100,6 +100,17 @@
   cursor: pointer;
   background-color: #0d6efd;
 }
+.buttonPagination_activate_one {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  border: 1px solid #000;
+  cursor: pointer;
+  background-color: #0d6efd;
+  border-radius: 10px;
+}
 .buttonPagination_activate_end{
   display: flex;
   height: 100%;

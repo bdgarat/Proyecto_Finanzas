@@ -21,8 +21,8 @@ function BlockCoinsValue({ request }) {
     let index = event.target.selectedIndex;
     if (event.target.value != "") {
       filter.setIndexSelec(index);
-      filter.setCoinSelected({
-        ...filter.coinsSelected,
+      filter.setDataFilter({
+        ...filter.dataFilter,
         currency: coins[index - 1].moneda.toLowerCase(),
         currency_type: coins[index - 1].casa,
       });
@@ -30,7 +30,7 @@ function BlockCoinsValue({ request }) {
     } else {
       filter.setIndexSelec(-1);
       filter.setCoinSelected({
-        ...filter.coinsSelected,
+        ...filter.dataFilter,
         currency: "",
         currency_type:"",
       });
