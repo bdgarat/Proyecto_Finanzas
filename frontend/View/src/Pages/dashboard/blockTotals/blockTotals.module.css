@@ -2,5 +2,32 @@
 .container_totals{
     display:flex;
     width: 800px;
-    justify-content: space-around;
+    justify-content: center;
 }
+.container_asterisco{
+    width:80px;
+    height: 25px;
+}
+.text_total_gastado{
+    margin-left: 10px;
+    margin-right:10px;
+    font-size: 25px;
+}
+.valor_total_gastado{
+    font-size: 25px;
+    color:red;
+}
+.text_total_ingresado{
+    font-size: 25px;
+    margin-left: 35px;
+    margin-right:15px;
+}
+.valor_total_ingresado{
+    font-size: 25px;
+    color:green;
+}
+.icons_saldo{
+    width:26px;
+    height: 25px;
+    cursor: pointer;
+  }

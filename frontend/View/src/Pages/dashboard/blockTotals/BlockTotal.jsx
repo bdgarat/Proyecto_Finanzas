@@ -7,7 +7,7 @@ import {
 } from "../../../utils/requests/getFuncionalidades";
 import { FilterContext } from "../../../utils/context/FilterProvider";
 import { CardsContext } from "../../../utils/context/CardsProvider";
-
+import asterisco from './../../../assets/asterisco.png'
 function BlockTotal() {
   const [totals, setTotals] = useState({
     gastos: 0,
@@ -59,16 +59,28 @@ function BlockTotal() {
     context.setIsUpdate(false);
   }, [context.isUpdate]);
   return (
-    <div className={style.cotainer_container_totals}>
+    <div >
       {totals.gastos != 0 && totals.ingresos != 0 ? (
         <div className={style.container_totals}>
-          <p className={style.gastos_totales}>Total Gastado: {totals.gastos}</p>
-          <p className={style.ingresos_totales}>
-            Total Ingresado: {totals.ingresos}
-          </p>
+          <span className={style.text_total_gastado} >Total Gastado: </span>
+           { context.isViewSaldo ? (<p className={style.valor_total_gastado}>
+              {  totals.gastos}
+            </p>):(<div className={style.container_asterisco}>
+              <img className={style.icons_saldo} src={asterisco} />
+              <img className={style.icons_saldo} src={asterisco} />
+              <img className={style.icons_saldo} src={asterisco} />
+            </div>)}
+            <span className={style.text_total_ingresado}>Total Ingresado: </span>
+            { context.isViewSaldo ? <p className={style.valor_total_ingresado}>
+             {totals.ingresos}
+          </p>:(<div className={style.container_asterisco}>
+              <img className={style.icons_saldo} src={asterisco} />
+              <img className={style.icons_saldo} src={asterisco} />
+              <img className={style.icons_saldo} src={asterisco} />
+            </div>)}
         </div>
       ) : (
-        <p></p>
+        null
       )}
     </div>
   );
