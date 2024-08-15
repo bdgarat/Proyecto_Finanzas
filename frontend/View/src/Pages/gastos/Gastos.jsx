@@ -22,7 +22,6 @@ function Gastos() {
   async function obtenerLosGastos() {
     try {
       let response = null;
-      console.log(filter.getDataFilter());
       response = await obtenerGastos(
         auth.getAccess(),
         filter.getDataFilter(),

@@ -1,7 +1,6 @@
 import axios from "axios";
 export async function obtenerGastos(access, data, page,otherCoins) {
   let respuesta = null;
-  console.log(data.currency,data.currency_type)
   try {
     if (
       (data.monto_final != "" ||
