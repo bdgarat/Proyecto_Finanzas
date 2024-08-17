@@ -51,7 +51,7 @@ select{
     cursor: pointer;
     margin:8px;
     padding:5px;
-    border: .5px solid white;
+    border: .5px solid #800030;
     color:white;
     display: flex;
     justify-content: center;
@@ -61,8 +61,12 @@ select{
     border-radius: 5px;
     background-color: #c42013;
     font-size: 17px;
+    box-shadow: 3px 3px #800030;
 }
-
+.button_enviar:active{
+    transform: translateY(3px);
+    box-shadow: 0 0;
+}
 .button_enviar:hover{
     background-color: red;
     
@@ -78,9 +82,15 @@ select{
     height: 3.4vh;
     border-radius: 5px;
     background-color: whitesmoke;
+    box-shadow: 3px 3px #555;
+    user-select: none;
 }
 .button_volver:hover{
     background-color: aquamarine;
+}
+.button_volver:active{
+    transform: translateY(3px);
+    box-shadow: 0 0;
 }
 @media(max-width:425px)
 {

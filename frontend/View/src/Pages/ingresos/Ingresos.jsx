@@ -56,11 +56,10 @@ function Ingresos() {
         filter.otherCoins
       );
     }
-
     context.setData(response.data);
     pageContext.setPage(response.data.page);
     pageContext.setNextPage(response.data.next_page);
-    pageContext.setLastPage(response.data.total_page);
+    pageContext.setLastPage(response.data.total_pages);
   }
   async function handleRemove(id) {
     let response = await removeIngreso(id, auth.getAccess());

@@ -92,6 +92,9 @@
     border: 3px #800030;
     color:white;
     cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    box-shadow: 3px 3px #800030;
 }
 .button_edit{
     display: flex;
@@ -108,12 +111,23 @@
     transition: .5;
     cursor: pointer;
     background-color: aliceblue;
+    text-decoration: none;
+    user-select: none;
+    box-shadow: 3px 3px #555;
 }
 .button_edit:hover{
     background-color: aquamarine;
 }
+.button_edit:active{
+    transform: translateY(5px);
+    box-shadow: 0 0 ;
+}
 .button_deleted:hover{
     background-color: red;
+}
+.button_deleted:active{
+    transform: translateY(5px);
+    box-shadow: 0 0 ;
 }
 @media(max-width:425px)
 {

@@ -1,0 +1,34 @@
+.graphics{
+    min-width:100%;
+    min-height: 500px;
+    margin:20px
+}
+.echarts-for-echarts{
+    width:100%
+}
+.container_button_filter{
+    display: flex;
+    justify-content: center;
+}
+.button_filter{
+    border: 1px solid #000;
+    box-shadow: 3px 3px #000;
+    border-radius: 5px;
+    padding:10px;
+    margin:10px;
+    display: flex;
+    width:15%;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    user-select: none;
+}
+.button_filter:active{
+    transform: translateY(5px);
+    box-shadow: 0 0px 0 #555;
+}
+.button_filter:hover{
+    background-color: #0d6efd;
+}
