@@ -45,7 +45,7 @@ function Ingresos() {
       auth.getAccess(),
       filter.getDataFilter(),
       pageContext.getPage(),
-      filter.otherCoins
+      filter.otherCoins,
     );
     if (response.status == 401) {
       let access = await auth.updateToken();
@@ -53,7 +53,7 @@ function Ingresos() {
         access,
         filter.getDataFilter(),
         pageContext.getPage(),
-        filter.otherCoins
+        filter.otherCoins,
       );
     }
     context.setData(response.data);

@@ -2,14 +2,7 @@ import axios from "axios";
 export async function getIngresos(access, data, page,otherCoins) {
   let respuesta = null;
   try {
-    if (
-      (data.monto_final != "" ||
-      data.tipo != "" ||
-      data.fecha_inicio != "" ||
-      data.fecha_fin != "" ||
-      data.currency != "" ||
-      data.currency_type != "" ) && otherCoins
-    ) {
+    if (otherCoins ) {
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
@@ -17,13 +10,13 @@ export async function getIngresos(access, data, page,otherCoins) {
         params: {
           page: page,
           page_size: 5,
-          monto_min: data.monto_inicial,
-          monto_max: data.monto_final,
-          tipo: data.tipo,
-          fecha_inicio: data.fecha_inicio,
-          fecha_fin: data.fecha_fin,
-          currency: data.currency,
-          currency_type: data.currency_type,
+          monto_min: data.monto_inicial !=""? data.monto_inicial:null,
+          monto_max: data.monto_final!=""? data.monto_final:null,
+          tipo: data.tipo!=""? data.tipo:null,
+          fecha_inicio: data.fecha_inicio!=""? data.fecha_inicio:null,
+          fecha_fin: data.fecha_fin!=""? data.fecha_fin:null,
+          currency: data.currency!=""? data.currency:null,
+          currency_type: data.currency_type!=""? data.currency_type:null,
           criterion: "last_updated_on_max",
         },
       });

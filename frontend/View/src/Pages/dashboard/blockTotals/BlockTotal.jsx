@@ -59,7 +59,7 @@ function BlockTotal() {
     context.setIsUpdate(false);
   }, [context.isUpdate]);
   return (
-    <div >
+    <div className={style.container_value_totals}>
       {totals.gastos != 0 && totals.ingresos != 0 ? (
         <div className={style.container_totals}>
           <span className={style.text_total_gastado} >Total Gastado: </span>

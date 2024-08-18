@@ -19,8 +19,9 @@ function FilterMenu() {
         filter.getDataFilter().fecha_inicio != "" &&
         filter.getDataFilter().fecha_final == ""
       )
-    )
+    ){
       filter.setIsFilter(true);
+    }
   }
   return (
     <div className={style.filterMenu}>

@@ -1,4 +1,15 @@
+.container_dashboard{
+    width:100%
+}
+.container_content_dashboard{
+    width:100%
+}
 .container_block{
     width:100%;
     display: flex;
+    justify-content: space-around;
+}
+.container_coins_value{
+    display: flex;
+    justify-content: flex-start;
 }

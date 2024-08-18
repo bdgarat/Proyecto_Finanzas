@@ -7,11 +7,11 @@ import BlockTotal from "./blockTotals/BlockTotal";
 import AvaragesGraphics from "./averages/AvaragesGraphics";
 function Dashboard() {
   return (
-    <div>
+    <div className={style.container_dashboard}>
       <DefaultPage>
-        <div>
+        <div className={style.container_content_dashboard}>
           <div className={style.container_block}>
-            <BlockCoinsValue request={getValueCoins} />
+            <BlockCoinsValue request={getValueCoins} className={style.container_coins_value}/>
             <BlockTotal />
           </div>
           <AvaragesGraphics />

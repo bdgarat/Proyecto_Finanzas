@@ -26,7 +26,7 @@ function Gastos() {
         auth.getAccess(),
         filter.getDataFilter(),
         pagContext.getPage(),
-        filter.otherCoins
+        filter.otherCoins,
       );
       if (response.status == 401) {
         let access = await auth.updateToken();
@@ -34,7 +34,7 @@ function Gastos() {
           access,
           filter.getDataFilter(),
           pagContext.getPage(),
-          filter.otherCoins
+          filter.otherCoins,
         );
       }
       context.setData(response.data);

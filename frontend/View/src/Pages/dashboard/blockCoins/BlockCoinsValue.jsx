@@ -32,7 +32,7 @@ function BlockCoinsValue({ request }) {
       filter.setDataFilter({
         ...filter.getDataFilter(),
         currency: "",
-        currency_type:"",
+        currency_type: "",
       });
       context.setIsUpdate(true);
     }
@@ -42,51 +42,54 @@ function BlockCoinsValue({ request }) {
   }, []);
   return (
     <div className={style.coins_container}>
-      <h3>Valores de las monedas</h3>
-      <div>
+      <div className={style.title_text_selec}>
+      <h3 className={style.title_coins}>Valores de las monedas</h3>
+      <div className={style.text_coins}>
         {" "}
         <input
           type="checkbox"
-          checked={filter.otherCoins? "checked":""}
+          checked={filter.otherCoins ? "checked" : ""}
           onChange={() => {
             context.setIsUpdate(true);
-            filter.setOtherCoins((previus)=> !previus);
+            filter.setOtherCoins((previus) => !previus);
           }}
         />
-        <span>Mostrar los valores en la moneda seleccionada</span>
+        <span className={style.text_info}>Mostrar los valores en la moneda seleccionada</span>
       </div>
       {Array.isArray(coins) ? (
-        <select
-          className={style.select_coins}
-          onChange={(event) => {
-            handleCoin(event);
-          }}
-          value={
-            coins.length != 0 && filter.indexSelec > 0
-              ? coins[filter.indexSelec - 1].nombre
-              : ""
-          }
-        >
-          <option value="">Seleccione la moneda de interes</option>
-          {coins.map((element) => (
-            <option key={element.nombre} value={element.nombre}>
-              {element.nombre} {element.moneda}
-            </option>
-          ))}
-        </select>
-      ) : null}
+        <div className={style.select_container}>
+          <select
+            className={style.select_coins}
+            onChange={(event) => {
+              handleCoin(event);
+            }}
+            value={
+              coins.length != 0 && filter.indexSelec > 0
+                ? coins[filter.indexSelec - 1].nombre
+                : ""
+            }
+          >
+            <option value="">Seleccione la moneda de interes</option>
+            {coins.map((element) => (
+              <option key={element.nombre} value={element.nombre}>
+                {element.nombre} {element.moneda}
+              </option>
+            ))}
+          </select>
+        </div>) : null}
+      </div>
       {filter.indexSelec > 0 && Array.isArray(coins) && coins.length != 0 ? (
-        <div className={style.coin_container}>
-          <p>Valor para la compra : {coins[filter.indexSelec - 1].compra}</p>
-          <p>Valor para la venta : {coins[filter.indexSelec - 1].venta}</p>
-          <p>
+        <div className={style.info_coin_container}>
+           <p>
             Fecha que se obtuvo el valor :{" "}
             {new Date(
               coins[filter.indexSelec - 1].fechaActualizacion
             ).toLocaleDateString()}
           </p>
+          <p>Valor para la compra : {coins[filter.indexSelec - 1].compra}</p>
+          <p>Valor para la venta : {coins[filter.indexSelec - 1].venta}</p>
         </div>
-      ) : null}
+      ) : <h3>No hay ninguna moneda seleccionada</h3>}
     </div>
   );
 }

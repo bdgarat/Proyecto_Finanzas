@@ -55,6 +55,7 @@ function AvaragesGraphics() {
       </div>
       <div className={style.graphics}>
         <Bar
+          className={style.canvas_bar}
           data={{
             labels: fechas,
             datasets: [
