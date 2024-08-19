@@ -94,15 +94,29 @@ function generarFechaSiguiente(day, month, year) {
   }
   return { fecha_string: `${year}-${month}-${day}`, day, month, year };
 }
-export function generarFechaAnterior() {
+function obtenerDiaActual() {
+  var date = new Date();
+  var diaActual = date.getDate();
+  var numDia = date.getDay();
+  for (let i = 1; i < numDia; i++) diaActual--;
+  if (monthThirtyOne[date.getMonth() - 1].isThirtyOne) {
+    if (diaActual < 28) {
+      diaActual = 31 + diaActual - 28;
+    } else diaActual = diaActual - 28;
+  } else {
+    if (diaActual < 28) {
+      diaActual = 30 + diaActual - 28;
+    } else diaActual = diaActual - 28;
+  }
+  return diaActual;
+}
+export function generarFechaAnterior(paso) {
   const date = new Date();
   var year = date.getFullYear();
   year = parseInt(year);
-  var day = date.toLocaleString().split(["/"])[0];
-  day = parseInt(day);
+  var day = obtenerDiaActual();
   var month = date.getMonth();
   month = parseInt(month);
-
   let fechas = [];
   if (month < 10) {
     fechas[0] = { fecha_string: `${year}-0${month}-${day}`, day, month, year };
@@ -118,14 +132,16 @@ export function generarFechaAnterior() {
   }
   if (fechas[4].month < 10) {
     fechas[5] = {
-      fecha_string: `${fechas[4].year}-0${fechas[4].month}-${parseInt(day)+1}`,
+      fecha_string: `${fechas[4].year}-0${fechas[4].month}-${
+        parseInt(day) + 1
+      }`,
       day: day,
       month: fechas[4].month,
       year: fechas[4].year,
     };
   } else {
     fechas[5] = {
-      fecha_string: `${fechas[4].year}-${fechas[4].month}-${parseInt(day)+1}`,
+      fecha_string: `${fechas[4].year}-${fechas[4].month}-${parseInt(day) + 1}`,
       day: day,
       month: fechas[4].month,
       year: fechas[4].year,
@@ -133,3 +149,4 @@ export function generarFechaAnterior() {
   }
   return fechas;
 }
+

@@ -88,6 +88,7 @@ function DefaultPage({ children }) {
             />
             {isMenu ? <div className={style.userMenu}>
               <a className={style.button_deslog} onClick={borrarCredenciales}>Desloguearse</a>
+              <a className={style.button_deslog} >Editar usuario</a>
             </div>:null}
           </div>
         </div>

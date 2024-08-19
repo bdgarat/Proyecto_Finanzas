@@ -43,7 +43,7 @@ function BlockCoinsValue({ request }) {
   return (
     <div className={style.coins_container}>
       <div className={style.title_text_selec}>
-      <h3 className={style.title_coins}>Valores de las monedas</h3>
+      <h3 className={style.title_coins}>Tipo de moneda</h3>
       <div className={style.text_coins}>
         {" "}
         <input
@@ -81,7 +81,7 @@ function BlockCoinsValue({ request }) {
       {filter.indexSelec > 0 && Array.isArray(coins) && coins.length != 0 ? (
         <div className={style.info_coin_container}>
            <p>
-            Fecha que se obtuvo el valor :{" "}
+            Fecha en la cuál se obtuvo el valor :{" "}
             {new Date(
               coins[filter.indexSelec - 1].fechaActualizacion
             ).toLocaleDateString()}
