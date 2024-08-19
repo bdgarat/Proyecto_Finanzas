@@ -8,6 +8,7 @@ export async function obtenerGastos(access, data, page, otherCoins) {
         headers: { "x-access-token": access },
         url: "http://127.0.0.1:5000/gastos/get_all",
         params: {
+          page:page,
           monto_min: data.monto_inicial !=""? data.monto_inicial:null,
           monto_max: data.monto_final!=""? data.monto_final:null,
           tipo: data.tipo!=""? data.tipo:null,
@@ -16,6 +17,7 @@ export async function obtenerGastos(access, data, page, otherCoins) {
           currency: data.currency!=""? data.currency:null,
           currency_type: data.currency_type!=""? data.currency_type:null,
           criterion: "last_updated_on_max",
+          page_size: 5,
         },
       });
     } else {
@@ -35,6 +37,7 @@ export async function obtenerGastos(access, data, page, otherCoins) {
         },
       });
     }
+    console.log(respuesta)
     return respuesta;
   } catch (error) {
     console.log(error);
@@ -147,7 +150,7 @@ export async function getAvaragesGastos(
       response = await axios({
         method: "GET",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/average",
+        url: "http://127.0.0.1:5000/gastos/total",
         params: {
           fecha_inicio: fecha_inicio,
           fecha_fin: fecha_fin,
@@ -159,7 +162,7 @@ export async function getAvaragesGastos(
       response = await axios({
         method: "GET",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/average",
+        url: "http://127.0.0.1:5000/gastos/total",
         params: {
           fecha_inicio: fecha_inicio,
           fecha_fin: fecha_fin,

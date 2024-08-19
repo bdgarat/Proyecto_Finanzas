@@ -34,8 +34,9 @@ function AvaragesGraphics() {
         filter.getDataFilter(),
         filter.otherCoins
       );
-      (auxData[j] = response.data.average),
+      (auxData[j] = response.data.total),
         (auxFecha[j] = fechasAux[j].fecha_string);
+        console.log(response)
     }
     setGastos(auxData);
     setFechas(auxFecha);
@@ -61,7 +62,7 @@ function AvaragesGraphics() {
             labels: fechas,
             datasets: [
               {
-                label: "Promedio de gastos",
+                label: "Gastos totales",
                 data: gastos,
                 backgroundColor: "#0d6efd",
                 borderColor: "black",
