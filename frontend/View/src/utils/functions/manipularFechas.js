@@ -110,7 +110,7 @@ function obtenerDiaActual() {
   }
   return diaActual;
 }
-export function generarFechaAnterior(paso) {
+export function generarFechaAnteriorPorSemana() {
   const date = new Date();
   var year = date.getFullYear();
   year = parseInt(year);
@@ -149,4 +149,77 @@ export function generarFechaAnterior(paso) {
   }
   return fechas;
 }
-
+export function generarFechasAnteriorPorDia()
+{
+  var actualDate = new Date();
+  var fechas = [];
+  var year = actualDate.getFullYear()
+  var dayStart = actualDate.getDate();
+  var monthStart = actualDate.getMonth();
+  if(monthThirtyOne[monthStart].isThirtyOne)
+  {
+    for(let i= 0;i<=32;i++)
+      {
+        if(dayStart > 31)
+        {
+          dayStart = 1;
+          monthStart +=1;
+        }
+        if(dayStart <10 && monthStart < 10)
+          fechas[i] = {fecha_string:`${year}-0${monthStart}-0${dayStart}`}
+        else if(dayStart < 10)
+        {
+          fechas[i] = {fecha_string:`${year}-${monthStart}-0${dayStart}`}
+        }else {
+          fechas[i] = {fecha_string:`${year}-0${monthStart}-${dayStart}`}
+        }
+        dayStart++;
+      }
+      return fechas
+  }
+  
+}
+export function generarFechaPorMes()
+{
+  var fechaActual = new Date();
+  var mes = fechaActual.getMonth()+1;
+  var year = fechaActual.getFullYear();
+  var day = 1;
+  var fechas = [];
+  if(mes - 4 < 0)
+  {
+    mes = 12 + (mes- 4)
+    year-=1
+  }else
+  {
+    mes -=3
+  }
+  for (let i=0;i<5;i++)
+  {
+    if(day < 10 && mes < 10)
+    {
+      fechas[i] = {fecha_string:`${year}-0${mes}-0${day}`}
+    }else if( day<10)
+    {
+      fechas[i] = {fecha_string:`${year}-${mes}-0${day}`}
+    }else
+    {
+      fechas[i] = {fecha_string:`${year}-0${mes}-${day}`}
+    }
+    mes++;
+  }
+  return fechas
+}
+export function generarFechaPorAño(){
+  var fechaActual = new Date();
+  var day = 1;
+  var month = 1;
+  var year = fechaActual.getFullYear()-3;
+  var fechas = [];
+  for(let i = 0; i < 5; i++)
+  {
+    fechas[i] ={fecha_string:`${year}-0${month}-${day}`}
+    year++;
+  }
+  return fechas;
+}

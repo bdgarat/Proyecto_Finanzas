@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { getAvaragesGastos } from "../../../utils/requests/peticionGastos";
 import { FilterContext } from "../../../utils/context/FilterProvider";
 import { useAuth } from "../../../Auth/AuthProvider";
-import { generarFechaAnterior } from "../../../utils/functions/manipularFechas";
+import { generarFechaAnteriorPorSemana, generarFechaPorAño, generarFechaPorMes, generarFechasAnteriorPorDia } from "../../../utils/functions/manipularFechas";
 import style from "./averages.module.css";
 import { CardsContext } from "../../../utils/context/CardsProvider";
 import { Bar } from "react-chartjs-2";
@@ -38,10 +38,30 @@ function AvaragesGraphics() {
       tipo: "Año",
       isSelec: false,
     },
+    
   ]);
-  async function obtenerDatos() {
+  const [filtradoActual,setFiltradoActual] = useState("Semana")
+  function filtrarFunction(textButton)
+  {
+    if(textButton =="Dia")
+    {
+      return generarFechasAnteriorPorDia();
+    }
+    if(textButton == "Semana")
+    {
+      return generarFechaAnteriorPorSemana();
+    }
+    if(textButton == "Mes")
+    {
+      return generarFechaPorMes()
+    }
+    if(textButton == "Año"){
+      return generarFechaPorAño()
+    }
+  }
+  async function obtenerDatos(textButton) {
     let access = await auth.updateToken();
-    let fechasAux = generarFechaAnterior();
+    let fechasAux = filtrarFunction(textButton);
     let auxData = [];
     let auxFecha = [];
     for (let j = 0; j < fechasAux.length - 1; j++) {
@@ -58,8 +78,10 @@ function AvaragesGraphics() {
     setGastos(auxData);
     setFechas(auxFecha);
   }
+
   useEffect(() => {
-    obtenerDatos();
+    generarFechaPorAño()
+    obtenerDatos(filtradoActual);
     context.setIsUpdate(false);
   }, [context.isUpdate]);
   async function handleButtonsFilter(textButton) {
@@ -72,6 +94,7 @@ function AvaragesGraphics() {
         setIsSelected(isSelected);
       }
     }
+    setFiltradoActual(textButton);
     context.setIsUpdate(true)
   }
   return (
