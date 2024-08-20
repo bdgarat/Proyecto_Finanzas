@@ -21,12 +21,30 @@ function AvaragesGraphics() {
   const auth = useAuth();
   const [gastos, setGastos] = useState([]);
   const [fechas, setFechas] = useState([]);
-  async function obtenerDatos(paso) {
+  const [isSelected, setIsSelected] = useState([
+    {
+      tipo: "Dia",
+      isSelec: false,
+    },
+    {
+      tipo: "Semana",
+      isSelec: true,
+    },
+    {
+      tipo: "Mes",
+      isSelec: false,
+    },
+    {
+      tipo: "Año",
+      isSelec: false,
+    },
+  ]);
+  async function obtenerDatos() {
     let access = await auth.updateToken();
-    let fechasAux =  generarFechaAnterior(paso);
+    let fechasAux = generarFechaAnterior();
     let auxData = [];
     let auxFecha = [];
-    for (let j = 0; j < fechasAux.length-1; j++) {
+    for (let j = 0; j < fechasAux.length - 1; j++) {
       let response = await getAvaragesGastos(
         access,
         fechasAux[j].fecha_string,
@@ -36,7 +54,6 @@ function AvaragesGraphics() {
       );
       (auxData[j] = response.data.total),
         (auxFecha[j] = fechasAux[j].fecha_string);
-        console.log(response)
     }
     setGastos(auxData);
     setFechas(auxFecha);
@@ -45,15 +62,62 @@ function AvaragesGraphics() {
     obtenerDatos();
     context.setIsUpdate(false);
   }, [context.isUpdate]);
+  async function handleButtonsFilter(textButton) {
+    for (let i = 0; i < isSelected.length; i++) {
+      if (textButton == isSelected[i].tipo && !isSelected[i].isSelec) {
+        isSelected[i].isSelec = true;
+        setIsSelected(isSelected);
+      } else {
+        isSelected[i].isSelec = false;
+        setIsSelected(isSelected);
+      }
+    }
+    context.setIsUpdate(true)
+  }
   return (
     <div className={style.avarages}>
-      
       <h3>Filtrar por: </h3>
       <div className={style.container_button_filter}>
-        <a className={style.button_filter} onClick={(event)=>obtenerDatos(event.target.innerText)}>Dia</a>
-        <a className={style.button_filter} onClick={(event)=>obtenerDatos(event.target.innerText)}>Semana</a>
-        <a className={style.button_filter} onClick={(event)=>obtenerDatos(event.target.innerText)}>Mes</a>
-        <a className={style.button_filter} onClick={(event)=>obtenerDatos(event.target.innerText)}>Año</a>
+        <a
+          className={
+            isSelected[0].isSelec
+              ? style.button_filter_activo
+              : style.button_filter
+          }
+          onClick={(event) => handleButtonsFilter(event.target.innerText)}
+        >
+          Dia
+        </a>
+        <a
+          className={
+            isSelected[1].isSelec
+              ? style.button_filter_activo
+              : style.button_filter
+          }
+          onClick={(event) => handleButtonsFilter(event.target.innerText)}
+        >
+          Semana
+        </a>
+        <a
+          className={
+            isSelected[2].isSelec
+              ? style.button_filter_activo
+              : style.button_filter
+          }
+          onClick={(event) => handleButtonsFilter(event.target.innerText)}
+        >
+          Mes
+        </a>
+        <a
+          className={
+            isSelected[3].isSelec
+              ? style.button_filter_activo
+              : style.button_filter
+          }
+          onClick={(event) => handleButtonsFilter(event.target.innerText)}
+        >
+          Año
+        </a>
       </div>
       <div className={style.graphics}>
         <Bar

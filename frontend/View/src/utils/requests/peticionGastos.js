@@ -37,7 +37,6 @@ export async function obtenerGastos(access, data, page, otherCoins) {
         },
       });
     }
-    console.log(respuesta)
     return respuesta;
   } catch (error) {
     console.log(error);
@@ -101,6 +100,7 @@ export async function removeGasto(id, access) {
 }
 export async function obtenerTypesGastos(access) {
   try {
+    console.log('token que llega a tipoGastos',access)
     const response = await axios({
       method: "get",
       url: "http://127.0.0.1:5000/gastos/tipos",

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { FilterContext } from "../../utils/context/FilterProvider";
 import style from "./filterMenu.module.css";
 import { CardsContext } from "../../utils/context/CardsProvider";
@@ -19,10 +19,20 @@ function FilterMenu() {
         filter.getDataFilter().fecha_inicio != "" &&
         filter.getDataFilter().fecha_final == ""
       )
-    ){
+    ) {
       filter.setIsFilter(true);
     }
   }
+  useEffect(() => {
+    filter.setDataFilter({
+      ...filter.getDataFilter(),
+      monto_inicial: "",
+      monto_final: "",
+      tipo: "",
+      fecha_inicio: "",
+      fecha_fin: "",
+    });
+  },[]);
   return (
     <div className={style.filterMenu}>
       <form className={style.form} onSubmit={(e) => handleSubmit(e)}>
@@ -49,12 +59,20 @@ function FilterMenu() {
           }}
         />
         <label>Tipo</label>
-        <select onChange={(event)=>{handleInputs(event)}} name="tipo" >
+        <select
+          onChange={(event) => {
+            handleInputs(event);
+          }}
+          name="tipo"
+          value={filter.getDataFilter().tipo}
+        >
           <option value="">Buscar por tipo</option>
-          {(context.listTypes !=null && context.listTypes.length !=0 && Array.isArray(context.listTypes))
-            ? context.listTypes.map((element) => <option key={element}>
-              {element}
-            </option>)
+          {context.listTypes != null &&
+          context.listTypes.length != 0 &&
+          Array.isArray(context.listTypes)
+            ? context.listTypes.map((element) => (
+                <option key={element}>{element}</option>
+              ))
             : null}
         </select>
         <label>Fecha inicial</label>
