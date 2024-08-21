@@ -35,6 +35,7 @@ input {
   font-family: "Cinzel", sans-serif;
   font-size: 40px;
   padding-bottom: 10px;
+  user-select: none;
 }
 .dataUser {
   position: relative;
