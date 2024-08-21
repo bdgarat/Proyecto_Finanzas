@@ -89,6 +89,7 @@ input {
   color: white;
   background-color: #222;
   cursor: pointer;
+  user-select: none;
 }
 .button_deslog:hover {
   background-color: skyblue;

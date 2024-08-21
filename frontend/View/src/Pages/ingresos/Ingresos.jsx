@@ -32,9 +32,11 @@ function Ingresos() {
   }, [context.updateTypes]);
   async function obtenerTiposIngresos() {
     let access = auth.getAccess();
+    console.log('Token viejo', access);
     let response = await obtenerTypesIngresos(access);
     if (response.status == 401) {
-      access = auth.updateToken();
+      access = await auth.updateToken();
+      console.log('Token nuevo', access);
       response = await obtenerTypesIngresos(access);
     }
     context.setListTypes(response.data);
@@ -64,7 +66,7 @@ function Ingresos() {
   async function handleRemove(id) {
     let response = await removeIngreso(id, auth.getAccess());
     if (response == 401) {
-      let access = auth.updateToken();
+      let access = await auth.updateToken();
       response = await removeIngreso(id, access);
     }
     if (response == 200) {

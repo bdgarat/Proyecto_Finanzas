@@ -52,9 +52,11 @@ function Gastos() {
     let response = null;
     try {
       let access = auth.getAccess();
+      console.log('token viejo en obtener tipos en gastos', access)
       response = await obtenerTypesGastos(access);
       if (response.status == 401) {
-        access = auth.updateToken();
+        access = await auth.updateToken();
+        console.log('token nuevo en obtener tipos en gastos', access)
         response = await obtenerTypesGastos(access);
       }
       context.setListTypes(response.data);
@@ -79,10 +81,11 @@ function Gastos() {
 
   async function handleRemove(id) {
     try {
-      let response = await removeGasto(id, auth.getAccess());
+      let access = auth.getAccess();
+      let response = await removeGasto(id, access);
       if (response == 401) {
-        auth.updateToken();
-        response = await removeGasto(id, auth.getAccess());
+        access= await auth.updateToken();
+        response = await removeGasto(id, access);
       }
       if (response == 200) {
         messageInfo(
