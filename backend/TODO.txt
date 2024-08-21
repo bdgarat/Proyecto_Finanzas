@@ -20,3 +20,4 @@ TODO:
 OAuth2
 Verificar cuenta
 investigar microservicio de imagenes
+Lista de ingresos/gastos totales/promedios separados, ver eficiencia en apidolar

@@ -1,11 +1,11 @@
 from flask_cors import cross_origin
 
 from app import token_required
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 from app.models.ingresos import Ingreso
 
-from app.controllers import elemento_financiero as ef
+from app.services import elemento_financiero as ef
 
 bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
 
@@ -16,7 +16,7 @@ bp = Blueprint('ingresos', __name__, url_prefix='/ingresos')
 def get_tipos_distinct():
     """Devuelve una lista con todos los tipos de ingresos"""
 
-    return ef.get_tipos_distinct(Ingreso)
+    return jsonify(ef.get_tipos_distinct(Ingreso)), 200
 
 
 @bp.route('/get_all', methods=['GET'])
@@ -25,7 +25,8 @@ def get_tipos_distinct():
 def get_all():
     """Devuelve un JSON con info de todos los ingresos generados por un usuario en base a diferentes filtros"""
 
-    return ef.get_all(request, Ingreso, "ingresos")
+    message, status_code = ef.get_all(request.args, Ingreso, "ingresos")
+    return jsonify(message), status_code
 
 
 @bp.route('/get', methods=['GET'])
@@ -34,7 +35,8 @@ def get_all():
 def get():
     """Devuelve un JSON con info de un ingreso generado por un usuario en base a diferentes filtros"""
 
-    return ef.get(request, Ingreso, "ingreso")
+    message, status_code = ef.get(request.args, Ingreso, "ingreso")
+    return jsonify(message), status_code
 
 
 @bp.route('/average', methods=['GET'])
@@ -43,7 +45,8 @@ def get():
 def average():
     """Devuelve un JSON con el promedio entre fechas de los ingresos de un usuario"""
 
-    return ef.average(request, Ingreso)
+    message, status_code = ef.average(request.args, Ingreso)
+    return jsonify(message), status_code
 
 
 @bp.route('/total', methods=['GET'])
@@ -52,7 +55,8 @@ def average():
 def total():
     """Devuelve un JSON con el total entre fechas de los gastos de un usuario"""
 
-    return ef.total(request, Ingreso)
+    message, status_code = ef.total(request.args, Ingreso)
+    return jsonify(message), status_code
 
 
 @bp.route('/count', methods=['GET'])
@@ -61,7 +65,8 @@ def total():
 def count():
     """Devuelve un JSON con la cantidad de ingresos entre fechas de los gastos de un usuario"""
 
-    return ef.count(request, Ingreso)
+    message, status_code = ef.count(request.args, Ingreso)
+    return jsonify(message), status_code
 
 
 @bp.route('/add', methods=['POST'])
@@ -70,7 +75,8 @@ def count():
 def add():
     """Agrega un ingreso al usuario logueado"""
 
-    return ef.add(request, Ingreso)
+    message, status_code = ef.add(request.json, Ingreso)
+    return jsonify(message), status_code
 
 
 @bp.route('/update', methods=['PUT'])
@@ -79,7 +85,8 @@ def add():
 def update():
     """Actualiza un ingreso al usuario logueado"""
 
-    return ef.update(request, Ingreso)
+    message, status_code = ef.update(request.json, Ingreso)
+    return jsonify(message), status_code
 
 
 @bp.route('/delete', methods=['DELETE'])
@@ -88,4 +95,5 @@ def update():
 def delete():
     """Elimina un ingreso al usuario logueado"""
 
-    return ef.delete(request, Ingreso)
+    message, status_code = ef.delete(request.args, Ingreso)
+    return jsonify(message), status_code

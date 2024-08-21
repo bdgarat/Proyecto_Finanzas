@@ -3,7 +3,7 @@ import datetime
 from sqlalchemy import and_
 
 
-def build_filters(params, current_user, model_object, ranges: bool = False):
+def build_filters(params, current_user, model_object, ranges: bool = False) -> list:
     filters = []
 
     if ranges:  # El filtro es para una lista de elementos
