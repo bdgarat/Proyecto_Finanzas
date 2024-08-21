@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useAuth } from "../../../Auth/AuthProvider";
 import style from "./blockTotals.module.css";
-import {getTotalsGasto} from "../../../utils/requests/peticionGastos";
-import {getTotalIngresos} from "../../../utils/requests/peticionesIngresos"
+import { getTotalsGasto } from "../../../utils/requests/peticionGastos";
+import { getTotalIngresos } from "../../../utils/requests/peticionesIngresos";
 import { FilterContext } from "../../../utils/context/FilterProvider";
 import { CardsContext } from "../../../utils/context/CardsProvider";
-import asterisco from './../../../assets/asterisco.png'
+import asterisco from "./../../../assets/asterisco.png";
 function BlockTotal() {
   const [totals, setTotals] = useState({
     gastos: 0,
     ingresos: 0,
-    cotizacion:""
+    cotizacion: "",
   });
   const auth = useAuth();
   const context = useContext(CardsContext);
@@ -44,11 +44,12 @@ function BlockTotal() {
           filter.otherCoins
         );
       }
+      console.log(gastos, ingresos);
       setTotals({
         ...totals,
         gastos: gastos.data.total,
         ingresos: ingresos.data.total,
-        cotizacion:gastos.data.additional_info.cotizacion
+        cotizacion: gastos.data.additional_info.cotizacion,
       });
     } catch (error) {
       console.log(error);
@@ -60,28 +61,32 @@ function BlockTotal() {
   }, [context.isUpdate]);
   return (
     <div className={style.container_value_totals}>
-      {totals.gastos != 0 && totals.ingresos != 0 ? (
         <div className={style.container_totals}>
-          <span className={style.text_total_gastado} >Total Gastado: </span>
-           { context.isViewSaldo ? (<p className={style.valor_total_gastado}>
-              {  totals.gastos} {totals.cotizacion}
-            </p>):(<div className={style.container_asterisco}>
+          <span className={style.text_total_gastado}>Total Gastado: </span>
+          {context.isViewSaldo ? (
+            <p className={style.valor_total_gastado}>
+              {totals.gastos} {totals.cotizacion}
+            </p>
+          ) : (
+            <div className={style.container_asterisco}>
               <img className={style.icons_saldo} src={asterisco} />
               <img className={style.icons_saldo} src={asterisco} />
               <img className={style.icons_saldo} src={asterisco} />
-            </div>)}
-            <span className={style.text_total_ingresado}>Total Ingresado: </span>
-            { context.isViewSaldo ? <p className={style.valor_total_ingresado}>
-             {totals.ingresos} {totals.cotizacion}
-          </p>:(<div className={style.container_asterisco}>
+            </div>
+          )}
+          <span className={style.text_total_ingresado}>Total Ingresado: </span>
+          {context.isViewSaldo ? (
+            <p className={style.valor_total_ingresado}>
+              {totals.ingresos} {totals.cotizacion}
+            </p>
+          ) : (
+            <div className={style.container_asterisco}>
               <img className={style.icons_saldo} src={asterisco} />
               <img className={style.icons_saldo} src={asterisco} />
               <img className={style.icons_saldo} src={asterisco} />
-            </div>)}
+            </div>
+          )}
         </div>
-      ) : (
-        null
-      )}
     </div>
   );
 }
