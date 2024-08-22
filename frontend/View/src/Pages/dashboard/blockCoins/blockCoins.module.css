@@ -63,3 +63,35 @@
     margin: 5px;
     font-size: 20px;
 }
+@media(max-width:765px)
+{
+    .coins_container{
+        width:100%;
+        margin:5px auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .title_text_selec{
+        width:100%;
+    }
+    .title_coins{
+        width:100%;
+        display: flex;
+        justify-content: center;
+    }
+    .text_info{
+        margin:0;
+    }
+    .check_coins{margin:1%; width:10%}
+    .text_coins{
+        margin:10px 0px;
+        display: flex;
+        align-items: start;
+    }
+    .select_coins{
+        height: auto;
+    }
+    .message_no_select_coin{
+        text-align: center;
+    }
+}

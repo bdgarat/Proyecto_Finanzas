@@ -49,6 +49,7 @@ function BlockCoinsValue({ request }) {
         <input
           type="checkbox"
           checked={filter.otherCoins ? "checked" : ""}
+          className={style.check_coins}
           onChange={() => {
             context.setIsUpdate(true);
             filter.setOtherCoins((previus) => !previus);
@@ -89,7 +90,7 @@ function BlockCoinsValue({ request }) {
           <p>Valor para la compra : {coins[filter.indexSelec - 1].compra}</p>
           <p>Valor para la venta : {coins[filter.indexSelec - 1].venta}</p>
         </div>
-      ) : <h3>No hay ninguna moneda seleccionada</h3>}
+      ) : <h3 className={style.message_no_select_coin}>No hay ninguna moneda seleccionada</h3>}
     </div>
   );
 }
