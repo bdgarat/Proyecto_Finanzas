@@ -42,6 +42,7 @@ select{
   box-shadow: 0 0px 0 #222;
 }
 @media (max-width: 480px) {
+
   .filterMenu {
     display: flex;
     align-items: center;
@@ -69,6 +70,41 @@ select{
     width:75%;
     margin:15px 5px;
     height: auto;
+  }
+  label {
+    margin: 6px;
+    height: auto;
+  }
+}
+@media (min-width: 481px) and (max-width:768px) {
+   
+  .filterMenu {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  .input_filter{
+    width: 80%;
+    height: 5vh;
+  }
+  .input_select_filter{
+    width: 80%;
+    height: 5vh;
+    text-align: center;
+  }
+  .search_button{
+    width:75%;
+    margin:15px 5px;
+    height: 7vh;
   }
   label {
     margin: 6px;

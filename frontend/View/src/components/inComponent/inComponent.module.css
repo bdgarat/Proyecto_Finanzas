@@ -130,6 +130,15 @@ select{
         height: auto;
         text-align: center;
       }
+      .container_type{
+        display: flex;
+        flex-direction: column;
+        width:100%;
+        height:auto;
+      }
+      .button_type{
+        width:50%
+      }
     .button_volver{
         cursor: pointer;
         margin:8px;
