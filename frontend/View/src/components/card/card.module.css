@@ -129,7 +129,7 @@
     transform: translateY(5px);
     box-shadow: 0 0 ;
 }
-@media(max-width:425px)
+@media(max-width:480px)
 {
     .card{
         list-style-type: none;
@@ -183,14 +183,14 @@
         justify-content: center;
         align-items: center;
         margin:5px;
-        height:4vh;
+        height:auto;
         width:100%
     }
     .button_deleted{
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 3.5vh;
+        height: auto;
         align-items: center;
         text-align: center;
         font-size: 15px;
@@ -206,7 +206,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 3.5vh;
+        height: auto;
         align-items: center;
         text-align: center;
         font-size: 15px;

@@ -148,7 +148,7 @@
 .message {
   margin: 15px;
 }
-@media(max-width:425px)
+@media(max-width:480px)
 {
   .cards {
     display: flex;
@@ -164,16 +164,23 @@
     height: 5vh;
   }
   .buttonAdd {
-    width: 100%;
+    width: 80%;
     height: auto;
     border-radius: 20px;
     border: 1px solid #00a135;
     text-align: center;
     font-size: 17px;
     background-color: #198754;
-    box-shadow: 0 5px 0 #00a135;
+    box-shadow: 5px 5px 5px #00a135;
     color: white;
     cursor: pointer;
+  }
+  .buttonAdd:hover {
+    background-color: #0d6efd;
+    color: black;
+    width: 80%;
+    height: auto;
+    box-shadow: 5px 5px 5px #0d6efd;
   }
   .message_entradas {
     display: flex;

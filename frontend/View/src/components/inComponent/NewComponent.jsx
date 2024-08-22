@@ -29,7 +29,7 @@ function NewComponent({ newRequest }) {
     event.preventDefault();
     let respuesta = await newRequest(data, auth.getAccess());
     if (respuesta == 401) {
-       let access = auth.updateToken();
+       let access = await auth.updateToken();
        respuesta = await newRequest(data, access);
     }
     if (respuesta == 201) {
@@ -63,6 +63,7 @@ function NewComponent({ newRequest }) {
     >
       <label>Monto</label>
       <input
+      className={style.input_inComponent}
         type="number"
         name="monto"
         placeholder="ingrese el monto"
@@ -75,7 +76,7 @@ function NewComponent({ newRequest }) {
       valores precargados y que el usuario pueda seleccionar entre esos valores
       y darde un valor-->*/}
       <label>Tipo</label>
-      {!context.isSelect ? (<select name="tipo" onChange={(e)=>{handleInputs(e)}}>
+      {!context.isSelect ? (<select name="tipo" onChange={(e)=>{handleInputs(e)}} className={style.select_inComponent}>
         <option>Selecciona un tipo </option>
         {context.listTypes !=null && context.listTypes.length !=0 && Array.isArray(context.listTypes) ? context.listTypes.map(element =>(
           <option key={element}>{element}</option>
@@ -83,6 +84,7 @@ function NewComponent({ newRequest }) {
         <option>Agregar un tipo nuevo</option>
       </select>):(<div className={style.container_type}>
       <input
+        className={style.input_inComponent}
         type="text"
         name="tipo"
         value={data.tipo}
@@ -94,6 +96,7 @@ function NewComponent({ newRequest }) {
       </div>)}
       <label>Descripción</label>
       <textarea
+      className={style.input_inComponent}
         value={data.descripcion}
         name="descripcion"
         onChange={(e) => {

@@ -63,7 +63,7 @@
     margin: 5px;
     font-size: 20px;
 }
-@media(max-width:765px)
+@media(max-width:480px)
 {
     .coins_container{
         width:100%;
@@ -82,14 +82,19 @@
     .text_info{
         margin:0;
     }
-    .check_coins{margin:1%; width:10%}
+    .check_coins{margin:0% 1%; width:10%; height: auto;}
     .text_coins{
         margin:10px 0px;
         display: flex;
-        align-items: start;
+        align-items: center;
     }
     .select_coins{
         height: auto;
+    }
+    .info_coin_container{
+        width: 100%;
+        display: flex;
+        text-align: center;
     }
     .message_no_select_coin{
         text-align: center;

@@ -34,7 +34,7 @@ function UpdateComponent({ editRequest, editFunction }) {
     event.preventDefault();
     let respuesta = await editRequest(data, auth.getAccess());
     if (respuesta == 401) {
-      let access = auth.updateToken();
+      let access = await auth.updateToken();
       respuesta = await editRequest(data, access);
     }
     if (respuesta == 200) {
@@ -63,6 +63,7 @@ function UpdateComponent({ editRequest, editFunction }) {
     <form onSubmit={handleSubmit} className={style.container}>
       <label>Monto</label>
       <input
+        className={style.input_inComponent}
         type="number"
         name="monto"
         placeholder="ingrese el monto en el que gasto"
@@ -77,6 +78,7 @@ function UpdateComponent({ editRequest, editFunction }) {
       <label>Tipo</label>
       {!context.isSelect ? (
         <select
+        className={style.select_inComponent}
           name="tipo"
           defaultValue={data.tipo}
           onChange={(e) => {
@@ -94,6 +96,7 @@ function UpdateComponent({ editRequest, editFunction }) {
       ) : (
         <div className={style.container_type}>
           <input
+          className={style.input_inComponent}
             type="text"
             name="tipo"
             value={data.tipo}

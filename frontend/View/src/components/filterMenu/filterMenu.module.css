@@ -41,7 +41,7 @@ select{
   transform: translateY(2px);
   box-shadow: 0 0px 0 #222;
 }
-@media (max-width: 425px) {
+@media (max-width: 480px) {
   .filterMenu {
     display: flex;
     align-items: center;
@@ -54,11 +54,24 @@ select{
     justify-content: space-around;
     align-items: center;
     width: 100%;
+    height: auto;
+  }
+  .input_filter{
+    width: 80%;
+    height: auto;
+  }
+  .input_select_filter{
+    width: 80%;
+    height: auto;
+    text-align: center;
+  }
+  .search_button{
+    width:75%;
+    margin:15px 5px;
+    height: auto;
   }
   label {
     margin: 6px;
-  }
-  input {
-    width: 100%;
+    height: auto;
   }
 }

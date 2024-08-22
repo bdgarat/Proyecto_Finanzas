@@ -39,6 +39,7 @@ function FilterMenu() {
         <label>Monto inicial</label>
         <input
           type="number"
+          className={style.input_filter}
           min="0"
           name="monto_inicial"
           placeholder=""
@@ -51,6 +52,7 @@ function FilterMenu() {
         <input
           type="number"
           min="1"
+          className={style.input_filter}
           name="monto_final"
           placeholder=""
           value={filter.getDataFilter().monto_final}
@@ -60,6 +62,7 @@ function FilterMenu() {
         />
         <label>Tipo</label>
         <select
+         className={style.input_select_filter}
           onChange={(event) => {
             handleInputs(event);
           }}
@@ -77,6 +80,7 @@ function FilterMenu() {
         </select>
         <label>Fecha inicial</label>
         <input
+         className={style.input_filter}
           type="date"
           name="fecha_inicio"
           value={filter.getDataFilter().fecha_inicio}
@@ -86,6 +90,7 @@ function FilterMenu() {
         />
         <label>Fecha final</label>
         <input
+         className={style.input_filter}
           type="date"
           name="fecha_fin"
           value={filter.getDataFilter().fecha_final}

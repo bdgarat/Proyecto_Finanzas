@@ -37,7 +37,7 @@
     height: 25px;
     cursor: pointer;
   }
-@media(max-width:765px)
+@media(max-width:480px)
 {
     .container_value_totals{
         width:100%;
