@@ -114,6 +114,7 @@ function UpdateComponent({ editRequest, editFunction }) {
       )}
       <label>Descripción</label>
       <textarea
+        className={style.textArea_inComponent}
         value={data.descripcion}
         name="descripcion"
         onChange={(e) => {

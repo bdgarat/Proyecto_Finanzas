@@ -96,7 +96,7 @@ function NewComponent({ newRequest }) {
       </div>)}
       <label>Descripción</label>
       <textarea
-      className={style.input_inComponent}
+     className={style.textArea_inComponent}
         value={data.descripcion}
         name="descripcion"
         onChange={(e) => {

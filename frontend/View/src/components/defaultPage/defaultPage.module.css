@@ -223,7 +223,7 @@ input {
   }
 }
 
-@media (min-width: 481px) and (max-width:768px) {
+@media (min-width: 481px) and (max-width:1024px) {
   .container {
     display: flex;
     flex-wrap: wrap;
