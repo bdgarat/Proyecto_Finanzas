@@ -37,7 +37,7 @@
     height: 25px;
     cursor: pointer;
   }
-@media(max-width:550px)
+@media(max-width:768px)
 {
     .container_value_totals{
         width:100%;
@@ -66,5 +66,12 @@
     .valor_total_ingresado{
         margin: 5px;
         font-size: 13px;
+    }
+}
+@media(min-width:768px) and (max-width:1024px)
+{
+    .container_value_totals{
+        width:80%;
+        margin:5px auto;
     }
 }

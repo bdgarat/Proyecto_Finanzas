@@ -64,7 +64,7 @@
 .button_filter:hover {
   background-color: #0d6efd;
 }
-@media(max-width:550px)
+@media(max-width:768px)
 {
   .avarages{
     width: 100%;
@@ -86,5 +86,11 @@
     height: auto;
     width: 100%;
     margin:20px 0;
+  }
+}
+@media(min-width:768px) and (max-width:1024px)
+{
+  .graphics{
+    height: auto;
   }
 }

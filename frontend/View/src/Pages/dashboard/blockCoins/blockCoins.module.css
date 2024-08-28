@@ -63,7 +63,7 @@
     margin: 5px;
     font-size: 20px;
 }
-@media(max-width:550px)
+@media(max-width:765px)
 {
     .coins_container{
         width:100%;
@@ -98,5 +98,15 @@
     }
     .message_no_select_coin{
         text-align: center;
+    }
+}
+@media(min-width:766px) and (max-width:1024px)
+{
+    .coins_container{
+        width:80%;
+        margin:5px auto;
+    }
+    .select_coins{
+        height: auto;
     }
 }

@@ -267,6 +267,9 @@ input {
     text-decoration: none;
     margin:5px 0px;
   }
+  .navBar_link_select{
+    margin:5px 0;
+  }
   .dataUser {
     position: relative;
     display: flex;
