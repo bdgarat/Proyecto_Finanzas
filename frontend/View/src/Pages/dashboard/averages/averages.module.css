@@ -92,5 +92,6 @@
 {
   .graphics{
     height: auto;
+    width: 100%;
   }
 }

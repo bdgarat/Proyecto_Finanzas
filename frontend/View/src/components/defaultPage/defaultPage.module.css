@@ -31,6 +31,7 @@ input {
   background: #333
 }
 .titulo_principal {
+  width:auto;
   justify-content: center;
   font-family: "Cinzel", sans-serif;
   font-size: 40px;
@@ -41,7 +42,6 @@ input {
   position: relative;
   display: flex;
   align-items: center;
-  margin-left: 25%;
 }
 
 .user_image {
@@ -106,12 +106,10 @@ input {
 }
 .barra_navegacion_links {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   width: 100%;
-  margin-left: 20%;
 }
 .navBar_link {
-  margin: 0 10%;
   font-size: 22px;
   color: #fcbc04;
   font-family: "Orbitron";
@@ -119,7 +117,6 @@ input {
   user-select: none;
 }
 .navBar_link_select {
-  margin: 0 10%;
   font-size: 22px;
   color: white;
   font-family: "Orbitron";
@@ -299,5 +296,27 @@ input {
     display: flex;
     flex-wrap: wrap;
     text-align: center;
+  }
+}
+@media(min-width:1025px) and (max-width:1400px)
+{
+  .titulo_principal{
+    font-size: 27px;
+  }
+  .nav_container{
+    width:45%;
+  }
+  .navBar_link_select, .navBar_link {
+    font-size: 19px;
+  }
+  .icon_saldo{
+    width: 40px;
+    height: 40px;
+  }
+  .userName{
+    font-size: 16px;
+  }
+  .user_image{
+    height: 5vh;
   }
 }

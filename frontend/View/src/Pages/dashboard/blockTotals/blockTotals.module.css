@@ -7,7 +7,7 @@
 }
 .container_totals{
     display:flex;
-    width: 800px;
+    width: auto;
     justify-content: center;
 }
 .container_asterisco{
@@ -73,5 +73,31 @@
     .container_value_totals{
         width:80%;
         margin:5px auto;
+    }
+    .container_totals{
+        width:auto;
+    }
+    .text_total_gastado{
+        font-size: 20px;
+    }
+    .valor_total_gastado{
+        font-size: 20px;
+    }
+    .text_total_ingresado{
+        font-size: 20px;
+    }
+    .valor_total_ingresado{
+        font-size: 20px;
+    }
+}
+@media(min-width:1025px) and (max-width:1430px)
+{
+    .container_value_totals{
+        margin:10px auto;
+        width: 80%;
+        height: auto;
+        align-items: center;
+        display: flex;
+        justify-content: center;
     }
 }

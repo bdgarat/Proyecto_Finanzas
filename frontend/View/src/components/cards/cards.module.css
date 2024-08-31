@@ -212,7 +212,7 @@
   }
   .buttonAdd {
     width: 50%;
-    height: 7vh;
+    height: 5vh;
     border-radius: 20px;
     border: 1px solid #00a135;
     text-align: center;
@@ -241,5 +241,17 @@
   }
   .message_entradas p {
     margin:10px
+  }
+}
+@media(min-width:1025px) and (max-width:1400px)
+{
+  .cards{
+    width:90%;
+  }
+}
+@media(min-width:1400px) and (max-width:1600px)
+{
+  .cards{
+    width:80%;
   }
 }
