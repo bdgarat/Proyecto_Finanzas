@@ -158,7 +158,7 @@ export function generarFechasAnteriorPorDia()
   var monthStart = actualDate.getMonth();
   if(monthThirtyOne[monthStart].isThirtyOne)
   {
-    for(let i= 0;i<=32;i++)
+    for(let i= 0;i<=33;i++)
       {
         if(dayStart > 31)
         {
@@ -175,9 +175,27 @@ export function generarFechasAnteriorPorDia()
         }
         dayStart++;
       }
-      return fechas
   }
-  
+  else{
+    for(let i= 0;i<=31;i++)
+      {
+        if(dayStart > 30)
+        {
+          dayStart = 1;
+          monthStart +=1;
+        }
+        if(dayStart <10 && monthStart < 10)
+          fechas[i] = {fecha_string:`${year}-0${monthStart}-0${dayStart}`}
+        else if(dayStart < 10)
+        {
+          fechas[i] = {fecha_string:`${year}-${monthStart}-0${dayStart}`}
+        }else {
+          fechas[i] = {fecha_string:`${year}-0${monthStart}-${dayStart}`}
+        }
+        dayStart++;
+      }
+  }
+  return fechas;
 }
 export function generarFechaPorMes()
 {
