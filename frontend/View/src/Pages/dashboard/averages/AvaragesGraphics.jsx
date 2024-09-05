@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { getAvaragesGastos } from "../../../utils/requests/peticionGastos";
 import { FilterContext } from "../../../utils/context/FilterProvider";
 import { useAuth } from "../../../Auth/AuthProvider";
-import { generarFechaAnteriorPorSemana, generarFechaPorAño, generarFechaPorMes, generarFechasAnteriorPorDia } from "../../../utils/functions/manipularFechas";
+import {
+  generarFechaAnteriorPorSemana,
+  generarFechaPorAño,
+  generarFechaPorMes,
+  generarFechasAnteriorPorDia,
+} from "../../../utils/functions/manipularFechas";
 import style from "./averages.module.css";
 import { CardsContext } from "../../../utils/context/CardsProvider";
 import { Bar } from "react-chartjs-2";
@@ -14,12 +19,16 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { getAvaragesIngresos } from "../../../utils/requests/peticionesIngresos";
 Chartjs.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 function AvaragesGraphics() {
   const filter = useContext(FilterContext);
   const context = useContext(CardsContext);
   const auth = useAuth();
-  const [gastos, setGastos] = useState([]);
+  const [datos, setDatos] = useState({
+    gastos: [],
+    ingresos: [],
+  });
   const [fechas, setFechas] = useState([]);
   const [isSelected, setIsSelected] = useState([
     {
@@ -38,31 +47,27 @@ function AvaragesGraphics() {
       tipo: "Año",
       isSelec: false,
     },
-    
   ]);
-  const [filtradoActual,setFiltradoActual] = useState("Semana")
-  function filtrarFunction(textButton)
-  {
-    if(textButton =="Dia")
-    {
+  const [filtradoActual, setFiltradoActual] = useState("Semana");
+  function filtrarFunction(textButton) {
+    if (textButton == "Dia") {
       return generarFechasAnteriorPorDia();
     }
-    if(textButton == "Semana")
-    {
+    if (textButton == "Semana") {
       return generarFechaAnteriorPorSemana();
     }
-    if(textButton == "Mes")
-    {
-      return generarFechaPorMes()
+    if (textButton == "Mes") {
+      return generarFechaPorMes();
     }
-    if(textButton == "Año"){
-      return generarFechaPorAño()
+    if (textButton == "Año") {
+      return generarFechaPorAño();
     }
   }
   async function obtenerDatos(textButton) {
     let access = await auth.updateToken();
     let fechasAux = filtrarFunction(textButton);
-    let auxData = [];
+    let auxGastos = [];
+    let auxIngresos = [];
     let auxFecha = [];
     for (let j = 0; j < fechasAux.length - 1; j++) {
       let response = await getAvaragesGastos(
@@ -72,15 +77,27 @@ function AvaragesGraphics() {
         filter.getDataFilter(),
         filter.otherCoins
       );
-      (auxData[j] = response.data.total),
-        (auxFecha[j] = fechasAux[j].fecha_string);
+      let responseI = await getAvaragesIngresos(
+        access,
+        fechasAux[j].fecha_string,
+        fechasAux[j + 1].fecha_string,
+        filter.getDataFilter(),
+        filter.otherCoins
+      );
+      auxGastos[j] = response.data.total
+      auxIngresos[j] = responseI.data.total
+      auxFecha[j] = fechasAux[j].fecha_string;
     }
-    setGastos(auxData);
+    setDatos({
+      ...datos,
+      gastos: auxGastos,
+      ingresos:auxIngresos
+    });
     setFechas(auxFecha);
   }
 
   useEffect(() => {
-    generarFechaPorAño()
+    generarFechaPorAño();
     obtenerDatos(filtradoActual);
     context.setIsUpdate(false);
   }, [context.isUpdate]);
@@ -95,7 +112,7 @@ function AvaragesGraphics() {
       }
     }
     setFiltradoActual(textButton);
-    context.setIsUpdate(true)
+    context.setIsUpdate(true);
   }
   return (
     <div className={style.avarages}>
@@ -150,11 +167,18 @@ function AvaragesGraphics() {
             datasets: [
               {
                 label: "Gastos totales",
-                data: gastos,
+                data: datos.gastos,
                 backgroundColor: "#0d6efd",
                 borderColor: "black",
                 borderWidth: 1,
               },
+              {
+                label:"Ingresos totales",
+                data:datos.ingresos,
+                backgroundColor:"aqua",
+                borderColor:"black",
+                borderWidth:1,
+              }
             ],
           }}
         />
