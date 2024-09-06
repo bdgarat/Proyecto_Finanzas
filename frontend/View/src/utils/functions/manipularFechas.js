@@ -130,23 +130,32 @@ export function generarFechaAnteriorPorSemana() {
       fechas[i - 1].year
     );
   }
-  if (fechas[4].month < 10) {
+  if (fechas[4].month < 10 && fechas[4].day<10) {
     fechas[5] = {
-      fecha_string: `${fechas[4].year}-0${fechas[4].month}-${
-        parseInt(day) + 1
+      fecha_string: `${fechas[4].year}-0${fechas[4].month}-0${
+        parseInt(day) + 2
       }`,
       day: day,
       month: fechas[4].month,
       year: fechas[4].year,
     };
-  } else {
+  } else if(fechas[4].month < 10) {
     fechas[5] = {
-      fecha_string: `${fechas[4].year}-${fechas[4].month}-${parseInt(day) + 1}`,
+      fecha_string: `${fechas[4].year}-0${fechas[4].month}-${parseInt(day) + 2}`,
+      day: day,
+      month: fechas[4].month,
+      year: fechas[4].year,
+    };
+  }else
+  {
+    fechas[5] = {
+      fecha_string: `${fechas[4].year}-${fechas[4].month}-${parseInt(day) + 2}`,
       day: day,
       month: fechas[4].month,
       year: fechas[4].year,
     };
   }
+  console.log(fechas);
   return fechas;
 }
 export function generarFechasAnteriorPorDia()

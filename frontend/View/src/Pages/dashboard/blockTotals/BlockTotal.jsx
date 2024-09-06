@@ -44,7 +44,6 @@ function BlockTotal() {
           filter.otherCoins
         );
       }
-      console.log(gastos, ingresos);
       setTotals({
         ...totals,
         gastos: gastos.data.total,
