@@ -168,14 +168,14 @@ function AvaragesGraphics() {
               {
                 label: "Gastos totales",
                 data: datos.gastos,
-                backgroundColor: "#0d6efd",
+                backgroundColor: "#e8033e",
                 borderColor: "black",
                 borderWidth: 1,
               },
               {
                 label:"Ingresos totales",
                 data:datos.ingresos,
-                backgroundColor:"aqua",
+                backgroundColor:"#0d6efd",
                 borderColor:"black",
                 borderWidth:1,
               }
