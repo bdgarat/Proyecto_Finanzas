@@ -116,7 +116,7 @@ function DefaultPage({ children }) {
             />
             {isMenu ? (
               <div className={style.userMenu}>
-                <a className={style.button_deslog}>Editar usuario</a>
+                <a className={style.button_deslog} onClick={()=>{navigate("/editarPerfil")}}>Editar usuario</a>
                 <a className={style.button_deslog} onClick={borrarCredenciales}>
                   Desloguearse
                 </a>
