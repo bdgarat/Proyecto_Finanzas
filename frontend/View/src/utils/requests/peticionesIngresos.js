@@ -1,4 +1,5 @@
 import axios from "axios";
+import {url} from './../../global'
 export async function getIngresos(access, data, page, otherCoins) {
   let respuesta = null;
   try {
@@ -6,7 +7,7 @@ export async function getIngresos(access, data, page, otherCoins) {
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/ingresos/get_all",
+        url: `${url}ingresos/get_all`,
         params: {
           page: page,
           page_size: 5,
@@ -24,7 +25,7 @@ export async function getIngresos(access, data, page, otherCoins) {
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/ingresos/get_all",
+        url: `${url}ingresos/get_all`,
         params: {
           page: page,
           page_size: 5,
@@ -41,7 +42,7 @@ export async function setIngreso(data, access) {
   try {
     const respuesta = await axios({
       method: "post",
-      url: "http://127.0.0.1:5000/ingresos/add",
+      url: `${url}ingresos/add`,
       headers: { "x-access-token": access },
       data: {
         monto: data.monto,
@@ -59,7 +60,7 @@ export async function editIngreso(data, access) {
   try {
     const respuesta = await axios({
       method: "put",
-      url: "http://127.0.0.1:5000/ingresos/update",
+      url: `${url}ingresos/update`,
       headers: { "x-access-token": access },
       data: {
         id: data.id,
@@ -78,7 +79,7 @@ export async function removeIngreso(id, access) {
   try {
     const response = await axios({
       method: "delete",
-      url: "http://127.0.0.1:5000/ingresos/delete",
+      url: `${url}ingresos/delete`,
       headers: { "x-access-token": access },
       params: {
         id,
@@ -94,7 +95,7 @@ export async function obtenerTypesIngresos(access) {
   try {
     const response = await axios({
       method: "get",
-      url: "http://127.0.0.1:5000/ingresos/tipos",
+      url: `${url}ingresos/tipos`,
       headers: { "x-access-token": access },
     });
     return response;
@@ -109,7 +110,7 @@ export async function getTotalIngresos(access, filter, otherCoins) {
       responseIngresos = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/ingresos/total",
+        url: `${url}ingresos/total`,
         params: {
           currency: filter.currency,
           currency_type: filter.currency_type,
@@ -119,7 +120,7 @@ export async function getTotalIngresos(access, filter, otherCoins) {
       responseIngresos = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/ingresos/total",
+        url: `${url}ingresos/total`,
       });
     }
     return responseIngresos;
@@ -143,7 +144,7 @@ export async function getAvaragesIngresos(
     if (otherCoins && filter.currency != "" && filter.currency_type != "") {
       response = await axios({
         method: "GET",
-        url: "http://localhost:5000/ingresos/total",
+        url: `${url}ingresos/total`,
         headers: { "x-access-token": access },
         params: {
           fecha_inicio: fecha_inicio,
@@ -155,7 +156,7 @@ export async function getAvaragesIngresos(
     } else {
       response = await axios({
         method: "GET",
-        url: "http://localhost:5000/ingresos/total",
+        url: `${url}ingresos/total`,
         headers: { "x-access-token": access },
         params: {
           fecha_inicio: fecha_inicio,

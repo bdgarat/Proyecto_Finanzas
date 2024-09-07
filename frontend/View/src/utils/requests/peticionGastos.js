@@ -1,4 +1,5 @@
 import axios from "axios";
+import {url} from './../../global'
 export async function obtenerGastos(access, data, page, otherCoins) {
   let respuesta = null;
   try {
@@ -6,7 +7,7 @@ export async function obtenerGastos(access, data, page, otherCoins) {
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/get_all",
+        url: `${url}gastos/get_all`,
         params: {
           page:page,
           monto_min: data.monto_inicial !=""? data.monto_inicial:null,
@@ -24,7 +25,7 @@ export async function obtenerGastos(access, data, page, otherCoins) {
       respuesta = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/get_all",
+        url: `${url}gastos/get_all`,
         params: {
           page: page,
           monto_min: data.monto_inicial !=""? data.monto_inicial:null,
@@ -48,7 +49,7 @@ export async function setGasto(data, access) {
     console.log(data);
     const respuesta = await axios({
       method: "post",
-      url: "http://127.0.0.1:5000/gastos/add",
+      url: `${url}gastos/add`,
       headers: { "x-access-token": access },
       data: {
         monto: data.monto,
@@ -66,7 +67,7 @@ export async function editGasto(data, access) {
   try {
     const respuesta = await axios({
       method: "put",
-      url: "http://127.0.0.1:5000/gastos/update",
+      url: `${url}gastos/update`,
       headers: { "x-access-token": access },
       data: {
         id: data.id,
@@ -86,7 +87,7 @@ export async function removeGasto(id, access) {
   try {
     const response = await axios({
       method: "delete",
-      url: "http://127.0.0.1:5000/gastos/delete",
+      url: `${url}gastos/delete`,
       headers: { "x-access-token": access },
       params: {
         id,
@@ -102,7 +103,7 @@ export async function obtenerTypesGastos(access) {
   try {
     const response = await axios({
       method: "get",
-      url: "http://127.0.0.1:5000/gastos/tipos",
+      url: `${url}gastos/tipos`,
       headers: { "x-access-token": access },
     });
     return response;
@@ -117,7 +118,7 @@ export async function getTotalsGasto(access, filter, otherCoins) {
       responseGastos = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/total",
+        url: `${url}gastos/total`,
         params: {
           currency: filter.currency,
           currency_type: filter.currency_type,
@@ -127,7 +128,7 @@ export async function getTotalsGasto(access, filter, otherCoins) {
       responseGastos = await axios({
         method: "get",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/total",
+        url: `${url}gastos/total`,
       });
     }
     return responseGastos;
@@ -149,7 +150,7 @@ export async function getAvaragesGastos(
       response = await axios({
         method: "GET",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/total",
+        url: `${url}gastos/total`,
         params: {
           fecha_inicio: fecha_inicio,
           fecha_fin: fecha_fin,
@@ -161,7 +162,7 @@ export async function getAvaragesGastos(
       response = await axios({
         method: "GET",
         headers: { "x-access-token": access },
-        url: "http://127.0.0.1:5000/gastos/total",
+        url: `${url}gastos/total`,
         params: {
           fecha_inicio: fecha_inicio,
           fecha_fin: fecha_fin,

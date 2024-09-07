@@ -1,10 +1,11 @@
 import axios from "axios";
+import {url} from './../../global'
 export async function refreshToken(refresh_token)
 {
     try{
         const response = await axios({
             method:"post",
-            url:"http://127.0.0.1:5000/auth/refresh",
+            url:`${url}/auth/refresh`,
             data:{
                 "refresh_token":refresh_token
             }
