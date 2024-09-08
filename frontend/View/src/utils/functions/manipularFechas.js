@@ -130,7 +130,7 @@ export function generarFechaAnteriorPorSemana() {
       fechas[i - 1].year
     );
   }
-  if (fechas[4].month < 10 && fechas[4].day<10) {
+  if (fechas[4].month < 10 && fechas[4].day+7<10) {
     fechas[5] = {
       fecha_string: `${fechas[4].year}-0${fechas[4].month}-0${
         parseInt(day) + 2
