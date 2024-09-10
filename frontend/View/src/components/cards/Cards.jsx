@@ -95,39 +95,40 @@ function Cards({
         )}
       </ul>
       <div className={style.paginationButton}>
-        {//Boton para ir a la pagina 01 
-        paginationContext.getPage() - 1 != 0 ? (
-          <a
-            className={style.buttonPagination_border_start}
-            onClick={async () => {
-              if (paginationContext.getPage() != 1) {
-                paginationContext.setPage(() => {
-                  paginationContext.getPage() -
-                    (paginationContext.getPage() - 1);
-                });
-                let value = isSelected.onePage ? false : true;
-                setIsSelected({
-                  ...isSelected,
-                  onePage: value,
-                  previusPage: false,
-                  nextPage: false,
-                  lastPage: false,
-                });
-                await obtenerDatos();
-              }
-            }}
-          >
-            {1}
-          </a>
-        ) : null}
+        {
+          //Boton para ir a la pagina 01
+          paginationContext.getPage() - 1 != 0 ? (
+            <a
+              className={style.buttonPagination_border_start}
+              onClick={async () => {
+                if (paginationContext.getPage() != 1) {
+                  paginationContext.setPage(() => {
+                    paginationContext.getPage() -
+                      (paginationContext.getPage() - 1);
+                  });
+                  let value = isSelected.onePage ? false : true;
+                  setIsSelected({
+                    ...isSelected,
+                    onePage: value,
+                    previusPage: false,
+                    nextPage: false,
+                    lastPage: false,
+                  });
+                  await obtenerDatos();
+                }
+              }}
+            >
+              {1}
+            </a>
+          ) : null
+        }
 
         {
           //Boton para ir a la pagina anterior
-        paginationContext.getPage() - 1 > 1 ? (
-          <a
-            className={style.buttonPagination}
-            onClick={async () => {
-              if (paginationContext.getPage() == 1) {
+          paginationContext.getPage() - 1 > 1 ? (
+            <a
+              className={style.buttonPagination}
+              onClick={async () => {
                 paginationContext.setPage(paginationContext.getPage() - 1);
                 let value = isSelected.previusPage ? false : true;
                 setIsSelected({
@@ -138,12 +139,12 @@ function Cards({
                   lastPage: false,
                 });
                 await obtenerDatos();
-              }
-            }}
-          >
-            {paginationContext.getPage() - 1}
-          </a>
-        ) : null}
+              }}
+            >
+              {paginationContext.getPage() - 1}
+            </a>
+          ) : null
+        }
         {paginationContext.getPage() - 2 > 1 ? (
           <a className={style.buttonPagination}>...</a>
         ) : null}
@@ -156,7 +157,7 @@ function Cards({
                   paginationContext.getLastPage() &&
                 paginationContext.getLastPage() != 1
               ? style.buttonPagination_activate_end
-              : paginationContext.getLastPage()== 1
+              : paginationContext.getLastPage() == 1
               ? style.buttonPagination_activate_one
               : style.buttonPagination_activate
           }
