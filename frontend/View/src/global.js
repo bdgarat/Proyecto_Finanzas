@@ -1,1 +1,1 @@
-export const url = "https://personal-repository-app-finanzas-production.up.railway.app/";
+export const url = "personal-repository-app-finanzas.railway.internal:5000/";
