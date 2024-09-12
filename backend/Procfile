@@ -1,2 +1,1 @@
-
-flask db init;
+web: gunicorn app:app;
