@@ -18,7 +18,7 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 CORS(app)
 app.config[
-    "SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://{db_config.get('USER')}:{db_config.get('PASSWORD')}@{db_config.get('HOST')}/{db_config.get('DATABASE')}"
+    "SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{db_config.get('USER')}:{db_config.get('PASSWORD')}@{db_config.get('HOST')}/{db_config.get('DATABASE')}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = cfg.SECRET_KEY
 app.config["REFRESH_SECRET_KEY"] = cfg.REFRESH_SECRET_KEY
