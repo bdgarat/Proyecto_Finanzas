@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Swall from 'sweetalert2'
 import { useAuth } from '../../Auth/AuthProvider'
-
+import {url} from './../../global'
 function Register() {
   const auth = useAuth();
   const navigate = new useNavigate();
