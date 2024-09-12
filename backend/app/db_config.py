@@ -1,6 +1,6 @@
 db_config = {
     "USER": "root",
     "PASSWORD": "sonQKaTgbtmTAEtjXNMjwEzQJudxgDww",
-    "HOST": "${{ MySQL.MYSQL_URL }}",
+    "HOST": "mysql.railway.internal",
     "DATABASE": "railway"
 }
