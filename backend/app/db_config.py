@@ -1,6 +1,6 @@
 db_config = {
     "USER": "root",
-    "PASSWORD":"sonQKaTgbtmTAEtjXNMjwEzQJudxgDww",
-    "HOST": "jdbc:mysql://root:sonQKaTgbtmTAEtjXNMjwEzQJudxgDww@autorack.proxy.rlwy.net:36133/railway",
-    "DATABASE": "railway"
+    "PASSWORD": "1234",
+    "HOST": "localhost",
+    "DATABASE": "proyecto_finanzas_develop"
 }
