@@ -49,7 +49,7 @@ function Register() {
       {
         axios({
           method:"post",
-          url:"http://127.0.0.1:5000/auth/signup",
+          url:`${url}auth/signup`,
           data:{
             username:values.username,
             email:values.email,

@@ -21,7 +21,7 @@ function LoginPage() {
   function obtenerPermiso() {
     axios({
       method: "post",
-      url: "http://127.0.0.1:5000/auth/login",
+      url: `${url}/auth/login`,
       data: {
         username: name,
         password: pass,
