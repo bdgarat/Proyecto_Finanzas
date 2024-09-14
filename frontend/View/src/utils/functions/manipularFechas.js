@@ -155,7 +155,6 @@ export function generarFechaAnteriorPorSemana() {
       year: fechas[4].year,
     };
   }
-  console.log(fechas);
   return fechas;
 }
 export function generarFechasAnteriorPorDia()
