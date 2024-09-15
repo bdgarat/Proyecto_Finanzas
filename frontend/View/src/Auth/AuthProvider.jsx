@@ -1,4 +1,4 @@
-import React,{useContext,createContext,useState,useEffect} from 'react'
+import React,{useContext,createContext,useState} from 'react'
 import { refreshToken } from '../utils/requests/peticionAuth';
 const AuthContext = createContext({})
 export function AuthProvider({children}) {
