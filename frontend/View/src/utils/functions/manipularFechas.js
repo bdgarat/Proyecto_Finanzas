@@ -98,16 +98,20 @@ function obtenerDiaActual() {
   var date = new Date();
   var diaActual = date.getDate();
   var numDia = date.getDay();
-  for (let i = 1; i < numDia; i++) diaActual--;
+  console.log(diaActual,numDia)
+  for (let i = 1; i < numDia; i++){
+    diaActual--;
+  } 
   if (monthThirtyOne[date.getMonth() - 1].isThirtyOne) {
     if (diaActual < 28) {
       diaActual = 31 + diaActual - 28;
-    } else diaActual = diaActual - 28;
+    } else diaActual = diaActual - 21;
   } else {
     if (diaActual < 28) {
       diaActual = 30 + diaActual - 28;
-    } else diaActual = diaActual - 28;
+    } else diaActual = diaActual - 21;
   }
+  console.log(diaActual);
   return diaActual;
 }
 export function generarFechaAnteriorPorSemana() {
@@ -115,7 +119,7 @@ export function generarFechaAnteriorPorSemana() {
   var year = date.getFullYear();
   year = parseInt(year);
   var day = obtenerDiaActual();
-  var month = date.getMonth();
+  var month = date.getMonth()+1;
   month = parseInt(month);
   let fechas = [];
   if (month < 10) {
@@ -129,31 +133,6 @@ export function generarFechaAnteriorPorSemana() {
       fechas[i - 1].month,
       fechas[i - 1].year
     );
-  }
-  if (fechas[4].month < 10 && fechas[4].day+7<10) {
-    fechas[5] = {
-      fecha_string: `${fechas[4].year}-0${fechas[4].month}-0${
-        parseInt(day) + 2
-      }`,
-      day: day,
-      month: fechas[4].month,
-      year: fechas[4].year,
-    };
-  } else if(fechas[4].month < 10) {
-    fechas[5] = {
-      fecha_string: `${fechas[4].year}-0${fechas[4].month}-${parseInt(day) + 2}`,
-      day: day,
-      month: fechas[4].month,
-      year: fechas[4].year,
-    };
-  }else
-  {
-    fechas[5] = {
-      fecha_string: `${fechas[4].year}-${fechas[4].month}-${parseInt(day) + 2}`,
-      day: day,
-      month: fechas[4].month,
-      year: fechas[4].year,
-    };
   }
   return fechas;
 }
