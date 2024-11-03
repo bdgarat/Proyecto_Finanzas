@@ -7,6 +7,10 @@ textarea{
     width:40%;
     text-align: center;
 }
+select{
+    height: 3.0vh;
+    width:auto;
+}
 .container{
     margin:10px 0;
     width:100%;
@@ -16,7 +20,29 @@ textarea{
     box-shadow: 5px 5px 12px #222;
     border-radius:10px;
 }
-
+.container_type{
+    display: flex;
+    align-items: center;
+}
+.button_type{
+    display: flex;
+    width:60px;
+    cursor: pointer;
+    height: 3.0vh;
+    margin:5px;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 3px 3px #555;
+}
+.button_type:hover{
+    background-color: aquamarine;
+}
+.button_type:active{
+    transform:translateY(3px);
+    box-shadow: 0 0;
+}
 .container_button{
     display: flex;
     justify-content: center;
@@ -29,19 +55,24 @@ textarea{
     cursor: pointer;
     margin:8px;
     padding:5px;
-    border: .5px solid white;
+    border: .5px solid #800030;
+    color:white;
     display: flex;
     justify-content: center;
     align-items: center;
     width:100%;
     height: 3.5vh;
     border-radius: 5px;
-    background-color: #1192ee;
+    background-color: #c42013;
     font-size: 17px;
+    box-shadow: 3px 3px #800030;
 }
-
+.button_enviar:active{
+    transform: translateY(3px);
+    box-shadow: 0 0;
+}
 .button_enviar:hover{
-    background-color: #1192aa;
+    background-color: red;
     
 }
 .button_volver{
@@ -55,7 +86,131 @@ textarea{
     height: 3.4vh;
     border-radius: 5px;
     background-color: whitesmoke;
+    box-shadow: 3px 3px #555;
+    user-select: none;
 }
 .button_volver:hover{
     background-color: aquamarine;
+}
+.button_volver:active{
+    transform: translateY(3px);
+    box-shadow: 0 0;
+}
+@media(max-width:480px)
+{
+    .container{
+        margin:10px 0;
+        width:100%;
+        padding:20px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 5px 5px 12px #222;
+        border-radius:10px;
+    }
+    textarea{
+        height: auto;
+        width:100%;
+        text-align: center;
+    }
+    .container_button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        margin:5px;
+    }
+    .input_inComponent{
+        width:80%;
+        height: auto;
+    }
+    .select_inComponent{
+        width:80%;
+        height: auto;
+        text-align: center;
+      }
+      .container_type{
+        display: flex;
+        flex-direction: column;
+        width:100%;
+        height:auto;
+      }
+      .button_type{
+        width:50%
+      }
+    .button_volver{
+        cursor: pointer;
+        margin:8px;
+        padding:5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:100%;
+        height: 3.4vh;
+        border-radius: 5px;
+        background-color: whitesmoke;
+    }
+    
+}
+@media(min-width:480px) and (max-width:1024px)
+{
+    .container{
+        margin:10px 0;
+        width:100%;
+        padding:20px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 5px 5px 12px #222;
+        border-radius:10px;
+    }
+    .textArea_inComponent{
+        height: 12vh;
+        width:80%;
+        text-align: center;
+    }
+    .container_button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        margin:5px;
+    }
+    .input_inComponent{
+        width:50%;
+        height: 5vh;
+    }
+    .select_inComponent{
+        width:50%;
+        height: 5vh;
+        text-align: center;
+      }
+      .container_type{
+        display: flex;
+        flex-direction: column;
+        width:100%;
+        height:auto;
+      }
+      .button_type{
+        width:50%
+      }
+    .button_volver{
+        cursor: pointer;
+        margin:8px;
+        padding:5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:40%;
+        height: 4.4vh;
+        border-radius: 5px;
+        background-color: whitesmoke;
+    }
+    .button_enviar{
+        width:40%;
+        height:4.4vh;
+    }
+    
 }

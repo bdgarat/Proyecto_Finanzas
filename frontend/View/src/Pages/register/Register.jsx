@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Swall from 'sweetalert2'
 import { useAuth } from '../../Auth/AuthProvider'
-
+import {url} from './../../global'
 function Register() {
   const auth = useAuth();
   const navigate = new useNavigate();
@@ -18,7 +18,7 @@ function Register() {
   useEffect(()=>{
     if(localStorage.getItem('access') && localStorage.getItem('user'))
     {
-      auth.cambiarEstado(true);
+      auth.setIsAuth(true);
       navigate('/dashboard')
     }
   },[])
@@ -49,7 +49,7 @@ function Register() {
       {
         axios({
           method:"post",
-          url:"http://127.0.0.1:5000/auth/signup",
+          url:`${url}auth/signup`,
           data:{
             username:values.username,
             email:values.email,
@@ -133,7 +133,7 @@ function Register() {
           <h1 className={style.title_formulario}>Crear usuario</h1>
           <form className={style.formulario} onSubmit={handleRegister}>
             <div className={style.entrada}>
-              <label className={style.label_form}> Name </label>
+              <label className={style.label_form}> Nombre </label>
               <input
                 className={style.input_form}
                 name="username"
@@ -148,9 +148,10 @@ function Register() {
             </div>
 
             <div className={style.entrada}>
-              <label className={style.label_form}>email</label>
+              <label className={style.label_form}>Email</label>
               <input
                 className={style.input_form}
+                placeholder='example@gmail.com'
                 type="email"
                 name="email"
                 value={values.email}
@@ -161,10 +162,11 @@ function Register() {
             </div>
 
             <div className={style.entrada}>
-              <label className={style.label_form}>repeat email</label>
+              <label className={style.label_form}>Repetir email</label>
               <input
                 className={style.input_form}
                 type="email"
+                placeholder='repeat example@gmail.com'
                 name="repeatEmail"
                 required
                 value={values.repeatEmail}
@@ -178,11 +180,12 @@ function Register() {
               </p>
             )}
             <div className={style.entrada}>
-              <label className={style.label_form}>password</label>
+              <label className={style.label_form}>Contraseña</label>
               <input
                 className={style.input_form}
                 type="password"
                 name="password"
+                placeholder='*********'
                 value={values.password}
                 required
                 onChange={handleInputChange}
@@ -190,11 +193,12 @@ function Register() {
               />
             </div>
             <div className={style.entrada}>
-              <label className={style.label_from}>repeat password</label>
+              <label className={style.label_form}>Repetir contraseña</label>
               <input
                 className={style.input_form}
                 type="password"
                 required
+                placeholder='*********'
                 value={values.repeatPassword}
                 name="repeatPassword"
                 onChange={handleInputChange}

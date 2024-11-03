@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "./card.module.css";
-import eye from "./../../assets/show.png";
-import not_eye from "./../../assets/not_show.png";
 import { CardsContext } from "../../utils/context/CardsProvider";
 import UpdateComponent from "../inComponent/UpdateComponent";
-import Swal from "sweetalert2";
+import asterisco from './../../assets/asterisco.png'
+import { message } from "./../../utils/functions/Message";
 function Card({ element, handleRemove, requestEdit }) {
   const context = useContext(CardsContext);
   const [isEdit, setIsEdit] = useState(false);
@@ -31,19 +30,14 @@ function Card({ element, handleRemove, requestEdit }) {
       context.setIsEdit(false);
     } else if (!isEdit && !context.isEdit) {
       if (context.isNew) {
-        Swal.fire({
-          title: "Quiere dejar de agregar",
-          text: "Si deja de agregar perdera todos los datos",
-          confirmButtonText: "Confirmar",
-          showCancelButton: true,
-          cancelButtonText: "Cancelar",
-          cancelButtonColor: "red",
-        }).then((event) => {
+        message("Quiere dejar de agregar","Si deja de agregar perdera todos los datos")
+        .then((event) => {
           if (event.isConfirmed) {
             context.setIsNew(false);
             context.setLastEdit({ id: element.id });
             setIsEdit(true);
             context.setIsEdit(true);
+            
           }
         });
       } else {
@@ -52,58 +46,34 @@ function Card({ element, handleRemove, requestEdit }) {
         context.setIsEdit(true);
       }
     } else {
-      Swal.fire({
-        title: "Esta seguro que quiere  dejar de editar?",
-        text: "Perdera todos sus datos",
-        showCancelButton: true,
-        confirmButtonText: "Confirmar",
-        cancelButtonText: "Cancelar",
-        cancelButtonColor: "red",
-      }).then((event) => {
+      message("Esta seguro que quiere  dejar de editar?","Perdera todos sus datos").
+      then((event) => {
         if (event.isConfirmed) {
           setIsEdit(false);
           setActual(() => element.id);
           context.setOtherEdit(true);
           context.setIsNew(false);
+          context.setIsSelect(false);
         }
       });
     }
 
     context.setDataEditable(element);
   }
-  function handleViewSaldo() {
-    context.isViewSaldo
-      ? context.setIsViewSaldo(false)
-      : context.setIsViewSaldo(true);
-  }
+
   return (
     <div className={style.container}>
       <li className={style.card}>
         <div className={style.monto_fecha}>
-          {context.isViewSaldo ? (
-            <p
-              className={
-                context.getType() ? style.montoGasto : style.montoIngreso
-              }
-            >
-              {element.monto}
-              <img
-                className={style.icon_saldo}
-                src={eye}
-                onClick={() => {
-                  handleViewSaldo();
-                }}
-              />{" "}
-            </p>
-          ) : (
-            <img
-              className={style.icon_saldo}
-              src={not_eye}
-              onClick={() => {
-                handleViewSaldo();
-              }}
-            />
-          )}
+          {context.isViewSaldo ? (<p
+            className={
+              context.getType() ? style.montoGasto : style.montoIngreso
+            }
+          >
+            {element.monto}
+          </p>):<div><img className={style.icon_saldo} src ={asterisco}/>
+          <img className={style.icon_saldo} src ={asterisco}/>
+          <img className={style.icon_saldo} src ={asterisco}/></div>}
           <p className={style.tipo}>Tipo:{element.tipo}</p>
           <p className={style.descripcion}>
             Descripción: {element.descripcion}
@@ -126,14 +96,8 @@ function Card({ element, handleRemove, requestEdit }) {
             <a
               className={style.button_deleted}
               onClick={() => {
-                Swal.fire({
-                  title: "Estas seguro que deseas borrar está entrada?",
-                  text: "Una vez confirmada la acción no podras recuperar estos datos",
-                  showCancelButton: true,
-                  cancelButtonText: "Cancelar",
-                  cancelButtonColor: "red",
-                  confirmButtonText: "Confirmar",
-                }).then((event) => {
+                message("Estas seguro que deseas borrar está entrada?","Una vez confirmada la acción no podras recuperar estos datos")
+                .then((event) => {
                   if (event.isConfirmed) {
                     handleRemove(element.id);
                   }

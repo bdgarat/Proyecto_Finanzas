@@ -1,21 +1,156 @@
-
-.filterMenu{
-    visibility: visible;
-    display: flex;
-    justify-content: center;
-    width:60%;
-    padding:10px;
-    border-radius: 0 0 10px 10px;
-
-    box-shadow: 3px 3px 15px #222;
-    margin:10px
+.filterMenu {
+  visibility: visible;
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 3px 3px 15px #222;
+  margin: 10px;
 }
-.form{
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+label {
+  margin: 0 10px;
+}
+select{
+    width:10%;
+    height: 2.5vh;
+}
+.search_button {
+  margin-left: 3%;
+  font-size: 15px;
+  width: 9%;
+  height: 4vh;
+  border-radius: 5px;
+  border: 2px solid white;
+  color:white;
+  box-shadow: 0 2px 0 cadetblue;
+  background-color: darkcyan;
+  cursor: pointer;
+}
+.search_button:hover{
+    background-color: darkcyan;
+    color:black;
+}
+.search_button:active {
+  transform: translateY(2px);
+  box-shadow: 0 0px 0 #222;
+}
+@media (max-width: 480px) {
+
+  .filterMenu {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width:90%;
+    width: 100%;
+    height: auto;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  .input_filter{
+    width: 80%;
+    height: auto;
+  }
+  .input_select_filter{
+    width: 80%;
+    height: auto;
+    text-align: center;
+  }
+  .search_button{
+    width:75%;
+    margin:15px 5px;
+    height: auto;
+  }
+  label {
+    margin: 6px;
+    height: auto;
+  }
 }
-label{
-    margin:0 10px;
+@media (min-width: 481px) and (max-width:768px) {
+   
+  .filterMenu {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  .input_filter{
+    width: 80%;
+    height: 5vh;
+  }
+  .input_select_filter{
+    width: 80%;
+    height: 5vh;
+    text-align: center;
+  }
+  .search_button{
+    width:75%;
+    margin:15px 5px;
+    height: 5vh;
+  }
+  label {
+    margin: 6px;
+    height: auto;
+  }
+}
+@media(min-width:769px) and (max-width:1024px)
+{
+  .filterMenu {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  .input_filter{
+    width: 60%;
+    height: 3vh;
+  }
+  .input_select_filter{
+    width: 60%;
+    height: 3vh;
+    text-align: center;
+  }
+  .search_button{
+    width:60%;
+    margin:15px 5px;
+    height: 5vh;
+  }
+}
+@media(min-width:1025px) and (max-width:1400px)
+{
+  .form{
+    flex-wrap: wrap;
+  }
+}
+@media(min-width:1401px) and (max-width:1600px)
+{
+  .form{
+    width: 100%;
+  }
 }

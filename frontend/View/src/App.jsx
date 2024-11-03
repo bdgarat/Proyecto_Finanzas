@@ -10,6 +10,7 @@ import { AuthProvider } from "./Auth/AuthProvider";
 import CardsProvider from "./utils/context/CardsProvider";
 import FilterProvider from "./utils/context/FilterProvider";
 import PaginadoProvider from "./utils/context/PaginadoProvider";
+import EditProfile from "./Pages/editProfile/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -29,25 +30,17 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
       },
-    ],
-  },
-  {
-    path: "/",
-    element: <Protected />,
-    children: [
       {
         path: "gastos",
         element: <Gastos />,
       },
-    ],
-  },
-  {
-    path: "/",
-    element: <Protected />,
-    children: [
       {
         path: "ingresos",
         element: <Ingresos />,
+      },
+      {
+        path: "editarPerfil",
+        element: <EditProfile />,
       },
     ],
   },

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "477ab3fb-a6dd-479e-b1f8-d33e56db29b9",
+		"_postman_id": "fdc3e0c8-ca65-453b-b73f-4bd45a8f56e6",
 		"name": "Proyecto_Finanzas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9496920"
+		"_exporter_id": "29172403"
 	},
 	"item": [
 		{
@@ -20,7 +20,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&monto=2000.0&tipo=super",
+							"raw": "127.0.0.1:5000/ingresos/get_all?page=1&page_size=10&currency=usd&currency_type=blue",
 							"host": [
 								"127",
 								"0",
@@ -42,12 +42,19 @@
 									"value": "10"
 								},
 								{
-									"key": "monto",
-									"value": "2000.0"
+									"key": "monto_min",
+									"value": "200.0",
+									"disabled": true
+								},
+								{
+									"key": "monto_max",
+									"value": "450.0",
+									"disabled": true
 								},
 								{
 									"key": "tipo",
-									"value": "super"
+									"value": "caso",
+									"disabled": true
 								},
 								{
 									"key": "fecha_inicio",
@@ -58,6 +65,22 @@
 									"key": "fecha_fin",
 									"value": "2024-07-24",
 									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_min",
+									"description": "Criterio de ordenamiento. Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
@@ -75,7 +98,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/ingresos/get?monto=500.0&tipo=super",
+							"raw": "127.0.0.1:5000/ingresos/get?criterion=monto_max&currency=usd&currency_type=blue",
 							"host": [
 								"127",
 								"0",
@@ -90,21 +113,33 @@
 							"query": [
 								{
 									"key": "monto",
-									"value": "500.0"
+									"value": "500.0",
+									"disabled": true
 								},
 								{
 									"key": "tipo",
-									"value": "super"
+									"value": "super",
+									"disabled": true
 								},
 								{
-									"key": "fecha_inicio",
+									"key": "fecha",
 									"value": "2024-07-23",
 									"disabled": true
 								},
 								{
-									"key": "fecha_fin",
-									"value": "2024-07-24",
-									"disabled": true
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max"
+								},
+								{
+									"key": "currency",
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
@@ -123,7 +158,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de ingreso\",\r\n    \"monto\": 200.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"\",\r\n    \"monto\": 0.0,\r\n    \"tipo\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -216,6 +251,172 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener tipos ingreso",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"tipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener promedio ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/average?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"average"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener total ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/total?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"total"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener cantidad ingresos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/ingresos/count?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"ingresos",
+								"count"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -245,7 +446,7 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&monto=2000&tipo=super",
+							"raw": "127.0.0.1:5000/gastos/get_all?page=1&page_size=10&currency=usd&currency_type=bolsa",
 							"host": [
 								"127",
 								"0",
@@ -267,12 +468,19 @@
 									"value": "10"
 								},
 								{
-									"key": "monto",
-									"value": "2000"
+									"key": "monto_min",
+									"value": "2000.0",
+									"disabled": true
+								},
+								{
+									"key": "monto_max",
+									"value": "2500.0",
+									"disabled": true
 								},
 								{
 									"key": "tipo",
-									"value": "super"
+									"value": "super",
+									"disabled": true
 								},
 								{
 									"key": "fecha_inicio",
@@ -283,6 +491,22 @@
 									"key": "fecha_fin",
 									"value": "2024-07-24",
 									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "bolsa",
+									"description": "Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
@@ -300,7 +524,7 @@
 							}
 						],
 						"url": {
-							"raw": "127.0.0.1:5000/gastos/get_first_by_tipo?tipo=super",
+							"raw": "127.0.0.1:5000/gastos/get?tipo=super&currency=usd&currency_type=bolawq",
 							"host": [
 								"127",
 								"0",
@@ -310,12 +534,38 @@
 							"port": "5000",
 							"path": [
 								"gastos",
-								"get_first_by_tipo"
+								"get"
 							],
 							"query": [
 								{
 									"key": "tipo",
 									"value": "super"
+								},
+								{
+									"key": "monto",
+									"value": "500.0",
+									"disabled": true
+								},
+								{
+									"key": "fecha",
+									"value": "2024-07-23",
+									"disabled": true
+								},
+								{
+									"key": "criterion",
+									"value": "monto_max",
+									"description": "Criterio de ordenamiento. Valores permitidos: fecha_min, fecha_max, monto_min, monto_max, created_on_min, created_on_max, last_updated_on_min, last_updated_on_max",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "usd",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu"
+								},
+								{
+									"key": "currency_type",
+									"value": "bolawq",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto"
 								}
 							]
 						}
@@ -334,7 +584,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto6\",\r\n    \"monto\": 1,\r\n    \"tipo\": \"Supermercado\"\r\n}",
+							"raw": "{\r\n    \"descripcion\": \"Prueba de gasto\",\r\n    \"monto\": 2000.0,\r\n    \"tipo\": \"Supermercado\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,6 +672,172 @@
 								{
 									"key": "id",
 									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos gasto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"tipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener promedio gastos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/average?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"average"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener total gastos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/total?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"total"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
+								},
+								{
+									"key": "currency",
+									"value": "eur",
+									"description": "Cotizacion. Valores permitidos: ars, usd, eur, brl, clp, uyu",
+									"disabled": true
+								},
+								{
+									"key": "currency_type",
+									"value": "blue",
+									"description": "Tipo de cotizacion. Valores permitidos: oficial, blue, bolsa, contadoconliqui, tarjeta, mayorista, cripto",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener cantidad gastos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/gastos/count?fecha_inicio=2024-07-08&fecha_fin=2024-09-12",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"gastos",
+								"count"
+							],
+							"query": [
+								{
+									"key": "fecha_inicio",
+									"value": "2024-07-08"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2024-09-12"
 								}
 							]
 						}
@@ -693,7 +1109,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"12345\",\r\n    \"email\": \"prueba@algo.com\"\r\n}",
+							"raw": "{\r\n    \"username\": \"prueba\",\r\n    \"password\": \"12345\",\r\n    \"email\": \"prueba@algo.com\",\r\n    \"is_money_visible\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -739,6 +1155,114 @@
 							"path": [
 								"usuarios",
 								"saldo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Feedback",
+			"item": [
+				{
+					"name": "Obtener entradas de feedback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/get_all",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"get_all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page_size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion\": \"Esta app es lo mejor que hay :)\",\r\n    \"tipo\": \"FEATURE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/add",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener tipos feedback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:5000/feedback/tipos",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"feedback",
+								"tipos"
 							]
 						}
 					},

@@ -12,10 +12,20 @@ export default function CardsProvider({ children }) {
   const [data, setData] = useState([]);
   //Esta constante sirve indicar que se tiene que actuarlizar el contenido de una lista
   const [isUpdate, setIsUpdate] = useState(false);
+  //Esta constante sirve para indicar si se esta mostrando los montos o se estan ocultando
   const [isViewSaldo, setIsViewSaldo] = useState(true);
+  //Sirve para condicionar los estilos de gasto e ingresos
   const[type,setType] = useState(true);
+  //Sirve para saber quién es la ultima carte que se le apreto el bóton editar
   const [lastEdit,setLastEdit] = useState({});
+  //Sirve para indiciar si hay otra carta que se este editando 
   const[otherEdit,setOtherEdit] = useState(false);
+  //Sirve para guardar los tipos de gasto o ingresos 
+  const[listTypes,setListTypes] = useState([]);
+  //Sirve para indicar si el usuario va usar los tipos ya cargados o agregar uno nuevo
+  const[isSelect,setIsSelect] = useState(false);
+  //Me permite indicar cuando hay que obtener los tipos nuevos 
+  const[updateTypes,setUpdateTypes] = useState(false);
   function getType() {
     return type;
   }
@@ -39,7 +49,13 @@ export default function CardsProvider({ children }) {
         lastEdit,
         setLastEdit,
         otherEdit,
-        setOtherEdit
+        setOtherEdit,
+        listTypes,
+        setListTypes,
+        isSelect,
+        setIsSelect,
+        updateTypes,
+        setUpdateTypes,
       }}
     >
       {children}

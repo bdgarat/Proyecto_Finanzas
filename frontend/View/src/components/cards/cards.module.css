@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 70%;
   margin: 20px;
 }
 .container_button_add {
@@ -14,18 +14,20 @@
 .buttonAdd {
   width: 35%;
   height: 4vh;
-  border-radius: 20px;
-  border: 1px solid #00a135;
+  border-radius: 10px;
+  border: 2px solid white;
   text-align: center;
   font-size: 17px;
-  background-color: #198754;
-  box-shadow: 0 5px 0 #00a135;
+  background-color: #0d6efd;
+  box-shadow: 0 5px 0 dodgerblue;
   color: white;
   cursor: pointer;
 }
 .buttonAdd:hover {
-  background-color: #95c755;
+  background-color: #0d6efd;
   color: black;
+  width: 40%;
+  height: 4.5vh;
 }
 .buttonAdd:active {
   transform: translateY(5px);
@@ -40,6 +42,12 @@
   flex-direction: column;
   align-items: center;
 }
+.message_entradas {
+  display: flex;
+  justify-content: space-between;
+  height: 4vh;
+  width: 100%;
+}
 
 .paginationButton {
   width: auto;
@@ -50,12 +58,6 @@
   justify-content: space-evenly;
 }
 
-.message_entradas {
-  display: flex;
-  justify-content: space-between;
-  height: 4vh;
-  width: 100%;
-}
 
 .buttonPagination {
   display: flex;
@@ -65,6 +67,7 @@
   width: 80px;
   border: 1px solid #000;
   cursor: pointer;
+  user-select: none;
 }
 .buttonPagination_border_start{
   display: flex;
@@ -76,6 +79,7 @@
   cursor: pointer;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  user-select: none;
 }
 .buttonPagination_border_end{
   display: flex;
@@ -87,6 +91,7 @@
   cursor: pointer;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  user-select: none;
 }
 .buttonPagination_activate {
   display: flex;
@@ -97,6 +102,19 @@
   border: 1px solid #000;
   cursor: pointer;
   background-color: #0d6efd;
+  user-select: none;
+}
+.buttonPagination_activate_one {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  border: 1px solid #000;
+  cursor: pointer;
+  background-color: #0d6efd;
+  border-radius: 10px;
+  user-select: none;
 }
 .buttonPagination_activate_end{
   display: flex;
@@ -109,6 +127,7 @@
   background-color: #0d6efd;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  user-select: none;
 }
 .buttonPagination_activate_start{
   display: flex;
@@ -121,10 +140,118 @@
   background-color: #0d6efd;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  user-select: none;
 }
 .buttonPagination:active {
   padding: 12px 12px;
 }
 .message {
   margin: 15px;
+}
+@media(max-width:480px)
+{
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .container_button_add {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 5vh;
+  }
+  .buttonAdd {
+    width: 80%;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid #00a135;
+    text-align: center;
+    font-size: 17px;
+    background-color: #198754;
+    box-shadow: 5px 5px 5px #00a135;
+    color: white;
+    cursor: pointer;
+  }
+  .buttonAdd:hover {
+    background-color: #0d6efd;
+    color: black;
+    width: 80%;
+    height: auto;
+    box-shadow: 5px 5px 5px #0d6efd;
+  }
+  .message_entradas {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    margin:10px 0;
+  }
+  .message_entradas p {
+    margin:10px
+  }
+}
+@media(min-width:480px) and (max-width:1024px)
+{
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .container_button_add {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  }
+  .buttonAdd {
+    width: 50%;
+    height: 5vh;
+    border-radius: 20px;
+    border: 1px solid #00a135;
+    text-align: center;
+    font-size: 17px;
+    background-color: #198754;
+    box-shadow: 5px 5px 5px #00a135;
+    color: white;
+    cursor: pointer;
+  }
+  .buttonAdd:hover {
+    background-color: #0d6efd;
+    color: black;
+    width: 50%;
+    height: 7vh;
+    box-shadow: 5px 5px 5px #0d6efd;
+  }
+  .message_entradas {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    margin-top:15px;
+    margin-bottom: 5px;
+  }
+  .message_entradas p {
+    margin:10px
+  }
+}
+@media(min-width:1025px) and (max-width:1400px)
+{
+  .cards{
+    width:90%;
+  }
+}
+@media(min-width:1400px) and (max-width:1600px)
+{
+  .cards{
+    width:80%;
+  }
 }

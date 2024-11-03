@@ -1,4 +1,4 @@
-import React,{useContext,createContext,useState,useEffect} from 'react'
+import React,{useContext,createContext,useState} from 'react'
 import { refreshToken } from '../utils/requests/peticionAuth';
 const AuthContext = createContext({})
 export function AuthProvider({children}) {
@@ -8,13 +8,13 @@ export function AuthProvider({children}) {
   {
     return isAuth;
   }
-  function getAccess(){
+   function getAccess(){
     return access;
   }
   async function updateToken()
   {
     let refresh = localStorage.getItem("refresh");
-    let accessA = await refreshToken(refresh)
+    let accessA = await refreshToken(refresh);
     setAccess(accessA);
     return accessA;
   }

@@ -1,49 +1,8 @@
 {
-  "hash": "3fb20f95",
+  "hash": "604aab82",
   "configHash": "ed2433a0",
-  "lockfileHash": "cc80bd9d",
-  "browserHash": "a186473a",
-  "optimized": {
-    "react": {
-      "src": "../../node_modules/react/index.js",
-      "file": "react.js",
-      "fileHash": "78a8295c",
-      "needsInterop": true
-    },
-    "react-dom/client": {
-      "src": "../../node_modules/react-dom/client.js",
-      "file": "react-dom_client.js",
-      "fileHash": "15dad1de",
-      "needsInterop": true
-    },
-    "react-router-dom": {
-      "src": "../../node_modules/react-router-dom/dist/index.js",
-      "file": "react-router-dom.js",
-      "fileHash": "d8409c94",
-      "needsInterop": false
-    },
-    "axios": {
-      "src": "../../node_modules/axios/index.js",
-      "file": "axios.js",
-      "fileHash": "d2c213e5",
-      "needsInterop": false
-    },
-    "sweetalert2": {
-      "src": "../../node_modules/sweetalert2/dist/sweetalert2.all.js",
-      "file": "sweetalert2.js",
-      "fileHash": "e616d096",
-      "needsInterop": true
-    }
-  },
-  "chunks": {
-    "chunk-MZQMFKLV": {
-      "file": "chunk-MZQMFKLV.js"
-    },
-    "chunk-4X3XUJ2M": {
-      "file": "chunk-4X3XUJ2M.js"
-    },
-    "chunk-G3PMV62Z": {
-      "file": "chunk-G3PMV62Z.js"
-    }
-  }
+  "lockfileHash": "e3b0c442",
+  "browserHash": "aa6f9d40",
+  "optimized": {},
+  "chunks": {}
 }

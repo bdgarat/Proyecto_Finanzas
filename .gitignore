@@ -186,4 +186,5 @@ dist-ssr
 
 # DB Migrations folder
 migrations/
+credentials/
 db_config.py

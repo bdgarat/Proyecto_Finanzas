@@ -1,0 +1,112 @@
+.coins_container{
+    width:50%;
+    display: flex;
+    align-items: center;
+    margin:10px;
+   border-radius: 10px;
+   border:1px solid #333;
+   box-shadow: 5px 5px #555;
+}
+.title_coins{
+    width:100%;
+    display: flex;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+}
+.text_info{
+    margin-left:5px;
+}
+.text_coins{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+.select_container
+{
+    width:100%;
+    display:flex;
+    justify-content: center;
+}
+.title_text_selec
+{
+    width:50%;
+    display: flex;
+    flex-direction: column;
+}
+.select_coins{
+    width:250px;
+    margin:20px;
+}
+.coin_info{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width:400px;
+    margin:10px;
+
+}
+.coin_container{
+    width:350px;
+}
+.info_coin_container{
+    height: 100%;
+    width:50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.info_coin_container p {
+    width: 100%;
+    margin: 5px;
+    font-size: 20px;
+}
+@media(max-width:765px)
+{
+    .coins_container{
+        width:100%;
+        margin:5px auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .title_text_selec{
+        width:100%;
+    }
+    .title_coins{
+        width:100%;
+        display: flex;
+        justify-content: center;
+    }
+    .text_info{
+        margin:0;
+    }
+    .check_coins{margin:0% 1%; width:10%; height: auto;}
+    .text_coins{
+        margin:10px 0px;
+        display: flex;
+        align-items: center;
+    }
+    .select_coins{
+        height: auto;
+    }
+    .info_coin_container{
+        width: 100%;
+        display: flex;
+        text-align: center;
+    }
+    .message_no_select_coin{
+        text-align: center;
+    }
+}
+@media(min-width:766px) and (max-width:1400px)
+{
+    .coins_container{
+        width:80%;
+        margin:5px auto;
+    }
+    .select_coins{
+        height: auto;
+    }
+}

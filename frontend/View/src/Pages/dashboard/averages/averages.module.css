@@ -1,0 +1,97 @@
+.avarages {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin: 10px auto;
+  height: auto;
+  border: 1px solid #333;
+  box-shadow: 5px 5px 5px 5px #555;
+  border-radius: 10px;
+}
+.graphics {
+ display: flex;
+ justify-content: center;
+  min-width: 80%;
+  margin: 20px;
+  height: 550px;
+}
+.echarts-for-echarts {
+  width: 100%;
+}
+.container_button_filter {
+  display: flex;
+  justify-content: center;
+  width:100%;
+}
+.button_filter {
+  border: 1px solid #000;
+  box-shadow: 3px 3px #000;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  width: 15%;
+  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  user-select: none;
+}
+.button_filter:active {
+  transform: translateY(5px);
+  box-shadow: 0 0px 0 #555;
+}
+.button_filter_activo{
+  border: 1px solid #000;
+  box-shadow: 3px 3px #000;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  width: 15%;
+  cursor: pointer;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  user-select: none;
+  background-color: red;
+}
+.button_filter:hover {
+  background-color: #0d6efd;
+}
+@media(max-width:768px)
+{
+  .avarages{
+    width: 100%;
+    margin:0;
+  }
+  .container_button_filter{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+  .button_filter{
+    width:90%
+  }
+  .button_filter_activo{
+    width: 90%;
+  }
+  .graphics{
+    height: auto;
+    width: 100%;
+    margin:20px 0;
+  }
+}
+@media(min-width:768px) and (max-width:1024px)
+{
+  .graphics{
+    height: auto;
+    width: 100%;
+  }
+}

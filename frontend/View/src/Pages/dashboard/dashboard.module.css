@@ -1,0 +1,22 @@
+.container_dashboard{
+    width:100%
+}
+.container_content_dashboard{
+    width:100%
+}
+.container_block{
+    width:100%;
+    display: flex;
+    justify-content: space-around;
+}
+.container_coins_value{
+    display: flex;
+    justify-content: flex-start;
+}
+@media (max-width:1400px ){
+    .container_block{
+        display: flex;
+        flex-direction: column;
+        width:100%;
+    }
+}

@@ -4,6 +4,10 @@
     flex-direction: column;
     align-items: center;
 }
+.container_edit_card{
+    width:100%;
+}
+
 .card{
     list-style-type: none;
     width:100%;
@@ -22,27 +26,25 @@
     width:100%
 }
 .montoGasto{
-    width:10%;
+    width:78px;
     font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    color:red
+    color:red;
+    height: 29px;
 }
 .montoIngreso{
-    width:10%;
+    width:78px;
     font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: space-around;
     color:rgb(0, 128, 53);
+    height: 29px;
     
 }
-.icon_saldo{
-    width:50px;
-    height: 50px;
-    cursor: pointer;
-}
+
 .tipo{
     width:25%;
     display: flex;
@@ -69,6 +71,11 @@
     height:4vh;
     width:100%
 }
+.icon_saldo{
+    width:26px;
+    height: 25px;
+    cursor: pointer;
+  }
 .button_deleted{
     display: flex;
     align-items: center;
@@ -81,9 +88,13 @@
     margin:7px;
     width:10%;
     transition: .5;
-    background-color: #1192ee;
-    border: 3px #800000;
+    background-color: #c42013;
+    border: 3px #800030;
+    color:white;
     cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    box-shadow: 3px 3px #800030;
 }
 .button_edit{
     display: flex;
@@ -100,13 +111,203 @@
     transition: .5;
     cursor: pointer;
     background-color: aliceblue;
+    text-decoration: none;
+    user-select: none;
+    box-shadow: 3px 3px #555;
 }
 .button_edit:hover{
     background-color: aquamarine;
 }
+.button_edit:active{
+    transform: translateY(5px);
+    box-shadow: 0 0 ;
+}
 .button_deleted:hover{
     background-color: red;
 }
-.container_edit_card{
-    width:90%;
+.button_deleted:active{
+    transform: translateY(5px);
+    box-shadow: 0 0 ;
+}
+@media(max-width:480px)
+{
+    .card{
+        list-style-type: none;
+        width:100%;
+        align-items: center;
+        padding:10px;
+        margin:7px;   
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 5px 5px 12px #222;
+    }
+    .monto_fecha{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width:100%
+    }
+    .montoGasto{
+        width:35%;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        color:red
+    }
+    .tipo{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:10px 0;
+    }
+    .descripcion{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        margin:10px auto;
+        align-items: center;
+        text-align: center;
+    }
+    .fecha{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+    .container_button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:5px;
+        height:auto;
+        width:100%
+    }
+    .button_deleted{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        align-items: center;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+        margin:7px;
+        width:50%;
+        transition: .5;
+        background-color: #1192ee;
+        border: 3px #800000;
+        cursor: pointer;
+    }
+    .button_edit{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        align-items: center;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px;
+        margin:7px;
+        width:50%;
+        transition: .5;
+        cursor: pointer;
+        background-color: aliceblue;
+    }
+
+}
+@media(min-width:481px) and (max-width:1024px)
+{
+    .card{
+        list-style-type: none;
+        width:80%;
+        align-items: center;
+        padding:10px;
+        margin:7px;   
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 5px 5px 12px #222;
+    }
+    .monto_fecha{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width:100%
+    }
+    .montoGasto{
+        width:35%;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        color:red
+    }
+    .tipo{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:10px 0;
+    }
+    .descripcion{
+        width:100%;
+        display: flex;
+        justify-content: center;
+        margin:10px auto;
+        align-items: center;
+        text-align: center;
+    }
+    .fecha{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+    .container_button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:5px;
+        height:6vh;
+        width:50%
+    }
+    .button_deleted{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 4vh;
+        align-items: center;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+        margin:7px;
+        width:50%;
+        transition: .5;
+        background-color: #1192ee;
+        border: 3px #800000;
+        cursor: pointer;
+    }
+    .button_edit{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 4vh;
+        align-items: center;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+        border: 1px;
+        margin:7px;
+        width:50%;
+        transition: .5;
+        cursor: pointer;
+        background-color: aliceblue;
+    }
+
 }
