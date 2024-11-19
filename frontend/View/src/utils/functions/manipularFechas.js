@@ -96,12 +96,23 @@ function generarFechaSiguiente(day, month, year) {
 }
 function obtenerDiaActual() {
   var date = new Date();
+  var month = date.getMonth();
   var diaActual = date.getDate();
   var numDia = date.getDay();
-  console.log(diaActual,numDia)
   for (let i = 1; i < numDia; i++){
-    diaActual--;
-  } 
+    if(diaActual == 1){
+      if(monthThirtyOne[month-1].isThirtyOne)
+      {
+        diaActual = 31;
+      }else
+      {
+        diaActual = 30;    
+      }
+    }else
+    {
+      diaActual--;
+    }
+  }
   if (monthThirtyOne[date.getMonth() - 1].isThirtyOne) {
     if (diaActual < 28) {
       diaActual = 31 + diaActual - 28;
@@ -111,7 +122,6 @@ function obtenerDiaActual() {
       diaActual = 30 + diaActual - 28;
     } else diaActual = diaActual - 21;
   }
-  console.log(diaActual);
   return diaActual;
 }
 export function generarFechaAnteriorPorSemana() {
@@ -119,13 +129,13 @@ export function generarFechaAnteriorPorSemana() {
   var year = date.getFullYear();
   year = parseInt(year);
   var day = obtenerDiaActual();
-  var month = date.getMonth()+1;
+  var month = date.getMonth();
   month = parseInt(month);
   let fechas = [];
   if (month < 10) {
     fechas[0] = { fecha_string: `${year}-0${month}-${day}`, day, month, year };
   } else {
-    fechas[0] = { fecha_string: `${day}-${month}-${year}`, day, month, year };
+    fechas[0] = { fecha_string: `${year}-${month}-${day} `, day, month, year };
   }
   for (let i = 1; i <= 4; i++) {
     fechas[i] = generarFechaSiguiente(
@@ -134,6 +144,7 @@ export function generarFechaAnteriorPorSemana() {
       fechas[i - 1].year
     );
   }
+  console.log(fechas);
   return fechas;
 }
 export function generarFechasAnteriorPorDia()
@@ -143,7 +154,7 @@ export function generarFechasAnteriorPorDia()
   var year = actualDate.getFullYear()
   var dayStart = actualDate.getDate();
   var monthStart = actualDate.getMonth();
-  if(monthThirtyOne[monthStart].isThirtyOne)
+  if(monthThirtyOne[monthStart-1].isThirtyOne)
   {
     for(let i= 0;i<=33;i++)
       {
