@@ -1,0 +1,36 @@
+### Definiciones generales del proyecto
+- Todo el proyecto va estar escrito en la versión de java 17 
+## Dependencias del comienzo 
+- Se describen todas las dependencias que se consideraron relevantes para la construcción correcta del software 
+- ### Lista de dependencias 
+	- **Spring Boot DevTools:** Proporciona reinicios rápidos de aplicaciones, LiveReload y configuraciones para una mejor experiencia de desarrollo 
+	- **Lombok:** Biblioteca de anotaciones de java que ayuda a reducir el código simple (getters, setters, constructores, etc.)
+	- **Spring Web:** Crea aplicaciones web, incluyendo RestFull, utilizando Spring MVC. Utiliza apache Tomcat como el contenedor integrado predeterminado
+	- **Spring Data JPA:** Persiste los datos en las tiendas de SQL con java persistence API usando Spring Data e Hibernate
+	- **Spring Security:** Marco de autenticación y control de acceso altamente personalizable para aplicaciones Spring.
+	- **MYSQL Driver:** MYSQL JDBC Driver 
+## Configuración de la base datos 
+- La base de datos que se aplicara para la etapa de desarrollo se va a encontrar de forma local 
+- La misma se implementara usando docker. 
+	- Se necesita tener docker instalado en un sistema de tipo linux o tener la aplicación de escritorio abierta en windows 
+	- Abriendo una terminal se escribe el siguiente comando => **docker run -p 3306:3306 --name database  -e MYSQL_ROOT_PASSWORD=123 -d mysql:latest**
+	- En caso de ser un sistema de tipo linux, se necesita permiso sudo para ejecutar este comando 
+	- Se puede confirmar que esta corriendo con el comando `sudo docker ps`
+- **Conexión:**
+	- como cliente para conectarse y manipular la base datos se va utilizar el programa DBeaver, que es multiplataforma y se encuentra para la mayoría de los sistemas operativos 
+	- Una configuración **importante** es que se tiene hacer es  modificar una propiedad de la conexión en DBeaver 
+		- Esta opción se encuentra dentro de driverProperties cuando creas la conexión 
+		- **allowPublicKeyRetrival = true** 
+	- Luego se tiene que ingresar la credenciales definidas para la base de datos: 
+		- **Usuario:** root
+		- **Password:** 123
+- **Nombre de la base datos:** Se recomienda dejar el nombre de la base datos como **finanzas_db**  
+	- Es recomendable crear la base desde el gestor de base de datos 
+- ### Configuración del archivo properties
+	- Este archivo sirve para configurar las credenciales de la conexión a la base de datos y ademas algunas configuraciones extras sobre comportamientos de determinadas dependencias 
+	- En este caso por el momento solo voy a definir la credenciales para la conexión a la base de datos, esto se define con 3 atributos 
+		- **spring.datasource.url** = **jdbc:mysql://localhost:3306/finanzas_db**
+		- **spring.datasource.username** = root
+		- **spring.datasource.password** = 123
+		- **spring.jpa.hibernate.ddl-auto** = create
+			- Esta opción te permite que JPA cree las tablas automáticamente cuando declares los modelos 

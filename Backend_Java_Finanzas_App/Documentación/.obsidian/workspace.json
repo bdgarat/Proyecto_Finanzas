@@ -1,0 +1,174 @@
+{
+  "main": {
+    "id": "f716960c7fba5c86",
+    "type": "split",
+    "children": [
+      {
+        "id": "228836fd0dc36131",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6525cc04cc7c488e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "BackEnd/Anotaciones.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Anotaciones"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "91414716bce29bd3",
+    "type": "split",
+    "children": [
+      {
+        "id": "6e6288688974a929",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3223e359926c1158",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "d4d57f0546dcf835",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "9f84ae8cced853a4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "890238db22709c44",
+    "type": "split",
+    "children": [
+      {
+        "id": "9b26e3c32f705119",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6a9a9f0629a73b80",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "BackEnd/Anotaciones.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes de Anotaciones"
+            }
+          },
+          {
+            "id": "2bd0729f85f2cb00",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "BackEnd/Anotaciones.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes de Anotaciones"
+            }
+          },
+          {
+            "id": "298316c5985e16d9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "aac24b62c02ca6fc",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "BackEnd/Anotaciones.md"
+              },
+              "icon": "lucide-list",
+              "title": "Esquema de Anotaciones"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false
+    }
+  },
+  "active": "6525cc04cc7c488e",
+  "lastOpenFiles": [
+    "Front End/Diseño del dashboard",
+    "BackEnd/Definiciones del modelo.md",
+    "BackEnd/Anotaciones.md",
+    "BackEnd/Estructura del proyecto.md",
+    "BackEnd/Conceptos generales del proyecto.md",
+    "Front End/Diseño del dashboard/Dashboard.md"
+  ]
+}
