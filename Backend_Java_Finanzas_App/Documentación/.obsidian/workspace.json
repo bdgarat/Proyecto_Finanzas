@@ -1,24 +1,25 @@
 {
   "main": {
-    "id": "f716960c7fba5c86",
+    "id": "0f5d1586959ae449",
     "type": "split",
     "children": [
       {
-        "id": "228836fd0dc36131",
+        "id": "6260de11940e3c0a",
         "type": "tabs",
         "children": [
           {
-            "id": "6525cc04cc7c488e",
+            "id": "218c5529753570ac",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BackEnd/Anotaciones.md",
+                "file": "BackEnd/Config/Security Config.md",
                 "mode": "source",
+                "backlinks": false,
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Anotaciones"
+              "title": "Security Config"
             }
           }
         ]
@@ -27,15 +28,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "91414716bce29bd3",
+    "id": "b6b523c8d4092cf7",
     "type": "split",
     "children": [
       {
-        "id": "6e6288688974a929",
+        "id": "5da09a8cf8b1f71a",
         "type": "tabs",
         "children": [
           {
-            "id": "3223e359926c1158",
+            "id": "38ce44397a44a6a3",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -47,12 +48,12 @@
             }
           },
           {
-            "id": "d4d57f0546dcf835",
+            "id": "29fae47cf8f57d22",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#jpa",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -64,7 +65,7 @@
             }
           },
           {
-            "id": "9f84ae8cced853a4",
+            "id": "14fc7d12a1282b01",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,98 +78,158 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 289.5
   },
   "right": {
-    "id": "890238db22709c44",
+    "id": "8d8afe62909d858e",
     "type": "split",
     "children": [
       {
-        "id": "9b26e3c32f705119",
+        "id": "2ea0f826ec1b4c63",
         "type": "tabs",
         "children": [
           {
-            "id": "6a9a9f0629a73b80",
+            "id": "9a2237544f90022e",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BackEnd/Anotaciones.md",
+                "file": "Anotaciones generales/Cuentas y contraseñas.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
+                "backlinkCollapsed": true,
+                "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "Enlaces entrantes de Anotaciones"
+              "title": "Enlaces entrantes de Cuentas y contraseñas"
             }
           },
           {
-            "id": "2bd0729f85f2cb00",
+            "id": "54c9db4f680eb4eb",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BackEnd/Anotaciones.md",
+                "file": "Universidad/2024/Segundo cuatrimestre/Taller de arquitectura/Resumen para preparar el trabajo practico_09.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Enlaces salientes de Anotaciones"
+              "title": "Enlaces salientes de Resumen para preparar el trabajo practico_09"
             }
           },
           {
-            "id": "298316c5985e16d9",
+            "id": "c80b74d028523e34",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Universidad/2024/Segundo cuatrimestre/Taller de arquitectura/Resumen para preparar el trabajo practico_09.md"
+              },
+              "icon": "lucide-list",
+              "title": "Esquema de Resumen para preparar el trabajo practico_09"
+            }
+          },
+          {
+            "id": "3e05b57546b64d0c",
             "type": "leaf",
             "state": {
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": false
               },
               "icon": "lucide-tags",
               "title": "Etiquetas"
             }
           },
           {
-            "id": "aac24b62c02ca6fc",
+            "id": "3b29ddb661acf7ec",
             "type": "leaf",
             "state": {
-              "type": "outline",
-              "state": {
-                "file": "BackEnd/Anotaciones.md"
-              },
-              "icon": "lucide-list",
-              "title": "Esquema de Anotaciones"
+              "type": "calendar",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Complemento no activo"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 209.5,
     "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
+      "canvas:Crear nuevo lienzo": false,
       "switcher:Abrir selector rápido": false,
       "graph:Abrir vista gráfica": false,
-      "canvas:Crear nuevo lienzo": false,
       "daily-notes:Abrir la nota de hoy": false,
       "templates:Insertar plantilla": false,
-      "command-palette:Abrir paleta de comandos": false
+      "command-palette:Abrir paleta de comandos": false,
+      "dbfolder:Crear una nueva tabla de base de datos": false
     }
   },
-  "active": "6525cc04cc7c488e",
+  "active": "218c5529753570ac",
   "lastOpenFiles": [
-    "Front End/Diseño del dashboard",
-    "BackEnd/Definiciones del modelo.md",
     "BackEnd/Anotaciones.md",
+    "image/Anotaciones-1732207975018.jpeg",
+    "BackEnd/Config/Security Config.md",
     "BackEnd/Estructura del proyecto.md",
+    "BackEnd/Config",
+    "BackEnd/Definiciones del modelo.md",
+    "BackEnd/Definiciones de los servicios.md",
+    "BackEnd/Definiciones de los Controller.md",
     "BackEnd/Conceptos generales del proyecto.md",
-    "Front End/Diseño del dashboard/Dashboard.md"
+    "image/Estructura del proyecto-1732206855731.jpeg",
+    "image/Definiciones de los servicios-1732206667906.jpeg",
+    "image/Definiciones de los servicios-1732206596554.jpeg",
+    "image/Definiciones de los servicios-1732206578950.jpeg",
+    "image/Definiciones de los servicios-1732206554102.jpeg",
+    "image/Definiciones de los servicios-1732206513736.jpeg",
+    "image/Definiciones de los Controller-1732197525772.jpeg",
+    "image/Definiciones de los servicios-1732206431320.jpeg",
+    "image/Anotaciones-1732203267969.jpeg",
+    "BackEnd/Fuente/Mas información sobre anotaciones.md",
+    "BackEnd/Fuente",
+    "image",
+    "Universidad/2024/Segundo cuatrimestre/Ingeniería de software/Clases/Clase 03.md",
+    "Anotaciones generales/Contraseñas Jesus/Contraseña Jesus.md",
+    " 1",
+    "Anotaciones generales/Cuentas y contraseñas.md",
+    "Anotaciones generales/Contraseñas Jesus",
+    "Universidad/2024/Segundo cuatrimestre/Ingeniería de software/Clases/Clase 02.md",
+    "Universidad/2024/Segundo cuatrimestre/Ingeniería de software/Clases/Clase 01.md",
+    "Universidad/2024/Segundo cuatrimestre/Ingeniería de software/Clases",
+    "Universidad/2024/Segundo cuatrimestre/Ingeniería de software/Notas sobre AppSheet.md",
+    "Universidad/2024/Segundo cuatrimestre/Ingeniería de software/Resumen_de_teorias.canvas",
+    "Linux/Análisis de sistemas operativos.md",
+    "Universidad/2024/Segundo cuatrimestre/Introducción al procesamiento de señales/Relaciones.md",
+    "Universidad/2024/Segundo cuatrimestre/Introducción al procesamiento de señales/Cuentas.md",
+    "Universidad/2024/Segundo cuatrimestre/Introducción al procesamiento de señales/Teoría sobre señales.md",
+    "Universidad/2024/Segundo cuatrimestre/Introducción al procesamiento de señales",
+    "Aplicación finanzas/BackEnd_python/FrontEnd.canvas",
+    "Aplicación finanzas/BackEnd_python/Como manipular el Backend.md",
+    "Aplicación finanzas/BackEnd_python/Deploy Aplicación.md",
+    "Aplicación finanzas/BackEnd/Estructura del proyecto.md",
+    "Aplicación finanzas/BackEnd/Conceptos generales del proyecto.md",
+    "Aplicación finanzas/BackEnd/Definiciones del modelo.md",
+    "Programación/Docker/Mysql.md",
+    "Ingles/Ingles.md",
+    "Aplicación finanzas/BackEnd",
+    "Aplicación finanzas",
+    "Universidad/Materias Correlativas.canvas",
+    "Universidad/2024/Segundo cuatrimestre/Taller de arquitectura/Trabajo_Practico_10/Teoría del libro.canvas",
+    "Universidad/2024/Segundo cuatrimestre/Taller de arquitectura/Trabajo_Practico_10",
+    "Universidad/2024/Primer cuatrimestre/Introducción al diseño lógico/Trabajo integrador_03/Esquema del circuito.canvas",
+    "Anotaciones generales/Sobre mi.canvas",
+    "Universidad/2024/Primer cuatrimestre/Concepto de base de datos/Resumen de teoría para final.canvas",
+    "Sin título 1.canvas",
+    "Sin título.canvas",
+    "Cursos-Proyetos/Proyecto app finanzas/Proyecto APP.canvas"
   ]
 }

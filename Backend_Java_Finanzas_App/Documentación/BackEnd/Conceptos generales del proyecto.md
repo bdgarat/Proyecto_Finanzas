@@ -18,7 +18,7 @@
 	- Se puede confirmar que esta corriendo con el comando `sudo docker ps`
 - **Conexión:**
 	- como cliente para conectarse y manipular la base datos se va utilizar el programa DBeaver, que es multiplataforma y se encuentra para la mayoría de los sistemas operativos 
-	- Una configuración **importante** es que se tiene hacer es  modificar una propiedad de la conexión en DBeaver 
+	- Una configuración **importante** es que se tiene hacer,  es  modificar una propiedad de la conexión en DBeaver 
 		- Esta opción se encuentra dentro de driverProperties cuando creas la conexión 
 		- **allowPublicKeyRetrival = true** 
 	- Luego se tiene que ingresar la credenciales definidas para la base de datos: 
@@ -32,5 +32,5 @@
 		- **spring.datasource.url** = **jdbc:mysql://localhost:3306/finanzas_db**
 		- **spring.datasource.username** = root
 		- **spring.datasource.password** = 123
-		- **spring.jpa.hibernate.ddl-auto** = create
+		- **spring.jpa.hibernate.ddl-auto** = update
 			- Esta opción te permite que JPA cree las tablas automáticamente cuando declares los modelos 

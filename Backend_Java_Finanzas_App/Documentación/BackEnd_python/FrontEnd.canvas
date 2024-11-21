@@ -1,17 +1,17 @@
 {
 	"nodes":[
-		{"id":"badf54f677053650","x":-720,"y":-320,"width":1687,"height":1229,"type":"group","label":"Arbol de componentes"},
-		{"id":"c8706b03cc153e1f","x":-260,"y":-300,"width":440,"height":160,"type":"text","text":"# APP\n- Este es el componente principal de la pagina. Es el primer elemento que se levanta"},
-		{"id":"889d9ade57ecd3b5","x":-425,"y":-80,"width":775,"height":100,"type":"text","text":"# CardsProvider, AuthProvider y FilterProvider\n"},
-		{"id":"820caef645a383b4","x":-425,"y":104,"width":250,"height":60,"type":"text","text":"# Gastos"},
-		{"id":"d091a62b2a16ca6e","x":100,"y":104,"width":250,"height":60,"type":"text","text":"# Ingresos"},
-		{"id":"a0ff5772ee2e9048","x":-700,"y":420,"width":293,"height":80,"type":"text","text":"# PageDefault"},
-		{"id":"e1a8e8b6c21a6894","x":-150,"y":420,"width":288,"height":80,"type":"text","text":"# FilterMenu"},
-		{"id":"e33b954cb1d7867a","x":300,"y":420,"width":280,"height":80,"type":"text","text":"# Cards"},
-		{"id":"13df085f96f75824","x":-100,"y":600,"width":402,"height":81,"type":"text","text":"# New Component"},
-		{"id":"d0624e939824d990","x":580,"y":604,"width":285,"height":77,"type":"text","text":"# Card"},
-		{"id":"eda1c896fd2ebdc0","x":499,"y":800,"width":448,"height":89,"type":"text","text":"# Edit Component"},
-		{"id":"64f9f2efc0f944b7","x":387,"y":-275,"width":386,"height":110,"color":"3","type":"text","text":"Cada componente inferior esta dentro del componente superior"}
+		{"id":"badf54f677053650","type":"group","x":-720,"y":-320,"width":1687,"height":1229,"label":"Arbol de componentes"},
+		{"id":"c8706b03cc153e1f","type":"text","text":"# APP\n- Este es el componente principal de la pagina. Es el primer elemento que se levanta","x":-260,"y":-300,"width":440,"height":160},
+		{"id":"889d9ade57ecd3b5","type":"text","text":"# CardsProvider, AuthProvider y FilterProvider\n","x":-425,"y":-80,"width":775,"height":120},
+		{"id":"820caef645a383b4","type":"text","text":"# Gastos","x":-425,"y":104,"width":250,"height":60},
+		{"id":"d091a62b2a16ca6e","type":"text","text":"# Ingresos","x":100,"y":104,"width":250,"height":60},
+		{"id":"a0ff5772ee2e9048","type":"text","text":"# PageDefault","x":-700,"y":420,"width":293,"height":80},
+		{"id":"e1a8e8b6c21a6894","type":"text","text":"# FilterMenu","x":-150,"y":420,"width":288,"height":80},
+		{"id":"13df085f96f75824","type":"text","text":"# New Component","x":-100,"y":600,"width":402,"height":81},
+		{"id":"eda1c896fd2ebdc0","type":"text","text":"# Edit Component","x":499,"y":800,"width":448,"height":89},
+		{"id":"64f9f2efc0f944b7","type":"text","text":"Cada componente inferior esta dentro del componente superior","x":387,"y":-275,"width":386,"height":110,"color":"3"},
+		{"id":"e33b954cb1d7867a","type":"text","text":"# Cards","x":300,"y":420,"width":280,"height":80},
+		{"id":"d0624e939824d990","type":"text","text":"# Card","x":580,"y":604,"width":285,"height":77}
 	],
 	"edges":[
 		{"id":"be5d1ace75838a42","fromNode":"c8706b03cc153e1f","fromSide":"bottom","toNode":"889d9ade57ecd3b5","toSide":"top"},

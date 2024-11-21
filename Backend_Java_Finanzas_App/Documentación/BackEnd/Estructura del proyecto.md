@@ -6,3 +6,4 @@
 	- **Servicios**: Los servicios son las funciones que atiene  o resuelven las peticiones echas por el usuario 
 	- **Repositorios**: Son archivos que efectúan las consultas de base de datos 
 - Aunque este modelo aparece generalmente en mucho proyectos eso no quiere decir que no se agreguen más paquetes conforme el proyecto vaya creciendo, en caso de crecer se documentara todo en este archivo tratando de dar un seguimiento lo mas minucioso posible 
+![[Estructura del proyecto-1732206855731.jpeg]]

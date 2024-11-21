@@ -1,0 +1,18 @@
+- Este documento va a tener escrito todas las definiciones de los que se van a encargar de atender y definir que porción del código resuelve cada petición 
+- **Controller:** Como se menciono arriba son documentos donde se define un ruta para una función que resuelve una petición 
+- **Aclaración:** Casi todos los controller van a estar definidos con 4 funcionalidades básicas que es la manipulación de la entidad, eso quiere decir que va a permitir, ingresar, modificar, borrar o leer datos de una entidad o tabla de una base de datos 
+- ## Controller Usuario 
+	- **listarUsuarios:**
+		- No tiene argumentos 
+		- Devuelve una lista con los elementos de la tabla
+	- **agregarUsuario:**
+		- Recibe los elementos que componen a un usuario, para que sea exitoso el agregar, se tiene que enviar todos los campos 
+		- Devuelve un mensaje indicando el éxito o no de la operación
+	- **editarUsuario:**
+		- Recibe todos los parámetros que componen un usuario, en caso contrario la operación falla 
+		- Devuelve un mensaje de éxito o fracaso 
+	- **eliminarUsuario:**
+		- Recibe el identificador único del usuario 
+		- Devuelve un mensaje indicando el éxito o fracaso de la operación
+	- ![[Definiciones de los Controller-1732197525772.jpeg]]
+		- 

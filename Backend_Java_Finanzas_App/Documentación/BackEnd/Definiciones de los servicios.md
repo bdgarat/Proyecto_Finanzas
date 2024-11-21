@@ -1,0 +1,12 @@
+- ## Servicio de usuario 
+	-  Se encarga de dar respuestas a las peticiones que tiene un usuario sobre sus datos 
+	- **Listar usuarios:**
+	- ![[Definiciones de los servicios-1732206431320.jpeg]]
+	- **Agregar usuario**
+	- ![[Definiciones de los servicios-1732206513736.jpeg]]
+	- **Editar usuario:**
+	- ![[Definiciones de los servicios-1732206554102.jpeg]]
+	- **Eliminar usuario:**
+	- ![[Definiciones de los servicios-1732206596554.jpeg]]
+	- **Chequeo de datos completos:** Es una función auxiliar que se utiliza para verificar que todos los datos necesarios estén cargados a la hora de agregar un usuario 
+	- ![[Definiciones de los servicios-1732206667906.jpeg]]
