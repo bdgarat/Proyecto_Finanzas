@@ -1,0 +1,11 @@
+## JwtAuthenticationFilter
+- La clase se encuentra dentro del paquete Jwt
+- La case extiende de **OncePerRequestFilter**
+	- **OncePerRequestFilter:*** 
+		- Básicamente se encarga de que cada petición del usuario sea validada, eso significa que la petición tiene que venir acompañada de un **Token**
+		- **doFilterInternal:** Es el método que se encarga de realizar los filtros 
+		- ![[Resumen del vídeo-1732517006677.jpeg]]
+		- **Hasta el momento no entiendo para que está el condicional** 
+	- Otro método que se encuentra declarado en la clase, es el método privado **getTokenFromRequest:**
+		- Esté método se encarga de buscar el token en la cabecera del método
+		- ![[Resumen del vídeo-1732516961768.jpeg]]

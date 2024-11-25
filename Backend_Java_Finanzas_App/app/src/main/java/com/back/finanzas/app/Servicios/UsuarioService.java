@@ -55,7 +55,7 @@ public class UsuarioService {
     }
     private boolean chequeoDatosCompletos(Usuario usuario)
     {
-        return !usuario.getNombre().isEmpty() && !usuario.getApellido().isEmpty() && !usuario.getEmail().isEmpty()
+        return !usuario.getUsername().isEmpty() && !usuario.getLastname().isEmpty() && !usuario.getEmail().isEmpty()
                 && !usuario.getPassword().isEmpty();
     }
 }
