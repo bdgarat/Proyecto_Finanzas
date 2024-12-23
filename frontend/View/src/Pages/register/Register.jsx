@@ -49,15 +49,15 @@ function Register() {
       {
         axios({
           method:"post",
-          url:`${url}auth/signup`,
+          url:`${url}auth/register`,
           data:{
-            username:values.username,
+            name:values.username,
             email:values.email,
             password:values.password,
           }
         }).then((res)=>{
           console.log(res);
-          if(res.status !=201){
+          if(res.status !=200){
             Swall.fire({
               title:"No se envio el formulario",
               text: "Intente nuevamente",

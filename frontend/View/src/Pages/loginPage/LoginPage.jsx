@@ -22,9 +22,9 @@ function LoginPage() {
   function obtenerPermiso() {
     axios({
       method: "post",
-      url: `${url}/auth/login`,
+      url: `${url}auth/login`,
       data: {
-        username: name,
+        email: name,
         password: pass,
       },
     })
