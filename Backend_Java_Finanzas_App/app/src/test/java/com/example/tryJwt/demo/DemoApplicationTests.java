@@ -1,10 +1,10 @@
-package com.back.finanzas.app;
+package com.example.tryJwt.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AppApplicationTests {
+class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
